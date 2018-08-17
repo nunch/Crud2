@@ -1,0 +1,23 @@
+﻿@using CRUDGenerator.Database
+@{
+    ViewBag.Title = "CRUDGenerator";
+    Layout = "~/Views/Template.cshtml";
+    ViewBag.css = "~/Content/head/removeDatabase/css";
+    ViewBag.js = "~/Scripts/footer/removeDatabase/js";
+}
+
+<form>
+	<fieldset>
+		<legend>Effacer une base de données</legend>
+
+		<div class="form-group">
+			<label>Nom de la base de données</label>
+			<select class="chosen-select" name="databaseName" id="removeDatabase-databaseName" required>
+			@foreach (DatabaseXML db in ViewBag.databases){
+				<option value="@db.Name">@db.Name</option>
+			}
+			</select>
+		</div>
+		<input type="submit" class="btn btn-default" id="removeDatabase-submit">
+	</fieldset>
+</form>

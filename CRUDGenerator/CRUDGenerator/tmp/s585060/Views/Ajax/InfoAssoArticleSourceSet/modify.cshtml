@@ -1,0 +1,107 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+InfoAssoArticleSourceSet infoAssoArticleSourceSet = (InfoAssoArticleSourceSet) ViewBag.infoAssoArticleSourceSet;
+    
+        bool useChosen_on_fk_fk_InfoAssoArticleSourceSet_0 = true;
+    
+}
+
+
+<form method="post" id="modifyData-form" action="/InfoAssoArticleSourceSet/update">
+    <fieldset>
+        <legend>Modifier InfoAssoArticleSourceSet</legend>
+                <input type="hidden" id="Id_InfoAssoArticleSource" name="Id_InfoAssoArticleSource" value="@infoAssoArticleSourceSet.Id_InfoAssoArticleSource" />
+                
+                    @if(useChosen_on_fk_fk_InfoAssoArticleSourceSet_0)
+                    {
+                    <div class="form-group" id="fk-0-div">
+                        <input type="hidden" id="Id_AssoArticleSource-object" value="@infoAssoArticleSourceSet.Id_AssoArticleSource" />
+                        <label class="control-label">Id_AssoArticleSource</label>
+                        <select data-placeholder="Choisir Id_AssoArticleSource" class="chosen-select" id="Id_AssoArticleSource" name="Id_AssoArticleSource" required=required>
+                            <option disabled selected>Choisir Id_AssoArticleSource</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_AssoArticleSource</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-0-div" class="form-group">
+                        <label class="control-label">Id_AssoArticleSource</label>
+                        <input type="hidden" name="Id_AssoArticleSource" id="Id_AssoArticleSource" value="@infoAssoArticleSourceSet.Id_AssoArticleSource" required=required />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-0" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-0" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-0" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-0-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-0-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_AssoArticleSource</th>
+                                        <th>IsSuppr</th>
+                                        <th>Id_Article</th>
+                                        <th>Id_Source</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_AssoArticleSource</p>
+                        </div>
+                    </div>
+                    }
+                
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">SourceFichier</label>
+                            <input type="number" id="SourceFichier" name="SourceFichier" class="form-control" required=required  value="@infoAssoArticleSourceSet.SourceFichier" />
+                    <div id="SourceFichier-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir SourceFichier</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsSuppr</label>
+                            <input type="number" id="IsSuppr" name="IsSuppr" class="form-control" required=required  value="@infoAssoArticleSourceSet.IsSuppr" />
+                    <div id="IsSuppr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsSuppr</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">PartMarche</label>
+                            <input type="number" id="PartMarche" name="PartMarche" class="form-control"   value="@infoAssoArticleSourceSet.PartMarche" />
+                    <div id="PartMarche-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir PartMarche</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">PNSuffixe</label>
+                            <input type="text" maxlength="0" id="PNSuffixe" name="PNSuffixe" class="form-control"   value="@infoAssoArticleSourceSet.PNSuffixe" />
+                    <div id="PNSuffixe-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir PNSuffixe</p>
+                    </div>
+                </div>
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Modifier</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+
+</fieldset>
+
+</form>
+
+<script src="/Scripts/Ajax/InfoAssoArticleSourceSet/modify.js"></script>

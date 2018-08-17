@@ -1,0 +1,556 @@
+﻿@using CRUDGenerator.Database
+@{
+    ViewBag.Title = "CRUDGenerator";
+    Layout = "~/Views/Template.cshtml";
+    ViewBag.css = "~/Content/head/showTable/css";
+    ViewBag.js = "~/Scripts/footer/showTable/js";
+}
+
+@{
+    Table table = ViewBag.table;
+    DatabaseXML database = ViewBag.database;
+    string normalType = "";
+    string nmRelation = "";
+    if (table.Type == "normal")
+    {
+        normalType = "selected";
+    }
+    else
+    {
+        nmRelation = "selected";
+    }
+}
+<input type="hidden" id="databaseName" value="@database.Name" />
+<input type="hidden" id="tableName" value="@table.Name" />
+
+<div class="row">
+    <div class="col-sm-12" style="margin-bottom:50px;  margin-top: 30px;">
+        <ul class="nav nav-pills nav-justified">
+            <li class="active"><a href="#">Colones</a></li>
+            <li><a href="#">Clé étrangère</a></li>
+        </ul>
+    </div>
+</div>
+<div class="row" id="columnsTab">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-3">
+                <label style="margin-top: 8px;">Type de la colone</label>
+            </div>
+            <div class="col-sm-3">
+                <select id="table-type" class="form-control">
+                    <option value="normal" @normalType>Normal</option>
+                    <option value="n-m-relation" @nmRelation>Relation n-m</option>
+                </select>
+            </div>
+            <div class="col-sm-3 col-sm-offset-3">
+                <button class="btn btn-primary btn-block" id="addColumn" data-toggle="modal" data-target="#modal-addColumn">Ajouter une colone</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px;">
+            <div class="col-sm-12">
+                <table id="columnsTabTable" class="table table-striped table-hover"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12" id="table">
+
+        <div class="panel panel-default">
+            <div class="panel-heading" id="panel-heading" role="collapse" target="#collapsible-@ViewBag.database.Name">
+                <h3 class="panel-title">@table.Name</h3>
+            </div>
+            <div class="panel-collapse collapse" id="collapsible-@ViewBag.database.Name">
+                <div class="form-group">
+                    <label>Type :</label>
+                    <select id="table-type" class="form-control">
+                        <option value="normal" @normalType >Normal</option>
+                        <option value="n-m-relation" @nmRelation >Relation n-m</option>
+                    </select>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Column column in table.Columns)
+                        {
+                            <tr>
+                                <th>@column.Name</th>
+                                <th>@TypeString.ToString(column.Type)</th>
+                                <th>
+                                    <i class="fa fa-pencil-square-o f2" role="editColumn" database="@ViewBag.database.Name" table="@table.Name" column="@column.Name"></i>
+                                    <i class="fa fa-times f2" role="removeColumn" database="@ViewBag.database.Name" table="@table.Name" column="@column.Name"></i>
+                                </th>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <button class="btn btn-primary btn-block" id="addColumn" data-toggle="modal" data-target="#modal-addColumn">Ajouter une colone</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6" id="foreignKeys">
+    	<div class="panel panel-default">
+            <div class="panel-heading" id="panel-heading" role="collapse" target="#collapsible-foreignkeys">
+                <h3 class="panel-title">Clés étrangères</h3>
+            </div>
+            <div class="panel-collapse collapse" id="collapsible-foreignkeys">
+            	<table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Table externe</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ForeignKey fk in table.ForeignKeys)
+                        {
+                        	<text>
+                            <tr>
+                                <td role="collapse" target="#collapsible-@fk.Name">@fk.Name</td>
+                                <td role="collapse" target="#collapsible-@fk.Name">@fk.ExternTableName</td>
+                                <td>
+                                    <i class="fa fa-search f2" role="collapse" target="#collapsible-@fk.Name"></i>
+                                    <i class="fa fa-times f2" role="removeForeignKey" database="@ViewBag.database.Name" table="@table.Name" foreignkey="@fk.Name"></i>
+                                </td>
+                            </tr>
+                            <tr>
+								<th colspan="2">
+                            		<div class="collapse" id="collapsible-@fk.Name">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>Nom colone</th>
+													<th>Nom colone table externe</th>
+													<th>Type</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach (ForeignKeyInside fki in fk.Info) {
+													Column column = table.getColumnByName(fki.ColumnName);
+													<tr>
+                                                        <td>@fki.ColumnName</td>
+                                                        <td>@fki.ExternColumnName</td>
+                                                        <td>@TypeString.ToString(column.Type)</td>
+													</tr>
+												}
+											</tbody>
+										</table>
+									</div>
+								</th>
+                            </tr>
+                        	</text>
+                        }
+                    </tbody>
+                </table>
+                <button class="btn btn-primary btn-block" id="addForeignKey" data-toggle="modal" data-target="#modal-addForeignKey">Ajouter une clé étrangère</button>
+            </div>
+    	</div>
+    </div>
+    <div class="col-sm-6" id="primaryKeys">
+        <div class="panel panel-default">
+            <div class="panel-heading" id="panel-heading" role="collapse" target="#collapsible-primaryKeys">
+                <h3 class="panel-title">Clé primaire</h3>
+            </div>
+            <div class="panel-collapse collapse" id="collapsible-primaryKeys">
+                @if (table.PrimaryKey.Count > 0)
+                {
+                    <text>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach (string pk in table.PrimaryKey)
+                                {
+                                    <td>@pk</td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn btn-primary btn-block" id="removePrimaryKey" data-toggle="modal">Enlever la clé primaire</button>
+                    </text>
+                }
+                else
+                {
+                    <button class="btn btn-primary btn-block" id="addPrimaryKey" data-toggle="modal" data-target="#modal-addPrimaryKey">Ajouter une clé primaire</button>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6" id="uniqueKeys">
+        <div class="panel panel-default">
+            <div class="panel-heading" id="panel-heading" role="collapse" target="#collapsible-uniquekeys">
+                <h3 class="panel-title">Clés uniques</h3>
+            </div>
+            <div class="panel-collapse collapse" id="collapsible-uniquekeys">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (UniqueKey uk in table.UniqueKeys)
+                        {
+                            <text>
+                                <tr>
+                                    <th role="collapse" target="#collapsible-@uk.Name">@uk.Name</th>
+                                    <th>
+                                        <i class="fa fa-search f2" role="collapse" target="#collapsible-@uk.Name"></i>
+                                        <i class="fa fa-times f2" role="removeUniqueKey" database="@ViewBag.database.Name" table="@table.Name" uniquekey="@uk.Name"></i>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">
+                                        <div class="collapse" id="collapsible-@uk.Name">
+                                            <table class="table">
+                                                <tbody>
+                                                    <tr>
+                                                        @foreach (string columnName in uk.List)
+                                                        {
+                                                            <th>@columnName</th>
+                                                        }
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </text>
+                        }
+                    </tbody>
+                </table>
+                <button class="btn btn-primary btn-block" id="addUniqueKey" data-toggle="modal" data-target="#modal-addUniqueKey">Ajouter une clé unique</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6" id="indexes">
+    	<div class="panel panel-default">
+            <div class="panel-heading" id="panel-heading" role="collapse" target="#collapsible-indexes">
+                <h3 class="panel-title">Index</h3>
+            </div>
+            <div class="panel-collapse collapse" id="collapsible-indexes">
+            	<table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Index index in table.Indexes)
+                        {
+                        	<text>
+                            <tr>
+                                <th role="collapse" target="#collapsible-@index.Name">@index.Name</th>
+                                <th>
+                                	<i class="fa fa-search f2" role="collapse" target="#collapsible-@index.Name"></i>
+                                    <i class="fa fa-pencil-square-o f2" role="editIndex" database="@ViewBag.database.Name" table="@table.Name" index="@index.Name"></i>
+                                    <i class="fa fa-times f2" role="removeIndex" database="@ViewBag.database.Name" table="@table.Name" index="@index.Name"></i>
+                                </th>
+                            </tr>
+                            <tr>
+                            	<th colspan="2">
+                            		<div class="collapse" id="collapsible-@index.Name">
+                            			<table class="table">
+                            				<tbody>
+                            					<tr>
+			                            			@foreach (string columnName in index.List) {
+													<th>@columnName</th>
+			                            			}	
+                            					</tr>
+                            				</tbody>
+                            			</table>
+                            		</div>
+                            	</th>
+                            </tr>
+                            </text>
+                        }
+                    </tbody>
+                </table>
+                <button class="btn btn-primary btn-block" id="addIndex" data-toggle="modal" data-target="#modal-addIndex">Ajouter un index</button>
+            </div>
+    	</div>
+    </div>
+</div>
+
+@{
+    List<Table> externTables = new List<Table>();
+    foreach (Table tmp in database.Content)
+    {
+        if (tmp.Name != table.Name)
+        {
+            externTables.Add(tmp);
+        }
+    }
+}
+
+<!-- Modal -->
+<div id="modal-addForeignKey" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Ajouter une clé étrangère</h4>
+      </div>
+      <div class="modal-body">
+          <div id="modal-addForeignKey-externTable">
+              <form id="modal-addForeignKey-form" method="post" action="ajax/table/addForeignKey">
+                  <div class="form-group">
+                      <label>Table externe</label>
+                      <select class="form-control" name="ExternTableName" id="modal-addForeignKey-externTableName">
+                          <option disabled selected>Table...</option>
+                          @foreach (Table tmp in database.Content)
+                          {
+                              <option value="@tmp.Name">@tmp.Name</option>
+                          }
+                      </select>
+                  </div>
+                  <table class="table" style="display: none">
+                      <thead>
+                      </thead>
+                      <tbody id="modal-addForeignKey-copy">
+                          <tr>
+                              <td>
+                                  <select class="form-control" name="ColumnName" id="modal-addForeignKey-columnName" disabled>
+                                      @foreach (Column column in table.Columns)
+                                      {
+                                          if (column.Type == CRUDGenerator.Database.Type.Int)
+                                          {
+                                            <option value="@column.Name">@column.Name</option>
+                                          }
+                                      }
+                                  </select>
+                              </td>
+                              <td>
+                                  <select class="form-control" name="ExternColumnName" id="modal-addForeignKey-externColumnName" disabled></select>
+                              </td>
+                              <td><i class="fa fa-times fa-2x" onclick="foreignKey.removeColumn(this)"></i></td>
+                          </tr>
+                      </tbody>
+                  </table>
+
+                  <table class="table">
+                      <thead>
+                          <tr>
+                              <th>Nom colone</th>
+                              <th>Nom colone externe</th>
+                              <th>Enlever</th>
+                          </tr>
+                      </thead>
+                      <tbody id="modal-addForeignKey-tbody">
+                      </tbody>
+                  </table>
+              </form>
+          </div>
+
+          <div onclick="foreignKey.addColumn()">
+              Ajouter une colone à la clé étrangère <i class="fa fa-plus fa-2x"></i>
+          </div>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-primary" id="modal-addForeignKey-submit">Ajouter</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="modal-addUniqueKey" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Ajouter une clé unique</h4>
+      </div>
+        <div class="modal-body">
+            <form id="modal-addUniqueKey-form">
+                <div style="display:none" id="modal-addUniqueKey-copy">
+                    <div class="col-sm-4 row">
+                        <div class="col-sm-9">
+                            <div class="form-group">
+                                <label>Nom colone</label>
+                                <select class="form-control" name="List" disabled>
+                                    @foreach (Column column in table.Columns)
+                                    {
+                                        <option value="@column.Name">@column.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" onclick="uniqueKey.removeColumn(this)"><i class="fa fa-times fa-2x" style="margin-top: 28px;margin-left: -16px;"></i></div>
+                    </div>
+                </div>
+                <div class="row" id="modal-addUniqueKey-row">
+                </div>
+                <div onclick="uniqueKey.addColumn()">
+                    Ajouter une colone à la clé unique <i class="fa fa-plus fa-2x"></i>
+                </div>
+            </form>
+        </div>
+
+      <div class="modal-footer">
+          <button class="btn btn-primary" id="modal-addUniqueKey-submit">Ajouter</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+@{
+    List<string> varcharColumns = new List<string>();
+    foreach (Column column in table.Columns)
+    {
+        if (column.Type == CRUDGenerator.Database.Type.String)
+        {
+            varcharColumns.Add(column.Name);
+        }
+    }
+}
+
+<!-- Modal -->
+<div id="modal-addIndex" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ajouter un index (seuls les colones de type varchar sont indexables)</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-addIndex-form">
+                    <div style="display:none" id="modal-addIndex-copy">
+                        <div class="col-sm-4 row">
+                            <div class="col-sm-9">
+                                <div class="form-group">
+                                    <label>Nom colone</label>
+                                    <select class="form-control" name="List" disabled>
+                                        @foreach (string columnName in varcharColumns)
+                                        {
+                                            <option value="@columnName">@columnName</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3" onclick="index.removeColumn(this)"><i class="fa fa-times fa-2x" style="margin-top: 28px;margin-left: -16px;"></i></div>
+                        </div>
+                    </div>
+                    <div class="row" id="modal-addIndex-row">
+                    </div>
+                    <div onclick="index.addColumn()">
+                        Ajouter une colone à l'index <i class="fa fa-plus fa-2x"></i>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="modal-addIndex-submit">Ajouter</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="modal-addColumn" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ajouter une colone</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-addColumn-form">
+                    <div class="form-group">
+                        <label>Nom</label>
+                        <input type="text" class="form-control" name="Name" id="modal-addColumn-columnName" />
+                    </div>
+                    <div class="form-group">
+                        <label>type</label>
+                        <select name="columnType" class="form-control">
+                            @foreach (CRUDGenerator.Database.Type type in Enum.GetValues(typeof(CRUDGenerator.Database.Type)))
+                            {
+                                <option value="@TypeString.ToString(type)">@TypeString.ToString(type)</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Taille</label>
+                        <input type="number" class="form-control" name="Length" id="modal-addColumn-columnLength" />
+                    </div>
+                    <div class="form-group">
+                        <label>Peut être null</label>
+                        <input type="checkbox" class="form-control" name="IsNull" id="modal-addColumn-columnIsNull" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="modal-addColumn-submit">Ajouter</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="modal-addPrimaryKey" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ajouter une clé primaire</h4>
+            </div>
+            <div class="modal-body">
+                <form id="modal-addPrimaryKey-form">
+                    <div style="display:none" id="modal-addPrimaryKey-copy">
+                        <div class="col-sm-4 row">
+                            <div class="col-sm-9">
+                                <div class="form-group">
+                                    <label>Nom colone</label>
+                                    <select class="form-control" name="columnNames" disabled>
+                                        @foreach (Column column in table.Columns)
+                                        {
+                                            <option value="@column.Name">@column.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3" onclick="primaryKey.removeColumn(this)"><i class="fa fa-times fa-2x" style="margin-top: 28px;margin-left: -16px;"></i></div>
+                        </div>
+                    </div>
+                    <div class="row" id="modal-addPrimaryKey-row">
+                    </div>
+                    <div onclick="primaryKey.addColumn()">
+                        Ajouter une colone à la clé primaire <i class="fa fa-plus fa-2x"></i>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="modal-addPrimaryKey-submit">Ajouter</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>

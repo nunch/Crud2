@@ -1,0 +1,233 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+EcartSet ecartSet = (EcartSet) ViewBag.ecartSet;
+    
+        bool useChosen_on_fk_fk_EcartSet_0 = true;
+    
+    
+        bool useChosen_on_fk_fk_EcartSet_1 = true;
+    
+    
+        bool useChosen_on_fk_fk_EcartSet_2 = true;
+    
+}
+
+
+<form method="post" id="modifyData-form" action="/EcartSet/update">
+    <fieldset>
+        <legend>Modifier EcartSet</legend>
+                <input type="hidden" id="Id_Ecart" name="Id_Ecart" value="@ecartSet.Id_Ecart" />
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">NumImport</label>
+                            <input type="number" id="NumImport" name="NumImport" class="form-control" required=required  value="@ecartSet.NumImport" />
+                    <div id="NumImport-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir NumImport</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsBoxarr</label>
+                            <input type="number" id="IsBoxarr" name="IsBoxarr" class="form-control" required=required  value="@ecartSet.IsBoxarr" />
+                    <div id="IsBoxarr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsBoxarr</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsBaan</label>
+                            <input type="number" id="IsBaan" name="IsBaan" class="form-control" required=required  value="@ecartSet.IsBaan" />
+                    <div id="IsBaan-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsBaan</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsTIP</label>
+                            <input type="number" id="IsTIP" name="IsTIP" class="form-control" required=required  value="@ecartSet.IsTIP" />
+                    <div id="IsTIP-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsTIP</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsSuppr</label>
+                            <input type="number" id="IsSuppr" name="IsSuppr" class="form-control" required=required  value="@ecartSet.IsSuppr" />
+                    <div id="IsSuppr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsSuppr</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">Id_Cle</label>
+                            <input type="number" id="Id_Cle" name="Id_Cle" class="form-control" required=required  value="@ecartSet.Id_Cle" />
+                    <div id="Id_Cle-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir Id_Cle</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">NumAxe</label>
+                            <input type="number" id="NumAxe" name="NumAxe" class="form-control" required=required  value="@ecartSet.NumAxe" />
+                    <div id="NumAxe-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir NumAxe</p>
+                    </div>
+                </div>
+                
+                    @if(useChosen_on_fk_fk_EcartSet_2)
+                    {
+                    <div class="form-group" id="fk-2-div">
+                        <input type="hidden" id="LienArticles_Id_LienArticles-object" value="@ecartSet.LienArticles_Id_LienArticles" />
+                        <label class="control-label">LienArticles_Id_LienArticles</label>
+                        <select data-placeholder="Choisir LienArticles_Id_LienArticles" class="chosen-select" id="LienArticles_Id_LienArticles" name="LienArticles_Id_LienArticles" required=required>
+                            <option disabled selected>Choisir LienArticles_Id_LienArticles</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-2-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir LienArticles_Id_LienArticles</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-2-div" class="form-group">
+                        <label class="control-label">LienArticles_Id_LienArticles</label>
+                        <input type="hidden" name="LienArticles_Id_LienArticles" id="LienArticles_Id_LienArticles" value="@ecartSet.LienArticles_Id_LienArticles" required=required />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-2" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-2" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-2" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-2-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-2-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_LienArticles</th>
+                                        <th>Id_ArticleParent</th>
+                                        <th>Id_ArticleEnfant</th>
+                                        <th>Programme</th>
+                                        <th>IsSuppr</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-2-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir LienArticles_Id_LienArticles</p>
+                        </div>
+                    </div>
+                    }
+                
+                
+                    @if(useChosen_on_fk_fk_EcartSet_0)
+                    {
+                    <div class="form-group" id="fk-0-div">
+                        <input type="hidden" id="Article_Id_Article-object" value="@ecartSet.Article_Id_Article" />
+                        <label class="control-label">Article_Id_Article</label>
+                        <select data-placeholder="Choisir Article_Id_Article" class="chosen-select" id="Article_Id_Article" name="Article_Id_Article" required=required>
+                            <option disabled selected>Choisir Article_Id_Article</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Article_Id_Article</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-0-div" class="form-group">
+                        <label class="control-label">Article_Id_Article</label>
+                        <input type="hidden" name="Article_Id_Article" id="Article_Id_Article" value="@ecartSet.Article_Id_Article" required=required />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-0" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-0" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-0" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-0-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-0-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_Article</th>
+                                        <th>PN</th>
+                                        <th>SIN</th>
+                                        <th>IsSuppr</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Article_Id_Article</p>
+                        </div>
+                    </div>
+                    }
+                
+                
+                    @if(useChosen_on_fk_fk_EcartSet_1)
+                    {
+                    <div class="form-group" id="fk-1-div">
+                        <input type="hidden" id="AssoArticleSource_Id_AssoArticleSource-object" value="@ecartSet.AssoArticleSource_Id_AssoArticleSource" />
+                        <label class="control-label">AssoArticleSource_Id_AssoArticleSource</label>
+                        <select data-placeholder="Choisir AssoArticleSource_Id_AssoArticleSource" class="chosen-select" id="AssoArticleSource_Id_AssoArticleSource" name="AssoArticleSource_Id_AssoArticleSource" required=required>
+                            <option disabled selected>Choisir AssoArticleSource_Id_AssoArticleSource</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-1-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir AssoArticleSource_Id_AssoArticleSource</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-1-div" class="form-group">
+                        <label class="control-label">AssoArticleSource_Id_AssoArticleSource</label>
+                        <input type="hidden" name="AssoArticleSource_Id_AssoArticleSource" id="AssoArticleSource_Id_AssoArticleSource" value="@ecartSet.AssoArticleSource_Id_AssoArticleSource" required=required />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-1" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-1" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-1" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-1-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-1-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_AssoArticleSource</th>
+                                        <th>IsSuppr</th>
+                                        <th>Id_Article</th>
+                                        <th>Id_Source</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-1-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir AssoArticleSource_Id_AssoArticleSource</p>
+                        </div>
+                    </div>
+                    }
+                
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Modifier</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+
+</fieldset>
+
+</form>
+
+<script src="/Scripts/Ajax/EcartSet/modify.js"></script>

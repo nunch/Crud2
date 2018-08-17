@@ -1,0 +1,143 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+InfoSourceSet infoSourceSet = (InfoSourceSet) ViewBag.infoSourceSet;
+    
+        bool useChosen_on_fk_fk_InfoSourceSet_0 = true;
+    
+}
+
+
+<form method="post" id="modifyData-form" action="/InfoSourceSet/update">
+    <fieldset>
+        <legend>Modifier InfoSourceSet</legend>
+                
+                    @if(useChosen_on_fk_fk_InfoSourceSet_0)
+                    {
+                    <div class="form-group" id="fk-0-div">
+                        <input type="hidden" id="Id_Source-object" value="@infoSourceSet.Id_Source" />
+                        <label class="control-label">Id_Source</label>
+                        <select data-placeholder="Choisir Id_Source" class="chosen-select" id="Id_Source" name="Id_Source" required=required>
+                            <option disabled selected>Choisir Id_Source</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Source</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-0-div" class="form-group">
+                        <label class="control-label">Id_Source</label>
+                        <input type="hidden" name="Id_Source" id="Id_Source" value="@infoSourceSet.Id_Source" required=required />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-0" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-0" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-0" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-0-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-0-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_Source</th>
+                                        <th>CodeSource</th>
+                                        <th>CodeSite</th>
+                                        <th>IsSuppr</th>
+                                        <th>EcartSource_Source_Id_Ecart</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Source</p>
+                        </div>
+                    </div>
+                    }
+                
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsSuppr</label>
+                            <input type="number" id="IsSuppr" name="IsSuppr" class="form-control" required=required  value="@infoSourceSet.IsSuppr" />
+                    <div id="IsSuppr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsSuppr</p>
+                    </div>
+                </div>
+                <input type="hidden" id="Id_InfoSource" name="Id_InfoSource" value="@infoSourceSet.Id_InfoSource" />
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">SourceFichier</label>
+                            <input type="number" id="SourceFichier" name="SourceFichier" class="form-control" required=required  value="@infoSourceSet.SourceFichier" />
+                    <div id="SourceFichier-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir SourceFichier</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">NomSource</label>
+                            <input type="text" maxlength="0" id="NomSource" name="NomSource" class="form-control"   value="@infoSourceSet.NomSource" />
+                    <div id="NomSource-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir NomSource</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">NomSite</label>
+                            <input type="text" maxlength="0" id="NomSite" name="NomSite" class="form-control"   value="@infoSourceSet.NomSite" />
+                    <div id="NomSite-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir NomSite</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">AdresseSite</label>
+                            <input type="text" maxlength="0" id="AdresseSite" name="AdresseSite" class="form-control"   value="@infoSourceSet.AdresseSite" />
+                    <div id="AdresseSite-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir AdresseSite</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">CodePays</label>
+                            <input type="text" maxlength="0" id="CodePays" name="CodePays" class="form-control"   value="@infoSourceSet.CodePays" />
+                    <div id="CodePays-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir CodePays</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">CodeMDM</label>
+                            <input type="text" maxlength="0" id="CodeMDM" name="CodeMDM" class="form-control"   value="@infoSourceSet.CodeMDM" />
+                    <div id="CodeMDM-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir CodeMDM</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">Champ1</label>
+                            <input type="text" maxlength="0" id="Champ1" name="Champ1" class="form-control"   value="@infoSourceSet.Champ1" />
+                    <div id="Champ1-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir Champ1</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">Champ2</label>
+                            <input type="text" maxlength="0" id="Champ2" name="Champ2" class="form-control"   value="@infoSourceSet.Champ2" />
+                    <div id="Champ2-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir Champ2</p>
+                    </div>
+                </div>
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Modifier</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+
+</fieldset>
+
+</form>
+
+<script src="/Scripts/Ajax/InfoSourceSet/modify.js"></script>

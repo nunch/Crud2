@@ -1,0 +1,310 @@
+
+
+@{    
+    Layout = null;
+}
+
+
+
+    var listTable = null;
+    var isHere = false;
+    var filters = new Array();
+    function post(path, params) {
+        open(path, params, "post");
+    }
+    function get(path, params) {
+        open(path, params, "get");
+    }
+    function open(path, params, method) {
+        method = method || "post"; // Set method to post by default if not specified.
+
+        // The rest of this code assumes you are not using a library.
+        // It can be made less wordy if you use one.
+        var form = document.createElement("form");
+        form.setAttribute("method", method);
+        form.setAttribute("action", path);
+
+        for (var key in params) {
+            if (params.hasOwnProperty(key)) {
+                var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", key);
+                hiddenField.setAttribute("value", params[key]);
+
+                form.appendChild(hiddenField);
+            }
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+    function openCreate() {
+        $.ajax({
+            url: '/AssoActionUtilisateurSet/create', // La ressource ciblée
+            type: 'GET', // Le type de la requÃªte HTTP.
+            data: {},
+            success: function (html) {
+                $("#modal .modal-body").html(html);
+                $("#modal").modal('show')
+            }
+        });
+    }
+    function modify(Id) {
+        $.ajax({
+            url: '/AssoActionUtilisateurSet/modify', // La ressource ciblée
+            type: 'POST', // Le type de la requÃªte HTTP.
+            data: { Id: Id },
+            success: function (html) {
+                $("#modal .modal-body").html(html);
+                $("#modal").modal('show')
+            }
+        });
+    }
+    function deleteObj(element) {
+        var data = listTable.row($(element).closest("tr")).data();
+        swal({
+            title: 'Voulez vous vraiment supprimer l\'&eacute;l&eacute;ment ?',
+            text: "",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonClass: 'swgButton',
+            cancelButtonClass: 'swgButtonCancel',
+            confirmButtonColor: '#2ecc71',
+            cancelButtonColor: '#ff0000',
+            confirmButtonText: 'Oui',
+            cancelButtonText: 'Non'
+        }).then(function() {
+            $.ajax({
+                url: '/ajax/AssoActionUtilisateurSet/remove', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: {Id: data["Id_AssoActionUtilisateur"]},
+                success: function (res) {
+                    if(res != ""){
+                        swal(
+                          'Une erreur s\'est produite',
+                          res,
+                          'error'
+                        );
+                    }else{
+                        location.reload();
+                    }
+                }
+            });
+        });
+        console.log(data);
+    }
+    function reinitFilters() {
+        $('#ViewDatas-table thead tr:last-child th input').each(function (index, value) {
+            $(this).val('').removeClass('colorFilter');
+        });
+        $('#ViewDatas-table tfoot tr th input').each(function (index, value) {
+            $(this).val('');
+        });
+        $('#customFilterInput').val('');
+        listTable.search('').columns().search('').draw();
+    }
+    function initFilters() {
+        $('#ViewDatas-table thead tr:last-child th input').each(function (index, value) {
+            var i = index;
+            if (index < 11) {
+                i += 3;
+                $(this).val(filters[i]).keyup();
+            }
+            else {
+                $(this).val('');
+            }
+        });
+    }
+    function displayInSearchInput(index, obj) {
+        $('#ViewDatas-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+        if (obj.value != "") {
+            $(obj).addClass("colorFilter");
+
+        } else {
+            $(obj).removeClass("colorFilter");
+        }
+    }
+    function formatAssoActionUtilisateurSet(assoActionUtilisateurSet) {
+        
+                
+        $.ajax({
+            url: '/ajax/ActionSet/find', // La ressource cibl&eacute;e
+            type: 'POST', // Le type de la requête HTTP.
+            data: {Id_Action : assoActionUtilisateurSet["Id_Action"] },
+            async: false,
+            dataType: "json",
+            success: function(dataFK){
+                    //dataFK["Priorite"]
+                    //dataFK["DateCreation"]
+                    //dataFK["DateRealisation"]
+                    //dataFK["DateModification"]
+                    //dataFK["IsSuppr"]
+                    //dataFK["Id_Entite"]
+                    //dataFK["Etat"]
+                    //dataFK["Id_Action"]
+                    //dataFK["Titre"]
+                    //dataFK["Description"]
+                assoActionUtilisateurSet["Id_Action"] = dataFK["Id_Action"];
+            }
+        });
+
+        
+                
+        $.ajax({
+            url: '/ajax/UtilisateurSet/find', // La ressource cibl&eacute;e
+            type: 'POST', // Le type de la requête HTTP.
+            data: {Id_Utilisateur : assoActionUtilisateurSet["Id_Utilisateur"] },
+            async: false,
+            dataType: "json",
+            success: function(dataFK){
+                    //dataFK["Id_Utilisateur"]
+                    //dataFK["Nom"]
+                    //dataFK["Prenom"]
+                    //dataFK["Matricule"]
+                    //dataFK["Mail"]
+                    //dataFK["Role"]
+                    //dataFK["IsSuppr"]
+                    //dataFK["Id_Entite"]
+                    //dataFK["DateDerniereConnexion"]
+                assoActionUtilisateurSet["Id_Utilisateur"] = dataFK["Id_Utilisateur"];
+            }
+        });
+
+        
+            }
+    $(function () {
+        $("#add").click(function () {
+            openCreate();
+        })
+        $('#ViewDatas-table thead #ViewDatas-table-input th[search]').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Recherche ' + title + '" />');
+        });
+        $('#btnResetFilters').on('click', function (e) {
+            reinitFilters();
+        })
+        $.ajax({
+            url: '/ajax/AssoActionUtilisateurSet/findAll', // La ressource cibl&eacute;e
+            type: 'POST', // Le type de la requête HTTP.
+            data: {},
+            dataType: "json",
+            success: function (dataRoww) {
+                for (var i = 0; i < dataRoww.length; i++) {
+                    formatAssoActionUtilisateurSet(dataRoww[i]);
+                }
+                listTable = $('#ViewDatas-table').DataTable({
+                    data: dataRoww,
+                    "pageLength": 100,
+                    dom: "rtp",
+                    "bDestroy": true,
+                    "bStateSave": true,
+                    //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                    "orderCellsTop": true,
+                    "language": {
+                        "sProcessing": "Traitement en cours...",
+                        "sSearch": "Rechercher&nbsp;:",
+                        "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                        "sInfo": "<span class='Total'>Total </span><span class='TotalNumber'>_MAX_ &eacute;l&eacute;ment(s)</span>",
+                        "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                        "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                        "sInfoPostFix": "",
+                        "sLoadingRecords": "Chargement en cours...",
+                        "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                        "sEmptyTable": "Aucune donn&eacute;e",
+                        "oPaginate": {
+                            "sFirst": "Premier",
+                            "sPrevious": "Pr&eacute;c&eacute;dent",
+                            "sNext": "Suivant",
+                            "sLast": "Dernier"
+                        },
+                        "oAria": {
+                            "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                            "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                        },
+                    },
+                    "columns": [
+                            { "sClass": "", "sTitle": "Id_AssoActionUtilisateur", "mData": "Id_AssoActionUtilisateur", "sDefaultContent": "-", "bVisible": true },
+                            { "sClass": "", "sTitle": "Type", "mData": "Type", "sDefaultContent": "-", "bVisible": true },
+                            { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                            { "sClass": "", "sTitle": "Id_Action", "mData": "Id_Action", "sDefaultContent": "-", "bVisible": true },
+                            { "sClass": "", "sTitle": "Id_Utilisateur", "mData": "Id_Utilisateur", "sDefaultContent": "-", "bVisible": true },
+                                            { "sClass": "", className: "ActionCell CenterAlignCol", "sTitle": "Actions", "mData": function (source, type, val) {
+                        var html = `
+                            <span class="fa-stack PictoContainer SquareBtn Blue" data-toggle="tooltip" data-placement="left" title="" data-original-title="Modifier">
+                                <i class="fa fa-square fa-stack-2x Wrap"></i>
+                                <i class ="fa fa-pencil fa-stack-1x Content btnDatatableEdit" onclick= "modify(` + source["Id_AssoActionUtilisateur"] + `)" ></i>
+                            </span>
+                            <span class="fa-stack PictoContainer" data-toggle="tooltip" data-placement="left" title="" data-original-title="Supprimer">
+                                <i class="fa fa-square fa-stack-2x Wrap"></i>
+                                <i class ="fa fa-trash fa-stack-1x Content btnDatatableSuprr" onclick="deleteObj(this)"></i>
+                            </span>`;
+                        return html;
+                    }, "bVisible": true },
+                    //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                    //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a>"; }, "bVisible": true, "sWidth": "10%" },
+                ],
+                "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                    return nRow;
+                },
+                "initComplete": function (settings) {
+                    // Search custom input
+                    oTable = $('#ViewDatas-table').DataTable();
+                    $('#customFilterInput').keyup(function () {
+                        oTable.search($(this).val()).draw();
+                    })
+                    //Add search field placeholder
+                    $('#ViewDatas-table' + "_filter input").attr("placeholder", "Rechercher...");
+                    $("#ViewDatas-table").DataTable().columns.adjust().draw()
+                    // Add search icon
+                    $('#tab' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                    $('#tab' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                    $('#tab' + "_filter input").blur(function () {
+                        ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                    });
+                    // Tooltip initialization
+                    $("[data-toggle=tooltip]").tooltip();
+
+                    if (!isHere) {
+                        $('#ViewDatas-table thead').append('<tr>');
+                        oTable.columns().every(function () {
+                            $('#ViewDatas-table thead tr:last-child').append('<th>');
+                            isHere = true;
+                        });
+                    }
+                    // Ajout d'un champ de recherche pour chaque colonne
+                    $('#ViewDatas-table thead tr:last-child th').each(function (index, value) {
+                        var i = index + 1;
+                        $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                    });
+                    initFilters();
+
+                },
+                "fnStateLoaded": function (oSettings, oData) {
+                    $.each(oData.columns, function (index, value) {
+                        filters.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                    });
+                }
+            });
+
+        // Ajout d'un champ de recherche pour chaque colonne
+        $('#ViewDatas-table tfoot tr th').each(function () {
+            $(this).html('<input type="text" placeholder="Rechercher..." />');
+        });
+
+        listTable.columns().every(function () {
+            var that = this;
+            $('input', this.footer()).on('keyup change', function () {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
+            });
+        });
+    }
+    });
+
+    });

@@ -1,0 +1,37 @@
+﻿@using CRUDGenerator.Database
+@{
+    ViewBag.Title = "CRUDGenerator";
+    Layout = "~/Views/Template.cshtml";
+    ViewBag.css = "~/Content/head/extractDatabase/css";
+    ViewBag.js = "~/Scripts/footer/extractDatabase/js";
+}
+<form id="loadDatabse-form" method="post">
+    <fieldset>
+        <legend>Charger la structure d'une base de données existante</legend>
+        <div class="form-group">
+            <label>Nom du projet</label>
+            <input type="text" class="form-control" name="projectName" />
+        </div>
+        <div class="form-group">
+            <label>Host</label>
+            <input type="text" class="form-control" name="host" />
+        </div>
+        <div class="form-group">
+            <label>Instance</label>
+            <input type="text" class="form-control" name="instance"/>
+        </div>
+        <div class="form-group">
+            <label>Nom de la basse de donnée</label>
+            <input type="text" class="form-control" name="databaseName" />
+        </div>
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control" name="username"/>
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control" name="password"/>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Charger la BDD ou écraser BDD existante" />
+    </fieldset>
+</form>

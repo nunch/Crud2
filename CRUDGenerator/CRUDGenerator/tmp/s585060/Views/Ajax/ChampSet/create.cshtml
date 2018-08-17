@@ -1,0 +1,32 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+}
+
+
+<form method="post" id="insertData-form" action="/ChampSet/create">
+    <fieldset>
+        <legend>Ajouter ChampSet</legend>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">Nom</label>
+                            <input type="text" maxlength="0" id="Nom" name="Nom" class="form-control" required=required  />
+                    <div id="Nom-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir Nom</p>
+                    </div>
+                </div>
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Ajouter</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+    </fieldset>
+
+</form>
+
+
+<script src="/Scripts/Ajax/ChampSet/create.js"></script>

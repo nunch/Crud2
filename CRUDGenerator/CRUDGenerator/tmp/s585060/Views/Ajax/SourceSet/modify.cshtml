@@ -1,0 +1,107 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+SourceSet sourceSet = (SourceSet) ViewBag.sourceSet;
+    
+        bool useChosen_on_fk_fk_SourceSet_0 = true;
+    
+}
+
+
+<form method="post" id="modifyData-form" action="/SourceSet/update">
+    <fieldset>
+        <legend>Modifier SourceSet</legend>
+                <input type="hidden" id="Id_Source" name="Id_Source" value="@sourceSet.Id_Source" />
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">CodeSource</label>
+                            <input type="text" maxlength="0" id="CodeSource" name="CodeSource" class="form-control" required=required  value="@sourceSet.CodeSource" />
+                    <div id="CodeSource-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir CodeSource</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">CodeSite</label>
+                            <input type="text" maxlength="0" id="CodeSite" name="CodeSite" class="form-control" required=required  value="@sourceSet.CodeSite" />
+                    <div id="CodeSite-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir CodeSite</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsSuppr</label>
+                            <input type="number" id="IsSuppr" name="IsSuppr" class="form-control" required=required  value="@sourceSet.IsSuppr" />
+                    <div id="IsSuppr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsSuppr</p>
+                    </div>
+                </div>
+                
+                    @if(useChosen_on_fk_fk_SourceSet_0)
+                    {
+                    <div class="form-group" id="fk-0-div">
+                        <input type="hidden" id="EcartSource_Source_Id_Ecart-object" value="@sourceSet.EcartSource_Source_Id_Ecart" />
+                        <label class="control-label">EcartSource_Source_Id_Ecart</label>
+                        <select data-placeholder="Choisir EcartSource_Source_Id_Ecart" class="chosen-select" id="EcartSource_Source_Id_Ecart" name="EcartSource_Source_Id_Ecart" required=required>
+                            <option disabled selected>Choisir EcartSource_Source_Id_Ecart</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir EcartSource_Source_Id_Ecart</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-0-div" class="form-group">
+                        <label class="control-label">EcartSource_Source_Id_Ecart</label>
+                        <input type="hidden" name="EcartSource_Source_Id_Ecart" id="EcartSource_Source_Id_Ecart" value="@sourceSet.EcartSource_Source_Id_Ecart" required=required />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-0" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-0" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-0" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-0-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-0-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_Ecart</th>
+                                        <th>NumImport</th>
+                                        <th>IsBoxarr</th>
+                                        <th>IsBaan</th>
+                                        <th>IsTIP</th>
+                                        <th>IsSuppr</th>
+                                        <th>Id_Cle</th>
+                                        <th>NumAxe</th>
+                                        <th>LienArticles_Id_LienArticles</th>
+                                        <th>Article_Id_Article</th>
+                                        <th>AssoArticleSource_Id_AssoArticleSource</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir EcartSource_Source_Id_Ecart</p>
+                        </div>
+                    </div>
+                    }
+                
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Modifier</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+
+</fieldset>
+
+</form>
+
+<script src="/Scripts/Ajax/SourceSet/modify.js"></script>

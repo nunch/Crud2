@@ -1,0 +1,160 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+}
+
+
+                
+                    $(function(){
+                        $("#IsSuppr").change(function(){
+                            var attr = $("#IsSuppr").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#IsSuppr").parent();
+                                if($("#IsSuppr").val() == "" || $("#IsSuppr").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#IsSuppr-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#IsSuppr-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#IsSuppr-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Nom").change(function(){
+                            var attr = $("#Nom").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Nom").parent();
+                                if($("#Nom").val() == "" || $("#Nom").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Nom-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Nom-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Nom-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Description").change(function(){
+                            var attr = $("#Description").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Description").parent();
+                                if($("#Description").val() == "" || $("#Description").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Description-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Description-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Description-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+            $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr"
+        });
+
+        $(".datetimepicker").datetimepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr",
+            timeFormat: 'HH:mm'
+        });
+
+        $("#form-submit").click(function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var keep = true;
+            $("#IsSuppr").trigger("change");
+            if($("#IsSuppr").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Id_Entite").trigger("change");
+            if($("#Id_Entite").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Nom").trigger("change");
+            if($("#Nom").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Description").trigger("change");
+            if($("#Description").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            if(keep == false){
+                return;
+            }
+            var dataArray = $("#insertData-form").serializeArray();
+            var dataToSend = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                var name = dataArray[i].name;
+                var value = dataArray[i].value;
+                if(value != "" && value != null){
+                    dataToSend[name] = value;
+                }
+            }
+            $.ajax({
+                url: '/ajax/EntiteSet/create', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    //window.location = "/EntiteSet/list";
+                    if (data["success"] == "true") {
+                        toastr.success("Insertion réussie");
+                        formatEntiteSet(data["entiteSet"]);
+                        listTable.row.add(data["entiteSet"]);
+                        listTable.draw();
+                    }else{
+                        toastr.error("L'insertion a échouée");
+                        console.log(data["errorMessage"]);
+                    }
+                }
+            });
+            $("#modal").modal("hide");
+        })
+    });

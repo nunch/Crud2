@@ -1,0 +1,309 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_0 = true;
+    
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_1 = true;
+    
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_2 = true;
+    
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_3 = true;
+    
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_4 = true;
+    
+}
+
+
+<form method="post" id="insertData-form" action="/AssoCleActionSet/create">
+    <fieldset>
+        <legend>Ajouter AssoCleActionSet</legend>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsSuppr</label>
+                            <input type="number" id="IsSuppr" name="IsSuppr" class="form-control" required=required  />
+                    <div id="IsSuppr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsSuppr</p>
+                    </div>
+                </div>
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_0)
+                    {
+                    <div class="form-group" id="fk-0-div">
+                        <label class="control-label">Id_Action</label>
+                        <select data-placeholder="Choisir Id_Action" class="chosen-select" id="Id_Action" name="Id_Action" required=required>
+                            <option disabled selected>Choisir Id_Action</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Action</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-0-div" class="form-group">
+                        <label class="control-label">Id_Action</label>
+                        <input type="hidden" name="Id_Action" id="Id_Action" required=required />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-0" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-0" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-0" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-0-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-0-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Priorite</th>
+                                        <th>DateCreation</th>
+                                        <th>DateRealisation</th>
+                                        <th>DateModification</th>
+                                        <th>IsSuppr</th>
+                                        <th>Id_Entite</th>
+                                        <th>Etat</th>
+                                        <th>Id_Action</th>
+                                        <th>Titre</th>
+                                        <th>Description</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Action</p>
+                        </div>
+                    </div>
+                    }
+                
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">Id_Cle</label>
+                            <input type="number" id="Id_Cle" name="Id_Cle" class="form-control" required=required  />
+                    <div id="Id_Cle-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir Id_Cle</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">NumAxe</label>
+                            <input type="number" id="NumAxe" name="NumAxe" class="form-control" required=required  />
+                    <div id="NumAxe-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir NumAxe</p>
+                    </div>
+                </div>
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_4)
+                    {
+                    <div class="form-group" id="fk-4-div">
+                        <label class="control-label">LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles</label>
+                        <select data-placeholder="Choisir LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles" class="chosen-select" id="LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles" name="LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles" >
+                            <option disabled selected>Choisir LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-4-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-4-div" class="form-group">
+                        <label class="control-label">LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles</label>
+                        <input type="hidden" name="LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles" id="LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles"  />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-4" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-4" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-4" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-4-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-4-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_LienArticles</th>
+                                        <th>Id_ArticleParent</th>
+                                        <th>Id_ArticleEnfant</th>
+                                        <th>Programme</th>
+                                        <th>IsSuppr</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-4-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles</p>
+                        </div>
+                    </div>
+                    }
+                
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_1)
+                    {
+                    <div class="form-group" id="fk-1-div">
+                        <label class="control-label">AssoCleActionArticle_AssoCleAction_Id_Article</label>
+                        <select data-placeholder="Choisir AssoCleActionArticle_AssoCleAction_Id_Article" class="chosen-select" id="AssoCleActionArticle_AssoCleAction_Id_Article" name="AssoCleActionArticle_AssoCleAction_Id_Article" >
+                            <option disabled selected>Choisir AssoCleActionArticle_AssoCleAction_Id_Article</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-1-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir AssoCleActionArticle_AssoCleAction_Id_Article</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-1-div" class="form-group">
+                        <label class="control-label">AssoCleActionArticle_AssoCleAction_Id_Article</label>
+                        <input type="hidden" name="AssoCleActionArticle_AssoCleAction_Id_Article" id="AssoCleActionArticle_AssoCleAction_Id_Article"  />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-1" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-1" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-1" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-1-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-1-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_Article</th>
+                                        <th>PN</th>
+                                        <th>SIN</th>
+                                        <th>IsSuppr</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-1-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir AssoCleActionArticle_AssoCleAction_Id_Article</p>
+                        </div>
+                    </div>
+                    }
+                
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_2)
+                    {
+                    <div class="form-group" id="fk-2-div">
+                        <label class="control-label">AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource</label>
+                        <select data-placeholder="Choisir AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource" class="chosen-select" id="AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource" name="AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource" >
+                            <option disabled selected>Choisir AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-2-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-2-div" class="form-group">
+                        <label class="control-label">AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource</label>
+                        <input type="hidden" name="AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource" id="AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource"  />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-2" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-2" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-2" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-2-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-2-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_AssoArticleSource</th>
+                                        <th>IsSuppr</th>
+                                        <th>Id_Article</th>
+                                        <th>Id_Source</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-2-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource</p>
+                        </div>
+                    </div>
+                    }
+                
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_3)
+                    {
+                    <div class="form-group" id="fk-3-div">
+                        <label class="control-label">AssoCleActionSource_AssoCleAction_Id_Source</label>
+                        <select data-placeholder="Choisir AssoCleActionSource_AssoCleAction_Id_Source" class="chosen-select" id="AssoCleActionSource_AssoCleAction_Id_Source" name="AssoCleActionSource_AssoCleAction_Id_Source" >
+                            <option disabled selected>Choisir AssoCleActionSource_AssoCleAction_Id_Source</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-3-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir AssoCleActionSource_AssoCleAction_Id_Source</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-3-div" class="form-group">
+                        <label class="control-label">AssoCleActionSource_AssoCleAction_Id_Source</label>
+                        <input type="hidden" name="AssoCleActionSource_AssoCleAction_Id_Source" id="AssoCleActionSource_AssoCleAction_Id_Source"  />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-3" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-3" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-3" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-3-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-3-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_Source</th>
+                                        <th>CodeSource</th>
+                                        <th>CodeSite</th>
+                                        <th>IsSuppr</th>
+                                        <th>EcartSource_Source_Id_Ecart</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-3-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir AssoCleActionSource_AssoCleAction_Id_Source</p>
+                        </div>
+                    </div>
+                    }
+                
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Ajouter</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+    </fieldset>
+
+</form>
+
+
+<script src="/Scripts/Ajax/AssoCleActionSet/create.js"></script>

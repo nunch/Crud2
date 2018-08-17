@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/bundles/AjaxCss")
+    @Scripts.Render("~/bundles/AjaxJs")
+    <style>
+    thead input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+            <a href="/ajax/ActionSet/list">ActionSet</a>
+            <a href="/ajax/ArticleSet/list">ArticleSet</a>
+            <a href="/ajax/AssoActionUtilisateurSet/list">AssoActionUtilisateurSet</a>
+            <a href="/ajax/AssoArticleSourceSet/list">AssoArticleSourceSet</a>
+            <a href="/ajax/AssoCleActionSet/list">AssoCleActionSet</a>
+            <a href="/ajax/ChampSet/list">ChampSet</a>
+            <a href="/ajax/ConditionSet/list">ConditionSet</a>
+            <a href="/ajax/EcartSet/list">EcartSet</a>
+            <a href="/ajax/EntiteSet/list">EntiteSet</a>
+            <a href="/ajax/ErreurSet/list">ErreurSet</a>
+            <a href="/ajax/ExceptionStatutSet/list">ExceptionStatutSet</a>
+            <a href="/ajax/FichierSet/list">FichierSet</a>
+            <a href="/ajax/IgnorerSet/list">IgnorerSet</a>
+            <a href="/ajax/InfoArticleSet/list">InfoArticleSet</a>
+            <a href="/ajax/InfoAssoArticleSourceSet/list">InfoAssoArticleSourceSet</a>
+            <a href="/ajax/InfoLienArticleSet/list">InfoLienArticleSet</a>
+            <a href="/ajax/InfoSourceSet/list">InfoSourceSet</a>
+            <a href="/ajax/LienArticlesSet/list">LienArticlesSet</a>
+            <a href="/ajax/RapportIntegrationSet/list">RapportIntegrationSet</a>
+            <a href="/ajax/SourceSet/list">SourceSet</a>
+            <a href="/ajax/UtilisateurSet/list">UtilisateurSet</a>
+        @RenderBody()
+    </div>
+
+</body>
+</html>

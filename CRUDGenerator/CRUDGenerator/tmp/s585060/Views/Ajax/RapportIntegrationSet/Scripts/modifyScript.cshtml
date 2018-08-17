@@ -1,0 +1,267 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+RapportIntegrationSet rapportIntegrationSet = (RapportIntegrationSet) ViewBag.rapportIntegrationSet;
+}
+
+
+                
+                    $(function(){
+                        $("#Id_RapportIntegration").change(function(){
+                            var attr = $("#Id_RapportIntegration").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Id_RapportIntegration").parent();
+                                if($("#Id_RapportIntegration").val() == "" || $("#Id_RapportIntegration").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Id_RapportIntegration-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Id_RapportIntegration-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Id_RapportIntegration-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#NbFichiers").change(function(){
+                            var attr = $("#NbFichiers").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#NbFichiers").parent();
+                                if($("#NbFichiers").val() == "" || $("#NbFichiers").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#NbFichiers-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#NbFichiers-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#NbFichiers-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#NbTotalSucces").change(function(){
+                            var attr = $("#NbTotalSucces").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#NbTotalSucces").parent();
+                                if($("#NbTotalSucces").val() == "" || $("#NbTotalSucces").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#NbTotalSucces-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#NbTotalSucces-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#NbTotalSucces-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#NbTotalErreur").change(function(){
+                            var attr = $("#NbTotalErreur").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#NbTotalErreur").parent();
+                                if($("#NbTotalErreur").val() == "" || $("#NbTotalErreur").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#NbTotalErreur-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#NbTotalErreur-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#NbTotalErreur-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#DateImport").change(function(){
+                            var attr = $("#DateImport").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#DateImport").parent();
+                                if($("#DateImport").val() == "" || $("#DateImport").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#DateImport-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#DateImport-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#DateImport-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#IsSuppr").change(function(){
+                            var attr = $("#IsSuppr").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#IsSuppr").parent();
+                                if($("#IsSuppr").val() == "" || $("#IsSuppr").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#IsSuppr-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#IsSuppr-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#IsSuppr-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+        
+
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr"
+        });
+
+        $(".datetimepicker").datetimepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr",
+            timeFormat: 'HH:mm'
+        });
+
+        $("#form-submit").click(function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var keep = true;
+            $("#Id_RapportIntegration").trigger("change");
+            if($("#Id_RapportIntegration").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#NbFichiers").trigger("change");
+            if($("#NbFichiers").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#NbTotalSucces").trigger("change");
+            if($("#NbTotalSucces").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#NbTotalErreur").trigger("change");
+            if($("#NbTotalErreur").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#DateImport").trigger("change");
+            if($("#DateImport").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#IsSuppr").trigger("change");
+            if($("#IsSuppr").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            if(keep == false){
+                return;
+            }
+            var dataArray = $("#modifyData-form").serializeArray();
+            var dataToSend = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                var name = dataArray[i].name;
+                var value = dataArray[i].value;
+                if(value != "" && value != null){
+                    dataToSend[name] = value;
+                }
+            }
+            $.ajax({
+                url: '/RapportIntegrationSet/update', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    //window.location = "/ajax/RapportIntegrationSet/list";
+                    if (data["success"] == "true") {
+                        toastr.success("Modification réussie");
+                        formatRapportIntegrationSet(data["rapportIntegrationSet"]);
+                        var tableData = listTable.rows()[0];
+                        var index = -1;
+                        for (var i = 0; i < tableData.length && index == -1 ; i++) {
+                            var dataTmp = listTable.row(tableData[i]).data();
+                            if (dataTmp["Id_RapportIntegration"] == data["rapportIntegrationSet"]["Id_RapportIntegration"]) {
+                                index = tableData[i];
+                            }
+                        }
+                        listTable.row(index).remove();
+                        listTable.row.add(data["rapportIntegrationSet"]);
+                        listTable.draw();
+                    }else{
+                        toastr.error("La modification a échouée");
+                        console.log(data["errorMessage"]);
+                    }
+                }
+            });
+            $("#modal").modal("hide");
+        })
+    });

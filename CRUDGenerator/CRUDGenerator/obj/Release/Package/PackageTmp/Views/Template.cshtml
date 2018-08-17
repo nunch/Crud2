@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @{ Html.RenderPartial("~/Views/Shared/inc/head.cshtml"); }
+</head>
+<body>
+    <div class="page-container">
+        @{ Html.RenderPartial("~/Views/Shared/inc/navbar.cshtml"); }
+
+		<div class="container-fluid row" style="margin-right: 0px;">
+		    <div class="col-sm-3 row row-offcanvas row-offcanvas-left">
+        		@{ Html.RenderPartial("~/Views/Shared/inc/sidebar.cshtml"); }
+		    </div>
+		    <div class="col-sm-9" id="page-body">
+		    @RenderBody()
+		    </div>
+		</div>        
+        @{ Html.RenderPartial("~/Views/Shared/inc/addTableModal.cshtml"); }
+    </div>
+        @{ Html.RenderPartial("~/Views/Shared/inc/footer.cshtml"); }
+</body>
+</html>

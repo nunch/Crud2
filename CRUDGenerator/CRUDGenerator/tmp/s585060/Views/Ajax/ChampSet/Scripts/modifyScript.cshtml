@@ -1,0 +1,135 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+ChampSet champSet = (ChampSet) ViewBag.champSet;
+}
+
+
+                
+                    $(function(){
+                        $("#Id_Champ").change(function(){
+                            var attr = $("#Id_Champ").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Id_Champ").parent();
+                                if($("#Id_Champ").val() == "" || $("#Id_Champ").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Id_Champ-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Id_Champ-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Id_Champ-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Nom").change(function(){
+                            var attr = $("#Nom").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Nom").parent();
+                                if($("#Nom").val() == "" || $("#Nom").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Nom-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Nom-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Nom-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+        
+
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr"
+        });
+
+        $(".datetimepicker").datetimepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr",
+            timeFormat: 'HH:mm'
+        });
+
+        $("#form-submit").click(function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var keep = true;
+            $("#Id_Champ").trigger("change");
+            if($("#Id_Champ").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Nom").trigger("change");
+            if($("#Nom").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            if(keep == false){
+                return;
+            }
+            var dataArray = $("#modifyData-form").serializeArray();
+            var dataToSend = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                var name = dataArray[i].name;
+                var value = dataArray[i].value;
+                if(value != "" && value != null){
+                    dataToSend[name] = value;
+                }
+            }
+            $.ajax({
+                url: '/ChampSet/update', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    //window.location = "/ajax/ChampSet/list";
+                    if (data["success"] == "true") {
+                        toastr.success("Modification réussie");
+                        formatChampSet(data["champSet"]);
+                        var tableData = listTable.rows()[0];
+                        var index = -1;
+                        for (var i = 0; i < tableData.length && index == -1 ; i++) {
+                            var dataTmp = listTable.row(tableData[i]).data();
+                            if (dataTmp["Id_Champ"] == data["champSet"]["Id_Champ"]) {
+                                index = tableData[i];
+                            }
+                        }
+                        listTable.row(index).remove();
+                        listTable.row.add(data["champSet"]);
+                        listTable.draw();
+                    }else{
+                        toastr.error("La modification a échouée");
+                        console.log(data["errorMessage"]);
+                    }
+                }
+            });
+            $("#modal").modal("hide");
+        })
+    });

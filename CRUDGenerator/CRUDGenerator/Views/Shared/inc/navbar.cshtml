@@ -1,0 +1,37 @@
+﻿@using CRUDGenerator.Controllers;
+@{
+    User user = (User)Session["user"];
+}
+<nav class="navbar navbar-default" role="navigation" id="navbar">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle  collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand">
+                <img alt="Brand" src="~/Images/Snecma.png" width="100">
+            </a>
+            <p style="border:1px;" class="navbar-text navbar-app-name">CRUD Generator</p>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li id="addDatabase"><a href="/addDatabase">Ajouter une BDD</a></li>
+                <li id="removeDatabase"><a href="/removeDatabase">Effacer une BDD</a></li>
+                <li id="extractDatabase"><a href="/extractDatabase">Extraire une BDD</a></li>
+                <!--<li id="verifyDatabase"><a href="/verifyDatabase">Vérifier une BDD</a></li>-->
+                <li id="loadDatabase"><a href="/loadDatabase">Charger une BDD</a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;@user.FirstName @user.LastName</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

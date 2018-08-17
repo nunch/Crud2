@@ -1,0 +1,13 @@
+
+
+                routes.MapRoute(
+                    name: "Ajax",
+                    url: "ajax/{controller}/{action}",
+                    namespaces: new string[] { "PerennisationSPI.Controllers.Ajax" }
+                );
+
+                routes.MapRoute(
+                    name: "Ajax2",
+                    url: "{controller}/{action}",
+                namespaces: new string[] { "PerennisationSPI.Controllers.Ajax" }
+                );

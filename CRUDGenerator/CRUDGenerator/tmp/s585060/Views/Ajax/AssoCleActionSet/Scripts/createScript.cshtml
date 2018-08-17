@@ -1,0 +1,1449 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_0 = true;
+    
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_1 = true;
+    
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_2 = true;
+    
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_3 = true;
+    
+    
+        bool useChosen_on_fk_fk_AssoCleActionSet_4 = true;
+    
+}
+
+
+                
+                    $(function(){
+                        $("#IsSuppr").change(function(){
+                            var attr = $("#IsSuppr").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#IsSuppr").parent();
+                                if($("#IsSuppr").val() == "" || $("#IsSuppr").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#IsSuppr-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#IsSuppr-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#IsSuppr-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_0)
+                    {
+                            $(function(){
+                                var attr = $("#Id_Action").attr("required");
+                                if (typeof attr !== typeof undefined && attr !== false) {
+                                    $("#Id_Action").change(function(){
+                                        var parent = $("#Id_Action").parent();
+                                        if($("#Id_Action").val() == "" || $("#Id_Action").val() == null){
+                                            $(parent).addClass("has-error");
+                                            $("#fk-0-div-collapse-div").collapse("show");
+                                            if($(parent).hasClass("has-success")){
+                                                $(parent).removeClass("has-success");
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-0-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+                                }
+                                $.ajax({
+                                    url: '/ajax/ActionSet/findAll', // La ressource cibl&eacute;e
+                                    type: 'POST', // Le type de la requête HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        for (var i = 0; i < data.length; i++) {
+                                                                                            //data[i]["Priorite"]
+                                                //data[i]["DateCreation"]
+                                                //data[i]["DateRealisation"]
+                                                //data[i]["DateModification"]
+                                                //data[i]["IsSuppr"]
+                                                //data[i]["Id_Entite"]
+                                                //data[i]["Etat"]
+                                                //data[i]["Id_Action"]
+                                                //data[i]["Titre"]
+                                                //data[i]["Description"]
+                                            $("#Id_Action").append("<option value='" + data[i].Id_Action + "'>" + data[i].Id_Action + "</option>");
+                                        }
+                                        $("#Id_Action").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                    }
+                                });
+                            })
+                    }else
+                    {
+                    
+                            var fk_0_table = null;
+                            var isHere_fk_0 = false;
+                            var filters_fk_0 = [];
+
+                            function reinitFilters_fk_0() {
+                                $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                    $(this).val('').removeClass('colorFilter');
+                                });
+                                $('#fk-0-table tfoot tr th input').each(function (index, value) {
+                                    $(this).val('');
+                                });
+                                $('#customFilterInput-fk-0').val('');
+                                fk_0_table.search('').columns().search('').draw();
+                            }
+                            function initFilters_fk_0() {
+                                $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                    var i = index;
+                                    if (index < 11) {
+                                        i += 3;
+                                        $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                    }
+                                    else {
+                                        $(this).val('');
+                                    }
+                                });
+                            }
+                            function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                if (obj.value != "") {
+                                    $(obj).addClass("colorFilter");
+
+                                } else {
+                                    $(obj).removeClass("colorFilter");
+                                }
+                            }
+                        $(function(){
+                            $("#form-cancel").click(function(){
+                                $("#modal").modal("hide");
+                            });
+                            $("#btnResetFilters-fk-0").click(function(event){
+                                event.preventDefault();
+                                reinitFilters_fk_0();
+                            })
+                                    $("#Id_Action").change(function(){
+                                        var parent = $("#Id_Action").parent();
+                                        var attr = $("#Id_Action").attr("required");
+                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                            if($("#Id_Action").val() == "" || $("#Id_Action").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-0-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-0-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-0-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+
+                                $.ajax({
+                                    url: '/ajax/ActionSet/findAll', // La ressource cibl&eacute;e
+                                    type: &#39;POST&#39;, // Le type de la requ&#234;te HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                            // data[i].Priorite
+                                            // data[i].DateCreation
+                                            // data[i].DateRealisation
+                                            // data[i].DateModification
+                                            // data[i].IsSuppr
+                                            // data[i].Id_Entite
+                                            // data[i].Etat
+                                            // data[i].Id_Action
+                                            // data[i].Titre
+                                            // data[i].Description
+
+                                        fk_0_table = $('#fk-0-table').DataTable({
+                                            data: data,
+                                            "pageLength": 100,
+                                            dom: "rtp",
+                                            "bDestroy": true,
+                                            "bStateSave": true,
+                                            //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                            "orderCellsTop": true,
+                                            "language": {
+                                                "sProcessing": "Traitement en cours...",
+                                                "sSearch": "Rechercher&nbsp;:",
+                                                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                "sInfoPostFix": "",
+                                                "sLoadingRecords": "Chargement en cours...",
+                                                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                "oPaginate": {
+                                                    "sFirst": "Premier",
+                                                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                    "sNext": "Suivant",
+                                                    "sLast": "Dernier"
+                                                },
+                                                "oAria": {
+                                                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                },
+                                            },
+                                            "columns": [
+                                                    { "sClass": "", "sTitle": "Priorite", "mData": "Priorite", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "DateCreation", "mData": "DateCreation", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "DateRealisation", "mData": "DateRealisation", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "DateModification", "mData": "DateModification", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Id_Entite", "mData": "Id_Entite", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Etat", "mData": "Etat", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Id_Action", "mData": "Id_Action", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Titre", "mData": "Titre", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Description", "mData": "Description", "sDefaultContent": "-", "bVisible": true },
+                                                //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a>"; }, "bVisible": true, "sWidth": "10%" },
+                                            ],
+                                            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                            },
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                return nRow;
+                                            },
+                                            "initComplete": function (settings) {
+                                                // Search custom input
+                                                oTable_fk_@(indexOfFK) = $('#fk-0-table').DataTable();
+                                                $('#customFilterInput-fk-0').keyup(function () {
+                                                    oTable_fk_0.search($(this).val()).draw();
+                                                })
+                                                //Add search field placeholder
+                                                $('#fk-@indexOfFK-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                $("#fk-0-table").DataTable().columns.adjust().draw()
+                                                // Add search icon
+                                                $('#fk-@indexOfFK-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                $('#fk-0-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                $('#fk-0-table' + "_filter input").blur(function () {
+                                                    ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                });
+                                                // Tooltip initialization
+                                                $(&quot;[data-toggle=tooltip]&quot;).tooltip();
+
+                                                if (!isHere_fk_0) {
+                                                    $('#fk-0-table thead').append('<tr>');
+                                                    oTable_fk_0.columns().every(function () {
+                                                        $('#fk-0-table thead tr:last-child').append('<th>');
+                                                        isHere_fk_0 = true;
+                                                    });
+                                                }
+                                                // Ajout d'un champ de recherche pour chaque colonne
+                                                $('#fk-@indexOfFK-table thead tr:last-child th').each(function (index, value) {
+                                                    var i = index + 1;
+                                                    $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_0(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                });
+                                                initFilters_fk_0();
+
+                                            },
+                                            "fnStateLoaded": function (oSettings, oData) {
+                                                $.each(oData.columns, function (index, value) {
+                                                    filters_fk_0.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                });
+                                            }
+                                        });
+
+                                        // Ajout d'un champ de recherche pour chaque colonne
+                                        $('#fk-@indexOfFK-table tfoot tr th').each(function () {
+                                            $(this).html(&#39;<input type="text" placeholder="Rechercher..." />');
+                                        });
+
+                                        fk_0_table.columns().every(function () {
+                                            var that = this;
+                                            $('input', this.footer()).on('keyup change', function () {
+                                                if (that.search() !== this.value) {
+                                                    that
+                                                        .search(this.value)
+                                                        .draw();
+                                                }
+                                            });
+                                        });
+
+
+
+                                        $('#fk-0-table tbody').on('click', 'tr', function () {
+                                            if ($(this).hasClass('selected')) {
+                                                $(this).removeClass('selected');
+                                                $("#Id_Action").val("");
+                                                $("#Id_Action").trigger("change");
+                                            }
+                                            else {
+                                                fk_0_table.$('tr.selected').removeClass('selected');
+                                                $(this).addClass('selected');
+                                                var datatmp = fk_0_table.row(this).data();
+                                                $("#Id_Action").val(""+datatmp["Id_Action"]);
+                                                $("#Id_Action").trigger("change");
+                                            }
+                                        });
+
+                                    }
+                                });
+                            })
+                    }
+                
+                
+                    $(function(){
+                        $("#Id_Cle").change(function(){
+                            var attr = $("#Id_Cle").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Id_Cle").parent();
+                                if($("#Id_Cle").val() == "" || $("#Id_Cle").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Id_Cle-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Id_Cle-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Id_Cle-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#NumAxe").change(function(){
+                            var attr = $("#NumAxe").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#NumAxe").parent();
+                                if($("#NumAxe").val() == "" || $("#NumAxe").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#NumAxe-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#NumAxe-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#NumAxe-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_4)
+                    {
+                            $(function(){
+                                var attr = $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").attr("required");
+                                if (typeof attr !== typeof undefined && attr !== false) {
+                                    $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").change(function(){
+                                        var parent = $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").parent();
+                                        if($("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").val() == "" || $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").val() == null){
+                                            $(parent).addClass("has-error");
+                                            $("#fk-4-div-collapse-div").collapse("show");
+                                            if($(parent).hasClass("has-success")){
+                                                $(parent).removeClass("has-success");
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-4-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+                                }
+                                $.ajax({
+                                    url: '/ajax/LienArticlesSet/findAll', // La ressource cibl&eacute;e
+                                    type: 'POST', // Le type de la requête HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        for (var i = 0; i < data.length; i++) {
+                                                                                            //data[i]["Id_LienArticles"]
+                                                //data[i]["Id_ArticleParent"]
+                                                //data[i]["Id_ArticleEnfant"]
+                                                //data[i]["Programme"]
+                                                //data[i]["IsSuppr"]
+                                            $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").append("<option value='" + data[i].Id_LienArticles + "'>" + data[i].Id_LienArticles + "</option>");
+                                        }
+                                        $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                    }
+                                });
+                            })
+                    }else
+                    {
+                    
+                            var fk_4_table = null;
+                            var isHere_fk_4 = false;
+                            var filters_fk_4 = [];
+
+                            function reinitFilters_fk_4() {
+                                $('#fk-4-table thead tr:last-child th input').each(function (index, value) {
+                                    $(this).val('').removeClass('colorFilter');
+                                });
+                                $('#fk-4-table tfoot tr th input').each(function (index, value) {
+                                    $(this).val('');
+                                });
+                                $('#customFilterInput-fk-4').val('');
+                                fk_4_table.search('').columns().search('').draw();
+                            }
+                            function initFilters_fk_4() {
+                                $('#fk-4-table thead tr:last-child th input').each(function (index, value) {
+                                    var i = index;
+                                    if (index < 11) {
+                                        i += 3;
+                                        $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                    }
+                                    else {
+                                        $(this).val('');
+                                    }
+                                });
+                            }
+                            function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                if (obj.value != "") {
+                                    $(obj).addClass("colorFilter");
+
+                                } else {
+                                    $(obj).removeClass("colorFilter");
+                                }
+                            }
+                        $(function(){
+                            $("#form-cancel").click(function(){
+                                $("#modal").modal("hide");
+                            });
+                            $("#btnResetFilters-fk-4").click(function(event){
+                                event.preventDefault();
+                                reinitFilters_fk_4();
+                            })
+                                    $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").change(function(){
+                                        var parent = $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").parent();
+                                        var attr = $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").attr("required");
+                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                            if($("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").val() == "" || $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-4-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-4-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-4-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+
+                                $.ajax({
+                                    url: '/ajax/LienArticlesSet/findAll', // La ressource cibl&eacute;e
+                                    type: &#39;POST&#39;, // Le type de la requ&#234;te HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                            // data[i].Id_LienArticles
+                                            // data[i].Id_ArticleParent
+                                            // data[i].Id_ArticleEnfant
+                                            // data[i].Programme
+                                            // data[i].IsSuppr
+
+                                        fk_4_table = $('#fk-4-table').DataTable({
+                                            data: data,
+                                            "pageLength": 100,
+                                            dom: "rtp",
+                                            "bDestroy": true,
+                                            "bStateSave": true,
+                                            //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                            "orderCellsTop": true,
+                                            "language": {
+                                                "sProcessing": "Traitement en cours...",
+                                                "sSearch": "Rechercher&nbsp;:",
+                                                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                "sInfoPostFix": "",
+                                                "sLoadingRecords": "Chargement en cours...",
+                                                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                "oPaginate": {
+                                                    "sFirst": "Premier",
+                                                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                    "sNext": "Suivant",
+                                                    "sLast": "Dernier"
+                                                },
+                                                "oAria": {
+                                                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                },
+                                            },
+                                            "columns": [
+                                                    { "sClass": "", "sTitle": "Id_LienArticles", "mData": "Id_LienArticles", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Id_ArticleParent", "mData": "Id_ArticleParent", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Id_ArticleEnfant", "mData": "Id_ArticleEnfant", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Programme", "mData": "Programme", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a>"; }, "bVisible": true, "sWidth": "10%" },
+                                            ],
+                                            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                            },
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                return nRow;
+                                            },
+                                            "initComplete": function (settings) {
+                                                // Search custom input
+                                                oTable_fk_@(indexOfFK) = $('#fk-4-table').DataTable();
+                                                $('#customFilterInput-fk-4').keyup(function () {
+                                                    oTable_fk_4.search($(this).val()).draw();
+                                                })
+                                                //Add search field placeholder
+                                                $('#fk-@indexOfFK-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                $("#fk-4-table").DataTable().columns.adjust().draw()
+                                                // Add search icon
+                                                $('#fk-@indexOfFK-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                $('#fk-4-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                $('#fk-4-table' + "_filter input").blur(function () {
+                                                    ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                });
+                                                // Tooltip initialization
+                                                $(&quot;[data-toggle=tooltip]&quot;).tooltip();
+
+                                                if (!isHere_fk_4) {
+                                                    $('#fk-4-table thead').append('<tr>');
+                                                    oTable_fk_4.columns().every(function () {
+                                                        $('#fk-4-table thead tr:last-child').append('<th>');
+                                                        isHere_fk_4 = true;
+                                                    });
+                                                }
+                                                // Ajout d'un champ de recherche pour chaque colonne
+                                                $('#fk-@indexOfFK-table thead tr:last-child th').each(function (index, value) {
+                                                    var i = index + 1;
+                                                    $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_4(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                });
+                                                initFilters_fk_4();
+
+                                            },
+                                            "fnStateLoaded": function (oSettings, oData) {
+                                                $.each(oData.columns, function (index, value) {
+                                                    filters_fk_4.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                });
+                                            }
+                                        });
+
+                                        // Ajout d'un champ de recherche pour chaque colonne
+                                        $('#fk-@indexOfFK-table tfoot tr th').each(function () {
+                                            $(this).html(&#39;<input type="text" placeholder="Rechercher..." />');
+                                        });
+
+                                        fk_4_table.columns().every(function () {
+                                            var that = this;
+                                            $('input', this.footer()).on('keyup change', function () {
+                                                if (that.search() !== this.value) {
+                                                    that
+                                                        .search(this.value)
+                                                        .draw();
+                                                }
+                                            });
+                                        });
+
+
+
+                                        $('#fk-4-table tbody').on('click', 'tr', function () {
+                                            if ($(this).hasClass('selected')) {
+                                                $(this).removeClass('selected');
+                                                $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").val("");
+                                                $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").trigger("change");
+                                            }
+                                            else {
+                                                fk_4_table.$('tr.selected').removeClass('selected');
+                                                $(this).addClass('selected');
+                                                var datatmp = fk_4_table.row(this).data();
+                                                $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").val(""+datatmp["Id_LienArticles"]);
+                                                $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").trigger("change");
+                                            }
+                                        });
+
+                                    }
+                                });
+                            })
+                    }
+                
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_1)
+                    {
+                            $(function(){
+                                var attr = $("#AssoCleActionArticle_AssoCleAction_Id_Article").attr("required");
+                                if (typeof attr !== typeof undefined && attr !== false) {
+                                    $("#AssoCleActionArticle_AssoCleAction_Id_Article").change(function(){
+                                        var parent = $("#AssoCleActionArticle_AssoCleAction_Id_Article").parent();
+                                        if($("#AssoCleActionArticle_AssoCleAction_Id_Article").val() == "" || $("#AssoCleActionArticle_AssoCleAction_Id_Article").val() == null){
+                                            $(parent).addClass("has-error");
+                                            $("#fk-1-div-collapse-div").collapse("show");
+                                            if($(parent).hasClass("has-success")){
+                                                $(parent).removeClass("has-success");
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-1-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+                                }
+                                $.ajax({
+                                    url: '/ajax/ArticleSet/findAll', // La ressource cibl&eacute;e
+                                    type: 'POST', // Le type de la requête HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        for (var i = 0; i < data.length; i++) {
+                                                                                            //data[i]["Id_Article"]
+                                                //data[i]["PN"]
+                                                //data[i]["SIN"]
+                                                //data[i]["IsSuppr"]
+                                            $("#AssoCleActionArticle_AssoCleAction_Id_Article").append("<option value='" + data[i].Id_Article + "'>" + data[i].Id_Article + "</option>");
+                                        }
+                                        $("#AssoCleActionArticle_AssoCleAction_Id_Article").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                    }
+                                });
+                            })
+                    }else
+                    {
+                    
+                            var fk_1_table = null;
+                            var isHere_fk_1 = false;
+                            var filters_fk_1 = [];
+
+                            function reinitFilters_fk_1() {
+                                $('#fk-1-table thead tr:last-child th input').each(function (index, value) {
+                                    $(this).val('').removeClass('colorFilter');
+                                });
+                                $('#fk-1-table tfoot tr th input').each(function (index, value) {
+                                    $(this).val('');
+                                });
+                                $('#customFilterInput-fk-1').val('');
+                                fk_1_table.search('').columns().search('').draw();
+                            }
+                            function initFilters_fk_1() {
+                                $('#fk-1-table thead tr:last-child th input').each(function (index, value) {
+                                    var i = index;
+                                    if (index < 11) {
+                                        i += 3;
+                                        $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                    }
+                                    else {
+                                        $(this).val('');
+                                    }
+                                });
+                            }
+                            function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                if (obj.value != "") {
+                                    $(obj).addClass("colorFilter");
+
+                                } else {
+                                    $(obj).removeClass("colorFilter");
+                                }
+                            }
+                        $(function(){
+                            $("#form-cancel").click(function(){
+                                $("#modal").modal("hide");
+                            });
+                            $("#btnResetFilters-fk-1").click(function(event){
+                                event.preventDefault();
+                                reinitFilters_fk_1();
+                            })
+                                    $("#AssoCleActionArticle_AssoCleAction_Id_Article").change(function(){
+                                        var parent = $("#AssoCleActionArticle_AssoCleAction_Id_Article").parent();
+                                        var attr = $("#AssoCleActionArticle_AssoCleAction_Id_Article").attr("required");
+                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                            if($("#AssoCleActionArticle_AssoCleAction_Id_Article").val() == "" || $("#AssoCleActionArticle_AssoCleAction_Id_Article").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-1-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-1-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-1-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+
+                                $.ajax({
+                                    url: '/ajax/ArticleSet/findAll', // La ressource cibl&eacute;e
+                                    type: &#39;POST&#39;, // Le type de la requ&#234;te HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                            // data[i].Id_Article
+                                            // data[i].PN
+                                            // data[i].SIN
+                                            // data[i].IsSuppr
+
+                                        fk_1_table = $('#fk-1-table').DataTable({
+                                            data: data,
+                                            "pageLength": 100,
+                                            dom: "rtp",
+                                            "bDestroy": true,
+                                            "bStateSave": true,
+                                            //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                            "orderCellsTop": true,
+                                            "language": {
+                                                "sProcessing": "Traitement en cours...",
+                                                "sSearch": "Rechercher&nbsp;:",
+                                                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                "sInfoPostFix": "",
+                                                "sLoadingRecords": "Chargement en cours...",
+                                                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                "oPaginate": {
+                                                    "sFirst": "Premier",
+                                                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                    "sNext": "Suivant",
+                                                    "sLast": "Dernier"
+                                                },
+                                                "oAria": {
+                                                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                },
+                                            },
+                                            "columns": [
+                                                    { "sClass": "", "sTitle": "Id_Article", "mData": "Id_Article", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "PN", "mData": "PN", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "SIN", "mData": "SIN", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a>"; }, "bVisible": true, "sWidth": "10%" },
+                                            ],
+                                            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                            },
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                return nRow;
+                                            },
+                                            "initComplete": function (settings) {
+                                                // Search custom input
+                                                oTable_fk_@(indexOfFK) = $('#fk-1-table').DataTable();
+                                                $('#customFilterInput-fk-1').keyup(function () {
+                                                    oTable_fk_1.search($(this).val()).draw();
+                                                })
+                                                //Add search field placeholder
+                                                $('#fk-@indexOfFK-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                $("#fk-1-table").DataTable().columns.adjust().draw()
+                                                // Add search icon
+                                                $('#fk-@indexOfFK-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                $('#fk-1-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                $('#fk-1-table' + "_filter input").blur(function () {
+                                                    ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                });
+                                                // Tooltip initialization
+                                                $(&quot;[data-toggle=tooltip]&quot;).tooltip();
+
+                                                if (!isHere_fk_1) {
+                                                    $('#fk-1-table thead').append('<tr>');
+                                                    oTable_fk_1.columns().every(function () {
+                                                        $('#fk-1-table thead tr:last-child').append('<th>');
+                                                        isHere_fk_1 = true;
+                                                    });
+                                                }
+                                                // Ajout d'un champ de recherche pour chaque colonne
+                                                $('#fk-@indexOfFK-table thead tr:last-child th').each(function (index, value) {
+                                                    var i = index + 1;
+                                                    $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_1(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                });
+                                                initFilters_fk_1();
+
+                                            },
+                                            "fnStateLoaded": function (oSettings, oData) {
+                                                $.each(oData.columns, function (index, value) {
+                                                    filters_fk_1.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                });
+                                            }
+                                        });
+
+                                        // Ajout d'un champ de recherche pour chaque colonne
+                                        $('#fk-@indexOfFK-table tfoot tr th').each(function () {
+                                            $(this).html(&#39;<input type="text" placeholder="Rechercher..." />');
+                                        });
+
+                                        fk_1_table.columns().every(function () {
+                                            var that = this;
+                                            $('input', this.footer()).on('keyup change', function () {
+                                                if (that.search() !== this.value) {
+                                                    that
+                                                        .search(this.value)
+                                                        .draw();
+                                                }
+                                            });
+                                        });
+
+
+
+                                        $('#fk-1-table tbody').on('click', 'tr', function () {
+                                            if ($(this).hasClass('selected')) {
+                                                $(this).removeClass('selected');
+                                                $("#AssoCleActionArticle_AssoCleAction_Id_Article").val("");
+                                                $("#AssoCleActionArticle_AssoCleAction_Id_Article").trigger("change");
+                                            }
+                                            else {
+                                                fk_1_table.$('tr.selected').removeClass('selected');
+                                                $(this).addClass('selected');
+                                                var datatmp = fk_1_table.row(this).data();
+                                                $("#AssoCleActionArticle_AssoCleAction_Id_Article").val(""+datatmp["Id_Article"]);
+                                                $("#AssoCleActionArticle_AssoCleAction_Id_Article").trigger("change");
+                                            }
+                                        });
+
+                                    }
+                                });
+                            })
+                    }
+                
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_2)
+                    {
+                            $(function(){
+                                var attr = $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").attr("required");
+                                if (typeof attr !== typeof undefined && attr !== false) {
+                                    $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").change(function(){
+                                        var parent = $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").parent();
+                                        if($("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").val() == "" || $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").val() == null){
+                                            $(parent).addClass("has-error");
+                                            $("#fk-2-div-collapse-div").collapse("show");
+                                            if($(parent).hasClass("has-success")){
+                                                $(parent).removeClass("has-success");
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-2-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+                                }
+                                $.ajax({
+                                    url: '/ajax/AssoArticleSourceSet/findAll', // La ressource cibl&eacute;e
+                                    type: 'POST', // Le type de la requête HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        for (var i = 0; i < data.length; i++) {
+                                                                                            //data[i]["Id_AssoArticleSource"]
+                                                //data[i]["IsSuppr"]
+                                                //data[i]["Id_Article"]
+                                                //data[i]["Id_Source"]
+                                            $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").append("<option value='" + data[i].Id_AssoArticleSource + "'>" + data[i].Id_AssoArticleSource + "</option>");
+                                        }
+                                        $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                    }
+                                });
+                            })
+                    }else
+                    {
+                    
+                            var fk_2_table = null;
+                            var isHere_fk_2 = false;
+                            var filters_fk_2 = [];
+
+                            function reinitFilters_fk_2() {
+                                $('#fk-2-table thead tr:last-child th input').each(function (index, value) {
+                                    $(this).val('').removeClass('colorFilter');
+                                });
+                                $('#fk-2-table tfoot tr th input').each(function (index, value) {
+                                    $(this).val('');
+                                });
+                                $('#customFilterInput-fk-2').val('');
+                                fk_2_table.search('').columns().search('').draw();
+                            }
+                            function initFilters_fk_2() {
+                                $('#fk-2-table thead tr:last-child th input').each(function (index, value) {
+                                    var i = index;
+                                    if (index < 11) {
+                                        i += 3;
+                                        $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                    }
+                                    else {
+                                        $(this).val('');
+                                    }
+                                });
+                            }
+                            function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                if (obj.value != "") {
+                                    $(obj).addClass("colorFilter");
+
+                                } else {
+                                    $(obj).removeClass("colorFilter");
+                                }
+                            }
+                        $(function(){
+                            $("#form-cancel").click(function(){
+                                $("#modal").modal("hide");
+                            });
+                            $("#btnResetFilters-fk-2").click(function(event){
+                                event.preventDefault();
+                                reinitFilters_fk_2();
+                            })
+                                    $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").change(function(){
+                                        var parent = $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").parent();
+                                        var attr = $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").attr("required");
+                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                            if($("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").val() == "" || $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-2-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-2-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-2-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+
+                                $.ajax({
+                                    url: '/ajax/AssoArticleSourceSet/findAll', // La ressource cibl&eacute;e
+                                    type: &#39;POST&#39;, // Le type de la requ&#234;te HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                            // data[i].Id_AssoArticleSource
+                                            // data[i].IsSuppr
+                                            // data[i].Id_Article
+                                            // data[i].Id_Source
+
+                                        fk_2_table = $('#fk-2-table').DataTable({
+                                            data: data,
+                                            "pageLength": 100,
+                                            dom: "rtp",
+                                            "bDestroy": true,
+                                            "bStateSave": true,
+                                            //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                            "orderCellsTop": true,
+                                            "language": {
+                                                "sProcessing": "Traitement en cours...",
+                                                "sSearch": "Rechercher&nbsp;:",
+                                                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                "sInfoPostFix": "",
+                                                "sLoadingRecords": "Chargement en cours...",
+                                                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                "oPaginate": {
+                                                    "sFirst": "Premier",
+                                                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                    "sNext": "Suivant",
+                                                    "sLast": "Dernier"
+                                                },
+                                                "oAria": {
+                                                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                },
+                                            },
+                                            "columns": [
+                                                    { "sClass": "", "sTitle": "Id_AssoArticleSource", "mData": "Id_AssoArticleSource", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Id_Article", "mData": "Id_Article", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Id_Source", "mData": "Id_Source", "sDefaultContent": "-", "bVisible": true },
+                                                //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a>"; }, "bVisible": true, "sWidth": "10%" },
+                                            ],
+                                            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                            },
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                return nRow;
+                                            },
+                                            "initComplete": function (settings) {
+                                                // Search custom input
+                                                oTable_fk_@(indexOfFK) = $('#fk-2-table').DataTable();
+                                                $('#customFilterInput-fk-2').keyup(function () {
+                                                    oTable_fk_2.search($(this).val()).draw();
+                                                })
+                                                //Add search field placeholder
+                                                $('#fk-@indexOfFK-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                $("#fk-2-table").DataTable().columns.adjust().draw()
+                                                // Add search icon
+                                                $('#fk-@indexOfFK-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                $('#fk-2-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                $('#fk-2-table' + "_filter input").blur(function () {
+                                                    ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                });
+                                                // Tooltip initialization
+                                                $(&quot;[data-toggle=tooltip]&quot;).tooltip();
+
+                                                if (!isHere_fk_2) {
+                                                    $('#fk-2-table thead').append('<tr>');
+                                                    oTable_fk_2.columns().every(function () {
+                                                        $('#fk-2-table thead tr:last-child').append('<th>');
+                                                        isHere_fk_2 = true;
+                                                    });
+                                                }
+                                                // Ajout d'un champ de recherche pour chaque colonne
+                                                $('#fk-@indexOfFK-table thead tr:last-child th').each(function (index, value) {
+                                                    var i = index + 1;
+                                                    $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_2(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                });
+                                                initFilters_fk_2();
+
+                                            },
+                                            "fnStateLoaded": function (oSettings, oData) {
+                                                $.each(oData.columns, function (index, value) {
+                                                    filters_fk_2.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                });
+                                            }
+                                        });
+
+                                        // Ajout d'un champ de recherche pour chaque colonne
+                                        $('#fk-@indexOfFK-table tfoot tr th').each(function () {
+                                            $(this).html(&#39;<input type="text" placeholder="Rechercher..." />');
+                                        });
+
+                                        fk_2_table.columns().every(function () {
+                                            var that = this;
+                                            $('input', this.footer()).on('keyup change', function () {
+                                                if (that.search() !== this.value) {
+                                                    that
+                                                        .search(this.value)
+                                                        .draw();
+                                                }
+                                            });
+                                        });
+
+
+
+                                        $('#fk-2-table tbody').on('click', 'tr', function () {
+                                            if ($(this).hasClass('selected')) {
+                                                $(this).removeClass('selected');
+                                                $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").val("");
+                                                $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").trigger("change");
+                                            }
+                                            else {
+                                                fk_2_table.$('tr.selected').removeClass('selected');
+                                                $(this).addClass('selected');
+                                                var datatmp = fk_2_table.row(this).data();
+                                                $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").val(""+datatmp["Id_AssoArticleSource"]);
+                                                $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").trigger("change");
+                                            }
+                                        });
+
+                                    }
+                                });
+                            })
+                    }
+                
+                
+                    @if(useChosen_on_fk_fk_AssoCleActionSet_3)
+                    {
+                            $(function(){
+                                var attr = $("#AssoCleActionSource_AssoCleAction_Id_Source").attr("required");
+                                if (typeof attr !== typeof undefined && attr !== false) {
+                                    $("#AssoCleActionSource_AssoCleAction_Id_Source").change(function(){
+                                        var parent = $("#AssoCleActionSource_AssoCleAction_Id_Source").parent();
+                                        if($("#AssoCleActionSource_AssoCleAction_Id_Source").val() == "" || $("#AssoCleActionSource_AssoCleAction_Id_Source").val() == null){
+                                            $(parent).addClass("has-error");
+                                            $("#fk-3-div-collapse-div").collapse("show");
+                                            if($(parent).hasClass("has-success")){
+                                                $(parent).removeClass("has-success");
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-3-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+                                }
+                                $.ajax({
+                                    url: '/ajax/SourceSet/findAll', // La ressource cibl&eacute;e
+                                    type: 'POST', // Le type de la requête HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        for (var i = 0; i < data.length; i++) {
+                                                                                            //data[i]["Id_Source"]
+                                                //data[i]["CodeSource"]
+                                                //data[i]["CodeSite"]
+                                                //data[i]["IsSuppr"]
+                                                //data[i]["EcartSource_Source_Id_Ecart"]
+                                            $("#AssoCleActionSource_AssoCleAction_Id_Source").append("<option value='" + data[i].Id_Source + "'>" + data[i].Id_Source + "</option>");
+                                        }
+                                        $("#AssoCleActionSource_AssoCleAction_Id_Source").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                    }
+                                });
+                            })
+                    }else
+                    {
+                    
+                            var fk_3_table = null;
+                            var isHere_fk_3 = false;
+                            var filters_fk_3 = [];
+
+                            function reinitFilters_fk_3() {
+                                $('#fk-3-table thead tr:last-child th input').each(function (index, value) {
+                                    $(this).val('').removeClass('colorFilter');
+                                });
+                                $('#fk-3-table tfoot tr th input').each(function (index, value) {
+                                    $(this).val('');
+                                });
+                                $('#customFilterInput-fk-3').val('');
+                                fk_3_table.search('').columns().search('').draw();
+                            }
+                            function initFilters_fk_3() {
+                                $('#fk-3-table thead tr:last-child th input').each(function (index, value) {
+                                    var i = index;
+                                    if (index < 11) {
+                                        i += 3;
+                                        $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                    }
+                                    else {
+                                        $(this).val('');
+                                    }
+                                });
+                            }
+                            function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                if (obj.value != "") {
+                                    $(obj).addClass("colorFilter");
+
+                                } else {
+                                    $(obj).removeClass("colorFilter");
+                                }
+                            }
+                        $(function(){
+                            $("#form-cancel").click(function(){
+                                $("#modal").modal("hide");
+                            });
+                            $("#btnResetFilters-fk-3").click(function(event){
+                                event.preventDefault();
+                                reinitFilters_fk_3();
+                            })
+                                    $("#AssoCleActionSource_AssoCleAction_Id_Source").change(function(){
+                                        var parent = $("#AssoCleActionSource_AssoCleAction_Id_Source").parent();
+                                        var attr = $("#AssoCleActionSource_AssoCleAction_Id_Source").attr("required");
+                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                            if($("#AssoCleActionSource_AssoCleAction_Id_Source").val() == "" || $("#AssoCleActionSource_AssoCleAction_Id_Source").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-3-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-3-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-3-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+
+                                $.ajax({
+                                    url: '/ajax/SourceSet/findAll', // La ressource cibl&eacute;e
+                                    type: &#39;POST&#39;, // Le type de la requ&#234;te HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                            // data[i].Id_Source
+                                            // data[i].CodeSource
+                                            // data[i].CodeSite
+                                            // data[i].IsSuppr
+                                            // data[i].EcartSource_Source_Id_Ecart
+
+                                        fk_3_table = $('#fk-3-table').DataTable({
+                                            data: data,
+                                            "pageLength": 100,
+                                            dom: "rtp",
+                                            "bDestroy": true,
+                                            "bStateSave": true,
+                                            //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                            "orderCellsTop": true,
+                                            "language": {
+                                                "sProcessing": "Traitement en cours...",
+                                                "sSearch": "Rechercher&nbsp;:",
+                                                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                "sInfoPostFix": "",
+                                                "sLoadingRecords": "Chargement en cours...",
+                                                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                "oPaginate": {
+                                                    "sFirst": "Premier",
+                                                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                    "sNext": "Suivant",
+                                                    "sLast": "Dernier"
+                                                },
+                                                "oAria": {
+                                                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                },
+                                            },
+                                            "columns": [
+                                                    { "sClass": "", "sTitle": "Id_Source", "mData": "Id_Source", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "CodeSource", "mData": "CodeSource", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "CodeSite", "mData": "CodeSite", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "EcartSource_Source_Id_Ecart", "mData": "EcartSource_Source_Id_Ecart", "sDefaultContent": "-", "bVisible": true },
+                                                //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a>"; }, "bVisible": true, "sWidth": "10%" },
+                                            ],
+                                            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                            },
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                return nRow;
+                                            },
+                                            "initComplete": function (settings) {
+                                                // Search custom input
+                                                oTable_fk_@(indexOfFK) = $('#fk-3-table').DataTable();
+                                                $('#customFilterInput-fk-3').keyup(function () {
+                                                    oTable_fk_3.search($(this).val()).draw();
+                                                })
+                                                //Add search field placeholder
+                                                $('#fk-@indexOfFK-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                $("#fk-3-table").DataTable().columns.adjust().draw()
+                                                // Add search icon
+                                                $('#fk-@indexOfFK-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                $('#fk-3-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                $('#fk-3-table' + "_filter input").blur(function () {
+                                                    ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                });
+                                                // Tooltip initialization
+                                                $(&quot;[data-toggle=tooltip]&quot;).tooltip();
+
+                                                if (!isHere_fk_3) {
+                                                    $('#fk-3-table thead').append('<tr>');
+                                                    oTable_fk_3.columns().every(function () {
+                                                        $('#fk-3-table thead tr:last-child').append('<th>');
+                                                        isHere_fk_3 = true;
+                                                    });
+                                                }
+                                                // Ajout d'un champ de recherche pour chaque colonne
+                                                $('#fk-@indexOfFK-table thead tr:last-child th').each(function (index, value) {
+                                                    var i = index + 1;
+                                                    $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_3(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                });
+                                                initFilters_fk_3();
+
+                                            },
+                                            "fnStateLoaded": function (oSettings, oData) {
+                                                $.each(oData.columns, function (index, value) {
+                                                    filters_fk_3.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                });
+                                            }
+                                        });
+
+                                        // Ajout d'un champ de recherche pour chaque colonne
+                                        $('#fk-@indexOfFK-table tfoot tr th').each(function () {
+                                            $(this).html(&#39;<input type="text" placeholder="Rechercher..." />');
+                                        });
+
+                                        fk_3_table.columns().every(function () {
+                                            var that = this;
+                                            $('input', this.footer()).on('keyup change', function () {
+                                                if (that.search() !== this.value) {
+                                                    that
+                                                        .search(this.value)
+                                                        .draw();
+                                                }
+                                            });
+                                        });
+
+
+
+                                        $('#fk-3-table tbody').on('click', 'tr', function () {
+                                            if ($(this).hasClass('selected')) {
+                                                $(this).removeClass('selected');
+                                                $("#AssoCleActionSource_AssoCleAction_Id_Source").val("");
+                                                $("#AssoCleActionSource_AssoCleAction_Id_Source").trigger("change");
+                                            }
+                                            else {
+                                                fk_3_table.$('tr.selected').removeClass('selected');
+                                                $(this).addClass('selected');
+                                                var datatmp = fk_3_table.row(this).data();
+                                                $("#AssoCleActionSource_AssoCleAction_Id_Source").val(""+datatmp["Id_Source"]);
+                                                $("#AssoCleActionSource_AssoCleAction_Id_Source").trigger("change");
+                                            }
+                                        });
+
+                                    }
+                                });
+                            })
+                    }
+                
+            $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr"
+        });
+
+        $(".datetimepicker").datetimepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr",
+            timeFormat: 'HH:mm'
+        });
+
+        $("#form-submit").click(function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var keep = true;
+            $("#Id_AssoCleAction").trigger("change");
+            if($("#Id_AssoCleAction").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#IsSuppr").trigger("change");
+            if($("#IsSuppr").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Id_Action").trigger("change");
+            if($("#Id_Action").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Id_Cle").trigger("change");
+            if($("#Id_Cle").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#NumAxe").trigger("change");
+            if($("#NumAxe").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").trigger("change");
+            if($("#LienArticlesAssoCleAction_AssoCleAction_Id_LienArticles").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#AssoCleActionArticle_AssoCleAction_Id_Article").trigger("change");
+            if($("#AssoCleActionArticle_AssoCleAction_Id_Article").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").trigger("change");
+            if($("#AssoCleActionAssoArticleSource_AssoCleAction_Id_AssoArticleSource").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#AssoCleActionSource_AssoCleAction_Id_Source").trigger("change");
+            if($("#AssoCleActionSource_AssoCleAction_Id_Source").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            if(keep == false){
+                return;
+            }
+            var dataArray = $("#insertData-form").serializeArray();
+            var dataToSend = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                var name = dataArray[i].name;
+                var value = dataArray[i].value;
+                if(value != "" && value != null){
+                    dataToSend[name] = value;
+                }
+            }
+            $.ajax({
+                url: '/ajax/AssoCleActionSet/create', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    //window.location = "/AssoCleActionSet/list";
+                    if (data["success"] == "true") {
+                        toastr.success("Insertion réussie");
+                        formatAssoCleActionSet(data["assoCleActionSet"]);
+                        listTable.row.add(data["assoCleActionSet"]);
+                        listTable.draw();
+                    }else{
+                        toastr.error("L'insertion a échouée");
+                        console.log(data["errorMessage"]);
+                    }
+                }
+            });
+            $("#modal").modal("hide");
+        })
+    });

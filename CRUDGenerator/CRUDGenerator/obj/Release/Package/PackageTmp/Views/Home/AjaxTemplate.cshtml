@@ -1,0 +1,25 @@
+﻿@using CRUDGenerator.Database
+@{
+    Layout = null;
+    DatabaseXML db = ViewBag.db;
+}<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    @@Styles.Render("~/bundles/AjaxCss")
+    @@Scripts.Render("~/bundles/AjaxJs")
+</head>
+<body>
+    <div class="container">
+        @foreach (Table table in db.Content)
+        {
+            string bigTableName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToUpper(table.Name);
+            <a href="/ajax/@bigTableName/list">@bigTableName</a>
+        }
+        @@RenderBody()
+    </div>
+
+</body>
+</html>

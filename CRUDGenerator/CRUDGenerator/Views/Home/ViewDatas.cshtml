@@ -1,0 +1,124 @@
+﻿@using CRUDGenerator.Database
+@{
+    //Layout = "~/Views/TemplateForm.cshtml";
+    Layout = null;
+}
+@{
+    DatabaseXML db = (DatabaseXML)ViewBag.database;
+    Table table = (Table)ViewBag.table;
+    string bigTableName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToUpper(table.Name);
+    int nbColumn = table.Columns.Count;
+    int idPosition = 0;
+    for (int i = 0; i < nbColumn ; i++)
+    {
+        if(table.Columns[i].Name == "Id" || table.Columns[i].Name == "id")
+        {
+            idPosition = i;
+        }
+    }
+    List<Table> inter_n_m_Relations = new List<Table>();
+    List<string> inter_n_m_Relation_columnName = new List<string>();
+    List<string> inter_n_m_Relation_externColumnName = new List<string>();
+    List<Table> n_m_Relations = new List<Table>();
+    foreach (Table tmp in db.Content)
+    {
+        if(tmp.Name != table.Name && tmp.Type == "n-m-relation")
+        {
+            if(tmp.ForeignKeys.Count == 2)
+            {
+                ForeignKey fk1 = tmp.ForeignKeys[0];
+                ForeignKey fk2 = tmp.ForeignKeys[1];
+                if (fk1.ExternTableName == table.Name)
+                {
+                    n_m_Relations.Add(db.getTableByName(fk2.ExternTableName));
+                    inter_n_m_Relations.Add(tmp);
+                    inter_n_m_Relation_columnName.Add(fk2.Info[0].ColumnName);
+                    inter_n_m_Relation_externColumnName.Add(fk2.Info[0].ExternColumnName);
+                }
+
+                if (fk2.ExternTableName == table.Name)
+                {
+                    n_m_Relations.Add(db.getTableByName(fk1.ExternTableName));
+                    inter_n_m_Relations.Add(tmp);
+                    inter_n_m_Relation_columnName.Add(fk1.Info[0].ColumnName);
+                    inter_n_m_Relation_externColumnName.Add(fk1.Info[0].ExternColumnName);
+                }
+            }
+        }
+    }
+    List<Table> fk_tables = new List<Table>();
+    List<string> fk_columnNames = new List<string>();
+    List<string> fk_names = new List<string>();
+    for (int i = 0; i < table.ForeignKeys.Count; i++)
+    {
+        ForeignKey fk = table.ForeignKeys[i];
+        fk_tables.Add(db.getTableByName(fk.ExternTableName));
+        fk_columnNames.Add(fk.Info[0].ColumnName);
+        fk_names.Add(fk.Name);
+    }
+}
+@@{
+    //Layout = "~/Views/Shared/AjaxTemplate.cshtml";
+    @for (int i = 0; i < n_m_Relations.Count; i++)
+    {
+    <text>bool show@(n_m_Relations[i].Name) = true;</text>
+    }
+}
+
+<div class="row">
+    <div class="col-xs-1">
+        <button id="btnResetFilters" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+            <i class="fa fa-refresh Icon"></i>
+        </button>
+    </div>
+    <div class="col-xs-4 ">
+        <div id="tab_filter" class="customFilter">
+            <label>
+                <input id="customFilterInput" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="ViewDatas-table">
+            </label>
+        </div>
+    </div>
+    <div class="col-xs-4 ">
+        <div class="col-xs-6 right">
+            <a class="btn btn-sm animated-button thar-three" id="add">Ajouter @bigTableName</a>
+        </div>
+    </div>
+</div>
+
+<table id="ViewDatas-table"class="table table-striped table-hover ClickableRow">
+    <tfoot>
+        <tr>
+            @for (int i = 0; i < nbColumn; i++)
+            {
+                Column column = table.Columns[i];
+                <th>@column.Name</th>
+            }
+            @for (int i = 0; i < n_m_Relations.Count; i++)
+            {
+                <text>
+                @@if(show@(n_m_Relations[i].Name)){
+                <th>@n_m_Relations[i].Name</th>
+                }</text>
+            }
+            <th>Actions</th>
+        </tr>
+    </tfoot>
+</table>
+<div id="modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="/Scripts/Ajax/@(table.Name)/list.js"></script>

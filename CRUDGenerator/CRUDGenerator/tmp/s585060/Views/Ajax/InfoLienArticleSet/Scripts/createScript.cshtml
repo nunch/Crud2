@@ -1,0 +1,548 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+    
+        bool useChosen_on_fk_fk_InfoLienArticleSet_0 = true;
+    
+}
+
+
+                
+                    $(function(){
+                        $("#SourceFichier").change(function(){
+                            var attr = $("#SourceFichier").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#SourceFichier").parent();
+                                if($("#SourceFichier").val() == "" || $("#SourceFichier").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#SourceFichier-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#SourceFichier-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#SourceFichier-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#IsSuppr").change(function(){
+                            var attr = $("#IsSuppr").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#IsSuppr").parent();
+                                if($("#IsSuppr").val() == "" || $("#IsSuppr").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#IsSuppr-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#IsSuppr-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#IsSuppr-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    @if(useChosen_on_fk_fk_InfoLienArticleSet_0)
+                    {
+                            $(function(){
+                                var attr = $("#Id_LienArticle").attr("required");
+                                if (typeof attr !== typeof undefined && attr !== false) {
+                                    $("#Id_LienArticle").change(function(){
+                                        var parent = $("#Id_LienArticle").parent();
+                                        if($("#Id_LienArticle").val() == "" || $("#Id_LienArticle").val() == null){
+                                            $(parent).addClass("has-error");
+                                            $("#fk-0-div-collapse-div").collapse("show");
+                                            if($(parent).hasClass("has-success")){
+                                                $(parent).removeClass("has-success");
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-0-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+                                }
+                                $.ajax({
+                                    url: '/ajax/LienArticlesSet/findAll', // La ressource cibl&eacute;e
+                                    type: 'POST', // Le type de la requête HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        for (var i = 0; i < data.length; i++) {
+                                                                                            //data[i]["Id_LienArticles"]
+                                                //data[i]["Id_ArticleParent"]
+                                                //data[i]["Id_ArticleEnfant"]
+                                                //data[i]["Programme"]
+                                                //data[i]["IsSuppr"]
+                                            $("#Id_LienArticle").append("<option value='" + data[i].Id_LienArticles + "'>" + data[i].Id_LienArticles + "</option>");
+                                        }
+                                        $("#Id_LienArticle").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                    }
+                                });
+                            })
+                    }else
+                    {
+                    
+                            var fk_0_table = null;
+                            var isHere_fk_0 = false;
+                            var filters_fk_0 = [];
+
+                            function reinitFilters_fk_0() {
+                                $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                    $(this).val('').removeClass('colorFilter');
+                                });
+                                $('#fk-0-table tfoot tr th input').each(function (index, value) {
+                                    $(this).val('');
+                                });
+                                $('#customFilterInput-fk-0').val('');
+                                fk_0_table.search('').columns().search('').draw();
+                            }
+                            function initFilters_fk_0() {
+                                $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                    var i = index;
+                                    if (index < 11) {
+                                        i += 3;
+                                        $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                    }
+                                    else {
+                                        $(this).val('');
+                                    }
+                                });
+                            }
+                            function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                if (obj.value != "") {
+                                    $(obj).addClass("colorFilter");
+
+                                } else {
+                                    $(obj).removeClass("colorFilter");
+                                }
+                            }
+                        $(function(){
+                            $("#form-cancel").click(function(){
+                                $("#modal").modal("hide");
+                            });
+                            $("#btnResetFilters-fk-0").click(function(event){
+                                event.preventDefault();
+                                reinitFilters_fk_0();
+                            })
+                                    $("#Id_LienArticle").change(function(){
+                                        var parent = $("#Id_LienArticle").parent();
+                                        var attr = $("#Id_LienArticle").attr("required");
+                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                            if($("#Id_LienArticle").val() == "" || $("#Id_LienArticle").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-0-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-0-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-0-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+
+                                $.ajax({
+                                    url: '/ajax/LienArticlesSet/findAll', // La ressource cibl&eacute;e
+                                    type: &#39;POST&#39;, // Le type de la requ&#234;te HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                            // data[i].Id_LienArticles
+                                            // data[i].Id_ArticleParent
+                                            // data[i].Id_ArticleEnfant
+                                            // data[i].Programme
+                                            // data[i].IsSuppr
+
+                                        fk_0_table = $('#fk-0-table').DataTable({
+                                            data: data,
+                                            "pageLength": 100,
+                                            dom: "rtp",
+                                            "bDestroy": true,
+                                            "bStateSave": true,
+                                            //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                            "orderCellsTop": true,
+                                            "language": {
+                                                "sProcessing": "Traitement en cours...",
+                                                "sSearch": "Rechercher&nbsp;:",
+                                                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                "sInfoPostFix": "",
+                                                "sLoadingRecords": "Chargement en cours...",
+                                                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                "oPaginate": {
+                                                    "sFirst": "Premier",
+                                                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                    "sNext": "Suivant",
+                                                    "sLast": "Dernier"
+                                                },
+                                                "oAria": {
+                                                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                },
+                                            },
+                                            "columns": [
+                                                    { "sClass": "", "sTitle": "Id_LienArticles", "mData": "Id_LienArticles", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Id_ArticleParent", "mData": "Id_ArticleParent", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Id_ArticleEnfant", "mData": "Id_ArticleEnfant", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Programme", "mData": "Programme", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a>"; }, "bVisible": true, "sWidth": "10%" },
+                                            ],
+                                            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                            },
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                return nRow;
+                                            },
+                                            "initComplete": function (settings) {
+                                                // Search custom input
+                                                oTable_fk_@(indexOfFK) = $('#fk-0-table').DataTable();
+                                                $('#customFilterInput-fk-0').keyup(function () {
+                                                    oTable_fk_0.search($(this).val()).draw();
+                                                })
+                                                //Add search field placeholder
+                                                $('#fk-@indexOfFK-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                $("#fk-0-table").DataTable().columns.adjust().draw()
+                                                // Add search icon
+                                                $('#fk-@indexOfFK-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                $('#fk-0-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                $('#fk-0-table' + "_filter input").blur(function () {
+                                                    ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                });
+                                                // Tooltip initialization
+                                                $(&quot;[data-toggle=tooltip]&quot;).tooltip();
+
+                                                if (!isHere_fk_0) {
+                                                    $('#fk-0-table thead').append('<tr>');
+                                                    oTable_fk_0.columns().every(function () {
+                                                        $('#fk-0-table thead tr:last-child').append('<th>');
+                                                        isHere_fk_0 = true;
+                                                    });
+                                                }
+                                                // Ajout d'un champ de recherche pour chaque colonne
+                                                $('#fk-@indexOfFK-table thead tr:last-child th').each(function (index, value) {
+                                                    var i = index + 1;
+                                                    $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_0(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                });
+                                                initFilters_fk_0();
+
+                                            },
+                                            "fnStateLoaded": function (oSettings, oData) {
+                                                $.each(oData.columns, function (index, value) {
+                                                    filters_fk_0.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                });
+                                            }
+                                        });
+
+                                        // Ajout d'un champ de recherche pour chaque colonne
+                                        $('#fk-@indexOfFK-table tfoot tr th').each(function () {
+                                            $(this).html(&#39;<input type="text" placeholder="Rechercher..." />');
+                                        });
+
+                                        fk_0_table.columns().every(function () {
+                                            var that = this;
+                                            $('input', this.footer()).on('keyup change', function () {
+                                                if (that.search() !== this.value) {
+                                                    that
+                                                        .search(this.value)
+                                                        .draw();
+                                                }
+                                            });
+                                        });
+
+
+
+                                        $('#fk-0-table tbody').on('click', 'tr', function () {
+                                            if ($(this).hasClass('selected')) {
+                                                $(this).removeClass('selected');
+                                                $("#Id_LienArticle").val("");
+                                                $("#Id_LienArticle").trigger("change");
+                                            }
+                                            else {
+                                                fk_0_table.$('tr.selected').removeClass('selected');
+                                                $(this).addClass('selected');
+                                                var datatmp = fk_0_table.row(this).data();
+                                                $("#Id_LienArticle").val(""+datatmp["Id_LienArticles"]);
+                                                $("#Id_LienArticle").trigger("change");
+                                            }
+                                        });
+
+                                    }
+                                });
+                            })
+                    }
+                
+                
+                    $(function(){
+                        $("#DateDebut").change(function(){
+                            var attr = $("#DateDebut").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#DateDebut").parent();
+                                if($("#DateDebut").val() == "" || $("#DateDebut").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#DateDebut-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#DateDebut-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#DateDebut-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#DateFin").change(function(){
+                            var attr = $("#DateFin").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#DateFin").parent();
+                                if($("#DateFin").val() == "" || $("#DateFin").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#DateFin-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#DateFin-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#DateFin-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Champ1").change(function(){
+                            var attr = $("#Champ1").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Champ1").parent();
+                                if($("#Champ1").val() == "" || $("#Champ1").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Champ1-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Champ1-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Champ1-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Champ2").change(function(){
+                            var attr = $("#Champ2").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Champ2").parent();
+                                if($("#Champ2").val() == "" || $("#Champ2").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Champ2-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Champ2-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Champ2-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#QuantiteLiee").change(function(){
+                            var attr = $("#QuantiteLiee").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#QuantiteLiee").parent();
+                                if($("#QuantiteLiee").val() == "" || $("#QuantiteLiee").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#QuantiteLiee-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#QuantiteLiee-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#QuantiteLiee-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+            $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr"
+        });
+
+        $(".datetimepicker").datetimepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr",
+            timeFormat: 'HH:mm'
+        });
+
+        $("#form-submit").click(function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var keep = true;
+            $("#Id_InfoLienArticle").trigger("change");
+            if($("#Id_InfoLienArticle").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#SourceFichier").trigger("change");
+            if($("#SourceFichier").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#IsSuppr").trigger("change");
+            if($("#IsSuppr").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Id_LienArticle").trigger("change");
+            if($("#Id_LienArticle").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#DateDebut").trigger("change");
+            if($("#DateDebut").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#DateFin").trigger("change");
+            if($("#DateFin").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Champ1").trigger("change");
+            if($("#Champ1").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Champ2").trigger("change");
+            if($("#Champ2").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#QuantiteLiee").trigger("change");
+            if($("#QuantiteLiee").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            if(keep == false){
+                return;
+            }
+            var dataArray = $("#insertData-form").serializeArray();
+            var dataToSend = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                var name = dataArray[i].name;
+                var value = dataArray[i].value;
+                if(value != "" && value != null){
+                    dataToSend[name] = value;
+                }
+            }
+            $.ajax({
+                url: '/ajax/InfoLienArticleSet/create', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    //window.location = "/InfoLienArticleSet/list";
+                    if (data["success"] == "true") {
+                        toastr.success("Insertion réussie");
+                        formatInfoLienArticleSet(data["infoLienArticleSet"]);
+                        listTable.row.add(data["infoLienArticleSet"]);
+                        listTable.draw();
+                    }else{
+                        toastr.error("L'insertion a échouée");
+                        console.log(data["errorMessage"]);
+                    }
+                }
+            });
+            $("#modal").modal("hide");
+        })
+    });

@@ -1,0 +1,1141 @@
+﻿@using CRUDGenerator.Database
+@{
+    //Layout = "~/Views/TemplateForm.cshtml";
+    Layout = null;
+}
+@{
+    DatabaseXML db = (DatabaseXML)ViewBag.database;
+    Table table = (Table)ViewBag.table;
+    string smallTableName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToLower(table.Name);
+    string bigTableName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToUpper(table.Name);
+    string bigDbName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToUpper(db.Name);
+
+    List<Table> inter_n_m_Relations = new List<Table>();
+    List<string> inter_n_m_Relation_columnName = new List<string>();
+    List<string> inter_n_m_Relation_externColumnName = new List<string>();
+    List<List<string>> inter_n_m_Relation_fkColumnNames = new List<List<string>>();
+    List<Table> n_m_Relations = new List<Table>();
+    foreach (Table tmp in db.Content)
+    {
+        if (tmp.Name != table.Name && tmp.Type == "n-m-relation")
+        {
+            if (tmp.ForeignKeys.Count == 2)
+            {
+                ForeignKey fk1 = tmp.ForeignKeys[0];
+                ForeignKey fk2 = tmp.ForeignKeys[1];
+                inter_n_m_Relation_fkColumnNames.Add(new List<string>
+                {
+                    fk1.Info[0].ColumnName, fk2.Info[0].ColumnName
+                });
+                if (fk1.ExternTableName == table.Name)
+                {
+                    n_m_Relations.Add(db.getTableByName(fk2.ExternTableName));
+                    inter_n_m_Relations.Add(tmp);
+                    inter_n_m_Relation_columnName.Add(fk1.Info[0].ColumnName); // Id+table.Name
+                    inter_n_m_Relation_externColumnName.Add(fk2.Info[0].ColumnName); // Id+externTable.Name
+                }
+
+                if (fk2.ExternTableName == table.Name)
+                {
+                    n_m_Relations.Add(db.getTableByName(fk1.ExternTableName));
+                    inter_n_m_Relations.Add(tmp);
+                    inter_n_m_Relation_columnName.Add(fk2.Info[0].ColumnName); // Id+table.Name
+                    inter_n_m_Relation_externColumnName.Add(fk1.Info[0].ColumnName); // Id+externTable.Name
+                }
+            }
+        }
+    }
+
+    List<Table> fk_tables = new List<Table>();
+    List<string> fk_columnNames = new List<string>();
+    List<string> fk_names = new List<string>();
+    for (int i = 0; i < table.ForeignKeys.Count; i++)
+    {
+        ForeignKey fk = table.ForeignKeys[i];
+        fk_tables.Add(db.getTableByName(fk.ExternTableName));
+        fk_columnNames.Add(fk.Info[0].ColumnName);
+        fk_names.Add(fk.Name);
+    }
+}@@using @(db.Name).Models
+@@using DataAccess
+@@{
+    Layout = null;
+@bigTableName @smallTableName = (@bigTableName) ViewBag.@smallTableName;
+@for (int i = 0; i < n_m_Relations.Count; i++)
+{
+    <text>
+        bool show@(n_m_Relations[i].Name) = true;
+        bool useChosen_on_n_m_@(n_m_Relations[i].Name) = true;
+    </text>
+}
+@for (int i = 0; i < fk_names.Count; i++)
+{
+    <text>
+        bool useChosen_on_fk_@(fk_names[i]) = true;
+    </text>
+}
+}
+
+
+        @for (int columnNumber = 0; columnNumber < table.Columns.Count; columnNumber++)
+        {
+            string required = "";
+            Column column = table.Columns[columnNumber];
+            if (column.isNull == 0)
+            {
+                required = "required=required";
+            }
+            int indexOfFK = fk_columnNames.IndexOf(column.Name);
+
+            if (indexOfFK != -1)
+            {
+                <text>
+                    @@if(useChosen_on_fk_@(fk_names[indexOfFK]))
+                    {
+                        <text>
+$(function(){
+    $("#form-cancel").click(function(){
+        $("#modal").modal("hide");
+    });
+    var attr = $("#@(column.Name)").attr("required");
+    if (typeof attr !== typeof undefined && attr !== false) {
+        $("#@(column.Name)").change(function(){
+            var parent = $("#@(column.Name)").parent();
+            if($("#@(column.Name)").val() == undefined || $("#@(column.Name)").val().trim() == "" ){
+                $(parent).addClass("has-error");
+                $("#fk-@indexOfFK-div-collapse-div").collapse("show");
+                if($(parent).hasClass("has-success")){
+                    $(parent).removeClass("has-success");
+                }
+            }else{
+                $(parent).addClass("has-success");
+                $("#fk-@indexOfFK-div-collapse-div").collapse("hide");
+                if($(parent).hasClass("has-error")){
+                    $(parent).removeClass("has-error");
+                }
+            }
+        })
+    }
+    $.ajax({
+        url: '/@(fk_tables[indexOfFK].Name)/GetAll@(fk_tables[indexOfFK].Name)', // La ressource cibl&eacute;e
+        type: 'POST', // Le type de la requête HTTP.
+        data: {},
+        dataType: "json",
+        success: function (res) {
+            var data = res.data;
+            for (var i = 0; i < data.length; i++) {
+                @for (int i = 0; i < fk_tables[indexOfFK].Columns.Count; i++)
+                {
+                    <text>//data[i]["@(fk_tables[indexOfFK].Columns[i].Name)"]</text>
+                }
+                $("#@(column.Name)").append("@("<option") value='" + data[i].@(fk_tables[indexOfFK].PrimaryKey[0]) + "'>" + data[i].@(fk_tables[indexOfFK].PrimaryKey[0]) + "@("</option>")");
+            }
+                            @("")
+            $("#@(column.Name)").val($("#@(column.Name)-object").val());
+
+            $("#@(column.Name)").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+        }
+    });
+})
+                        </text>
+
+                    }else
+                    {
+                    <text>
+var fk_@(indexOfFK)_table = null;
+var isHere_fk_@indexOfFK = false;
+var filters_fk_@(indexOfFK) = [];
+
+function reinitFilters_fk_@(indexOfFK)() {
+    $('#fk-@indexOfFK-table thead tr:last-child th input').each(function (index, value) {
+        $(this).val('').removeClass('colorFilter');
+    });
+    $('#fk-@indexOfFK-table tfoot tr th input').each(function (index, value) {
+        $(this).val('');
+    });
+    $('#customFilterInput-fk-@indexOfFK').val('');
+    fk_@(indexOfFK)_table.search('').columns().search('').draw();
+}
+function initFilters_fk_@(indexOfFK)() {
+    $('#fk-@indexOfFK-table thead tr:last-child th input').each(function (index, value) {
+        var i = index;
+        if (index < 11) {
+            i += 3;
+                        @("")
+            $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+        }
+        else {
+            $(this).val('');
+        }
+    });
+}
+                        @("")
+function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+    $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+    if (obj.value != "") {
+        $(obj).addClass("colorFilter");
+
+    } else {
+        $(obj).removeClass("colorFilter");
+    }
+}
+$(function(){
+
+    $("#btnResetFilters-fk-@indexOfFK").click(function(event){
+        event.preventDefault();
+        reinitFilters_fk_@(indexOfFK)();
+    })
+    $("#@(column.Name)").change(function(){
+        var parent = $("#@(column.Name)").parent();
+        var attr = $("#@(column.Name)").attr("required");
+        if (typeof attr !== typeof undefined && attr !== false) {
+            if($("#@(column.Name)").val() == undefined || $("#@(column.Name)").val() == ""){
+                $(parent).addClass("has-error");
+                $("#fk-@indexOfFK-div-collapse-div").collapse("show");
+                if($(parent).hasClass("has-success")){
+                    $(parent).removeClass("has-success");
+                }
+            }else{
+                $(parent).addClass("has-success");
+                $("#fk-@indexOfFK-div-collapse-div").collapse("hide");
+                if($(parent).hasClass("has-error")){
+                    $(parent).removeClass("has-error");
+                }
+            }
+        }else{
+            $(parent).addClass("has-success");
+            $("#fk-@indexOfFK-div-collapse-div").collapse("hide");
+            if($(parent).hasClass("has-error")){
+                $(parent).removeClass("has-error");
+            }
+        }
+    })
+
+    $.ajax({
+        url: '/@(fk_tables[indexOfFK].Name)/GetAll@(fk_tables[indexOfFK].Name)', // La ressource cibl&eacute;e
+        type: 'POST', // Le type de la requête HTTP.
+        data: {},
+        dataType: "json",
+        success: function (res) {
+            var data = res.data;
+            @foreach (Column columnTmp in fk_tables[indexOfFK].Columns)
+            {
+                <text>@("//") @("data[i].")@(columnTmp.Name)</text>
+            }
+
+            fk_@(indexOfFK)_table = $('#fk-@indexOfFK-table').DataTable({
+                data: data,
+                "pageLength": 100,
+                dom: "rtp",
+                "bDestroy": true,
+                "bStateSave": true,
+                //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                "orderCellsTop": true,
+                "language": {
+                    "sProcessing": "Traitement en cours...",
+                    "sSearch": "Rechercher&nbsp;:",
+                    "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                    "sInfo": "@("<span class='Total'>Total </span><span class='TotalNumber'>_MAX_ &eacute;l&eacute;ment(s)</span>")",
+                    "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                    "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                    "sInfoPostFix": "",
+                    "sLoadingRecords": "Chargement en cours...",
+                    "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                    "oPaginate": {
+                        "sFirst": "Premier",
+                        "sPrevious": "Pr&eacute;c&eacute;dent",
+                        "sNext": "Suivant",
+                        "sLast": "Dernier"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                    },
+                },
+                "columns": [
+                    @for (int i = 0; i < fk_tables[indexOfFK].Columns.Count; i++)
+                    {
+                        <text>{ "sClass": "", "sTitle": "@(fk_tables[indexOfFK].Columns[i].Name)", "mData": "@(fk_tables[indexOfFK].Columns[i].Name)", "sDefaultContent": "-", "bVisible": true },</text>
+                    }
+                    //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                    //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "@("<a") href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "@("</a")")>"; }, "bVisible": true, "sWidth": "10%" },
+                ],
+                "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                    return nRow;
+                },
+                "initComplete": function (settings) {
+                    // Search custom input
+                    oTable_fk_@(indexOfFK) = $('#fk-@indexOfFK-table').DataTable();
+                    $('#customFilterInput-fk-@indexOfFK').keyup(function () {
+                        oTable_fk_@(indexOfFK).search($(this).val()).draw();
+                    })
+                    //Add search field placeholder
+                    $('#fk-@indexOfFK-table' + "_filter input").attr("placeholder", "Rechercher...");
+                    $("#fk-@indexOfFK-table").DataTable().columns.adjust().draw()
+                    // Add search icon
+                    $('#fk-@indexOfFK-table' + "_filter label").append("@("<i") class ='fa fa-search SearchIcon'>");
+                    $('#fk-@indexOfFK-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                    $('#fk-@indexOfFK-table' + "_filter input").blur(function () {
+                        ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                    });
+                    // Tooltip initialization
+                    @@("$(\"[data-toggle=tooltip]\").tooltip();")
+
+                    if (!isHere_fk_@indexOfFK) {
+                        $('#fk-@indexOfFK-table thead').append('@("<tr>")');
+                        oTable_fk_@(indexOfFK).columns().every(function () {
+                            $('#fk-@indexOfFK-table thead tr:last-child').append('@("<th>")');
+                            isHere_fk_@indexOfFK = true;
+                        });
+                    }
+                    // Ajout d'un champ de recherche pour chaque colonne
+                    $('#fk-@indexOfFK-table thead tr:last-child th').each(function (index, value) {
+                        var i = index + 1;
+                        $(this).html('@("<input") type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_@(indexOfFK)(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                    });
+                    initFilters_fk_@(indexOfFK)();
+
+                },
+                "fnStateLoaded": function (oSettings, oData) {
+                    $.each(oData.columns, function (index, value) {
+                        filters_fk_@(indexOfFK).push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                    });
+                }
+            });
+
+            // Ajout d'un champ de recherche pour chaque colonne
+            $('#fk-@indexOfFK-table tfoot tr th').each(function () {
+                $(this).html('@("<input") type ="text" placeholder="Rechercher..." />');
+            });
+
+            fk_@(indexOfFK)_table.columns().every(function () {
+                var that = this;
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+
+
+
+            $('#fk-@indexOfFK-table tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                    $("#@(column.Name)").val("");
+                    $("#@(column.Name)").trigger("change");
+                }
+                else {
+                    fk_@(indexOfFK)_table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    var datatmp = fk_@(indexOfFK)_table.row(this).data();
+                    $("#@(column.Name)").val(""+datatmp["@(fk_tables[indexOfFK].PrimaryKey[0])"]);
+                    $("#@(column.Name)").trigger("change");
+                }
+            });
+            $("#@(column.Name)").val($("#@(column.Name)").val());
+            var trs = $('#fk-@indexOfFK-table tbody tr');
+            for (var i = 0; i < trs.length; i++) {
+                var datatmp = fk_@(indexOfFK)_table.row($(trs[i])).data();
+                if(datatmp["@(fk_tables[indexOfFK].PrimaryKey[0])"] == $("#@(column.Name)").val()){
+                    $(trs[i]).trigger("click");
+                }
+            }
+        }
+    });
+})
+                    </text>
+                    }
+                </text>
+            }
+            else
+            {
+                <text>
+$(function(){
+    $("#@(column.Name)").change(function(){
+        var attr = $("#@(column.Name)").attr("required");
+        if (typeof attr !== typeof undefined && attr !== false) {
+            var parent = $("#@(column.Name)").parent();
+            if($("#@(column.Name)").val() == undefined || $("#@(column.Name)").val().trim() == ""){
+                $(parent).addClass("has-error");
+                $("#@(column.Name)-collapse-div").collapse("show");
+                if($(parent).hasClass("has-success")){
+                    $(parent).removeClass("has-success");
+                }
+            }else{
+                $(parent).addClass("has-success");
+                $("#@(column.Name)-collapse-div").collapse("hide");
+                if($(parent).hasClass("has-error")){
+                    $(parent).removeClass("has-error");
+                }
+            }
+        }else{
+            $(parent).addClass("has-success");
+            $("#@(column.Name)-collapse-div").collapse("hide");
+            if($(parent).hasClass("has-error")){
+                $(parent).removeClass("has-error");
+            }
+        }
+    });
+});
+                </text>
+            }
+
+        }
+        @for (int pos = 0; pos < n_m_Relations.Count; pos++)
+        {
+            <text>
+                @@if(show@(n_m_Relations[pos].Name))
+                {
+                <text>
+                    @@if (useChosen_on_n_m_@(n_m_Relations[pos].Name) == true)
+                    {
+                    <text>
+var originalValues = [];
+function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i] == obj) {
+            return true;
+        }
+    }
+    return false;
+}
+$(function () {
+    $("#fk-@pos").change(function () {
+        var values = $("#fk-@pos").val();
+        $("#fk-inputs-@pos").html("");
+        $("#fk-delete-inputs-@pos").html("");
+        for (var i = 0; i < originalValues.length; i++) {
+            if(!contains(values, originalValues[i])){
+                @("$(\"#fk-delete-inputs-"+pos+"\").append(`<")input type="hidden" name="@(inter_n_m_Relations[pos].Name)_remove_list[` + i + `]" value= "` + originalValues[i] + `" />`);
+            }
+        }
+        for (var i = 0; i < values.length; i++) {
+                        @("")
+            $("#fk-inputs-@pos").append(`@("<")input type="hidden" name= "@(inter_n_m_Relations[pos].Name)_list[` + i + `].@(inter_n_m_Relation_externColumnName[pos])" value= "` + values[i] + `" />`);
+        }
+    })
+    $.ajax({
+        url: '/@(n_m_Relations[pos].Name)/findAll', // La ressource cibl&eacute;e
+        type: 'POST', // Le type de la requête HTTP.
+        data: {},
+        dataType: "json",
+        success: function (data) {
+            for (var i = 0; i < data.length; i++) {
+                @foreach (Column columnTmp in n_m_Relations[pos].Columns)
+                    {
+                        <text>//data[i].@(columnTmp.Name)</text>
+                        if(columnTmp.Type == CRUDGenerator.Database.Type.Date)
+                        {
+                    <text>
+                data[i]["@(columnTmp.Name)"] = (new Date(data[i]["@(columnTmp.Name)"])).format("dd/mm/yy");
+                </text>
+                        }else if (columnTmp.Type == CRUDGenerator.Database.Type.Datetime)
+                        {
+                    <text>
+                data[i]["@(columnTmp.Name)"] = (new Date(data[i]["@(columnTmp.Name)"])).format("dd/mm/yy HH:MM");
+                </text>
+                        }
+                    }
+
+                $("#fk-@pos").append("@("<")option value='" + data[i].@(n_m_Relations[pos].PrimaryKey[0]) + "'>" + data[i].@(n_m_Relations[pos].PrimaryKey[0]) + "@("<")/option>");
+            }
+            $("#fk-@pos").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+            $.ajax({
+                url: '/@(inter_n_m_Relations[pos].Name)/findById@(table.Name)', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                        @("")
+                data: {Id@(table.Name): $("#@(smallTableName)-@(table.PrimaryKey[0])").val()},
+                dataType: "json",
+                success: function(data2) {
+                var activeValues = [];
+                for (var i = 0; i < data2.length; i++)
+                {
+                    @foreach(Column columnTmp in inter_n_m_Relations[pos].Columns)
+                            {
+                        if (columnTmp.Type == CRUDGenerator.Database.Type.Date)
+                        {
+                                    < text >
+                        data2[i]["@(columnTmp.Name)"] = (new Date(data2[i]["@(columnTmp.Name)"])).format("dd/mm/yy");
+                        </ text >
+                                }
+                        else if (columnTmp.Type == CRUDGenerator.Database.Type.Datetime)
+                        {
+                                    < text >
+                        data2[i]["@(columnTmp.Name)"] = (new Date(data2[i]["@(columnTmp.Name)"])).format("dd/mm/yy HH:MM");
+                        </ text >
+                                }
+                    }
+                    var dataRow = undefined;
+                    for (var j = 0; j < data.length && dataRow == undefined; j++)
+                    {
+                        if (data[j]["@(n_m_Relations[pos].PrimaryKey[0])"] == data2[i]["@(inter_n_m_Relation_externColumnName[pos])"])
+                        {
+                            dataRow = data[j];
+                        }
+                    }
+                    activeValues.push(data2[i]["@(inter_n_m_Relation_externColumnName[pos])"]);
+                    originalValues.push(data2[i]["@(inter_n_m_Relation_externColumnName[pos])"]);
+                }
+                    $("#fk-@pos").val(activeValues);
+                    $("#fk-@pos").trigger("change");
+                    $("#fk-@pos").trigger("chosen:updated");
+            }
+        });
+        }
+    });
+})
+                    </text>
+                    }
+                    else
+                    {
+                    <text>
+                    @{
+                        List<string> externColumnsNames = new List<string>();
+                        List<string> inter_n_m_columnNames = new List<string>();
+                        List<string> columnNames = new List<string>();
+                        for (int i = 0; i < n_m_Relations[pos].Columns.Count; i++)
+                        {
+                            Column columnTmp = n_m_Relations[pos].Columns[i];
+                            externColumnsNames.Add(columnTmp.Name);
+                            columnNames.Add(columnTmp.Name);
+                        }
+                        for (int i = 0; i < inter_n_m_Relations[pos].Columns.Count; i++)
+                        {
+                            Column columnTmp = inter_n_m_Relations[pos].Columns[i];
+                            bool keep = true;
+                            foreach (ForeignKey fk in inter_n_m_Relations[pos].ForeignKeys)
+                            {
+                                if (columnTmp.Name.Equals(fk.Info[0].ColumnName))
+                                {
+                                    keep = false;
+                                }
+                            }
+                            if (inter_n_m_Relations[pos].PrimaryKey.Contains(columnTmp.Name))
+                            {
+                                keep = false;
+                            }
+                            if (keep == true)
+                            {
+                                inter_n_m_columnNames.Add(columnTmp.Name);
+                                columnNames.Add(columnTmp.Name);
+                            }
+                        }
+                    }
+                    @for (int i = 0; i < inter_n_m_Relations[pos].Columns.Count; i++)
+                    {
+
+                        Column inter_n_m_Relations_Column = inter_n_m_Relations[pos].Columns[i];
+                        string requiredColumn = "";
+                        if (inter_n_m_Relations_Column.isNull == 0)
+                        {
+                            requiredColumn = "required=required";
+                        }
+                        if (!inter_n_m_Relations[pos].PrimaryKey.Contains(inter_n_m_Relations_Column.Name) && !inter_n_m_Relation_fkColumnNames[pos].Contains(inter_n_m_Relations_Column.Name))
+                        {
+                                            <text>
+$(function(){
+    $("#fk-@pos-modal-@(inter_n_m_Relations_Column.Name)").change(function(){
+        var parent = $("#fk-@pos-modal-@(inter_n_m_Relations_Column.Name)").parent();
+        var attr = $("#fk-@pos-modal-@(inter_n_m_Relations_Column.Name)").attr("required");
+        if (typeof attr !== typeof undefined && attr !== false) {
+            if($("#fk-@pos-modal-@(inter_n_m_Relations_Column.Name)").val() == undefined || $("#fk-@pos-modal-@(inter_n_m_Relations_Column.Name)").val().trim() == ""){
+                $(parent).addClass("has-error");
+                $("#fk-@pos-modal-@(inter_n_m_Relations_Column.Name)-collapse-div").collapse("show");
+                if($(parent).hasClass("has-success")){
+                    $(parent).removeClass("has-success");
+                }
+            }else{
+                $(parent).addClass("has-success");
+                $("#fk-@pos-modal-@(inter_n_m_Relations_Column.Name)-collapse-div").collapse("hide");
+                if($(parent).hasClass("has-error")){
+                    $(parent).removeClass("has-error");
+                }
+            }
+        }else{
+            $(parent).addClass("has-success");
+            $("#fk-@pos-modal-@(inter_n_m_Relations_Column.Name)-collapse-div").collapse("hide");
+            if($(parent).hasClass("has-error")){
+                $(parent).removeClass("has-error");
+            }
+        }
+    });
+});
+                    </text>
+                        }
+                    }
+
+var fk_table_@pos = null;
+var isHere_@pos = false;
+var filters_@(pos) = [];
+var fk_modal_table_@pos = null;
+var isHere_modal_@pos = false;
+var filters_modal_@(pos) = [];
+function add_fk_@(pos)() {
+
+    var tmp = fk_modal_table_@(pos).row('.selected');
+    var keep = true;
+    if(tmp.length == 0){
+        var div = $("#fk-@pos-modal-table").closest(".form-group");
+        $(div).addClass("has-error");
+        $("#fk-@pos-modal-collapse-div").collapse("show");
+        keep = false;
+    }
+    var inputs = $("#fk-@pos-modal").find("input");
+    for (var i = 0; i < inputs.length; i++) {
+        var attr = $(inputs[i]).attr("required");
+        if (typeof attr !== typeof undefined && attr !== false) {
+            var parent = $(inputs[i]).parent();
+            if($(inputs[i]).val() == undefined || $(inputs[i]).val().trim() == ""){
+                $(parent).addClass("has-error");
+                $(parent).find(".collapse").collapse("show");
+                if($(parent).hasClass("has-success")){
+                    $(parent).removeClass("has-success");
+                }
+                keep = false;
+            }else{
+                $(parent).addClass("has-success");
+                $(parent).find(".collapse").collapse("hide");
+                if($(parent).hasClass("has-error")){
+                    $(parent).removeClass("has-error");
+                }
+            }
+        }
+    }
+    if(keep == false){
+        return;
+    }
+
+    $("#fk-@pos-modal").modal("hide");
+    var object = fk_modal_table_@(pos).rows('.selected').data()[0];
+    @for (int i = 0; i < inter_n_m_columnNames.Count; i++)
+        {
+        <text>object["@(inter_n_m_columnNames[i])"] = $("#fk-@pos-modal").find("[name='@(inter_n_m_columnNames[i])']").val()</text>
+        }
+    var num = $("#fk-@pos-inputs").children().length;
+    object["num"] = num;
+    object["exists"] = false;
+    fk_table_@(pos).row.add(object).draw(false);;
+    var html = `
+            @("<")div id= "fk-@pos-input-` + num + `" >
+                @for (int i = 0; i < inter_n_m_columnNames.Count; i++)
+                {
+                    <text>@("<input") type="hidden" name= "@(inter_n_m_Relations[pos].Name)_list[` + num + `].@(inter_n_m_columnNames[i])" columnName="@(inter_n_m_columnNames[i])"  value= "` + object["@(inter_n_m_columnNames[i])"] + `" /></text>
+                }
+                @("<input") type="hidden" name= "@(inter_n_m_Relations[pos].Name)_list[` + num + `].@(inter_n_m_Relation_externColumnName[pos])" columnName="@(inter_n_m_Relation_externColumnName[pos])" value= "` + object["@(inter_n_m_Relations[pos].PrimaryKey[0])"] + `" />
+            @("<")/div>
+`;
+    $("#fk-@pos-inputs").append(html);
+}
+function remove_fk_@(pos)(element) {
+    var row = $(element).closest("tr");
+    var object = fk_table_@(pos).rows(row).data()[0];
+    if(object["exists"] == true){
+        var number = $("#fk-@pos-remove-inputs").children().length;
+        $("#fk-@pos-remove-inputs").append('@("<input") type="hidden" name="@(inter_n_m_Relations[pos].Name)_remove_list['+number+']" value="'+object["@(inter_n_m_Relations[pos].Name)Id"]+'"/>');
+    }
+    $("#fk-@pos-input-" + object["num"]).remove();
+    init_fk_inputs_@(pos)();
+    fk_table_@(pos).row(row).remove().draw(false);
+}
+function init_fk_inputs_@(pos)() {
+    var inputDivs = $("#fk-@pos-inputs").children();
+    for (var i = 0; i < inputDivs.length; i++) {
+        $(inputDivs[i]).attr("id", "fk-@pos-input-" + i);
+        var inputs = $(inputDivs[i]).children();
+        for (var j = 0; j < inputs.length; j++) {
+            $(inputs[j]).attr("name", "@(inter_n_m_Relations[pos].Name)_list[" + i + "]." + $(inputs[j]).attr("columnName"));
+        }
+    }
+}
+function deleteObj_@(pos)(Id) {
+
+}
+function reinitFilters_@(pos)() {
+    $('#table-fk-@pos thead tr:last-child th input').each(function (index, value) {
+        $(this).val('').removeClass('colorFilter');
+    });
+    $('#table-fk-@pos tfoot tr th input').each(function (index, value) {
+        $(this).val('');
+    });
+    $('#customFilterInput-@pos').val('');
+    fk_table_@(pos).search('').columns().search('').draw();
+}
+function initFilters_@(pos)() {
+    $('#table-fk-@pos thead tr:last-child th input').each(function (index, value) {
+        var i = index;
+        if (index < 11) {
+            i += 3;
+                        @("")
+            $(this).val(filters_@(pos)[i]).keyup();
+        }
+        else {
+            $(this).val('');
+        }
+    });
+}
+function displayInSearchInput_@(pos)(index, obj) {
+    $('#table-fk-@pos tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+    if (obj.value != "") {
+        $(obj).addClass("colorFilter");
+
+    } else {
+        $(obj).removeClass("colorFilter");
+    }
+}
+function reinitFilters_modal_@(pos)() {
+    $('#fk-@pos-modal-table thead tr:last-child th input').each(function (index, value) {
+        $(this).val('').removeClass('colorFilter');
+    });
+    $('#fk-@pos-modal-table tfoot tr th input').each(function (index, value) {
+        $(this).val('');
+    });
+    $('#customFilterInput-modal-@pos').val('');
+    fk_modal_table_@(pos).search('').columns().search('').draw();
+}
+function initFilters_modal_@(pos)() {
+    $('#fk-@pos-modal-table thead tr:last-child th input').each(function (index, value) {
+        var i = index;
+        if (index < 11) {
+            i += 3;
+                        @("")
+            $(this).val(filters_modal_@(pos)[i]).keyup();
+        }
+        else {
+            $(this).val('');
+        }
+    });
+}
+function displayInSearchInput_modal_@(pos)(index, obj) {
+    $('#fk-@pos-modal-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+    if (obj.value != "") {
+        $(obj).addClass("colorFilter");
+
+    } else {
+        $(obj).removeClass("colorFilter");
+    }
+}
+
+
+
+$(function () {
+
+    $("#btnResetFilters-@pos").click(function(event){
+        event.preventDefault();
+        reinitFilters_@(pos)();
+    })
+    $("#btnResetFilters-modal-@pos").click(function(event){
+        event.preventDefault();
+        reinitFilters_modal_@(pos)();
+    })
+    $('#table-fk-@pos thead #ViewDatas-table-input th[search]').each(function () {
+        var title = $(this).text();
+        $(this).html('@("<input") type="text" placeholder="Recherche ' + title + '" />');
+    });
+    $('#btnResetFilters-@pos').on('click', function (e) {
+        reinitFilters_@(pos)();
+    })
+    $("#add-@pos").click(function () {
+        $("#fk-@pos-modal").find("input").val("");
+        if (isHere_modal_@(pos)) {
+            fk_modal_table_@(pos).$('tr.selected').removeClass('selected');
+            reinitFilters_modal_@(pos)();
+        }
+        $("#fk-@pos-modal").modal("show");
+    })
+
+    $('#fk-@pos-modal-table thead #ViewDatas-table-input th[search]').each(function () {
+        var title = $(this).text();
+        $(this).html('@("<input") type="text" placeholder="Recherche ' + title + '" />');
+    });
+    $('#btnResetFilters-modal-@pos').on('click', function (e) {
+        reinitFilters_modal_@(pos)();
+    })
+    $("#add-modal-@(pos)").click(function () {
+        add_fk_@(pos)();
+    })
+    fk_table_@pos = $('#table-fk-@pos').DataTable({
+        data: {},
+        "pageLength": 100,
+        dom: "rtp",
+        "bDestroy": true,
+        "bStateSave": true,
+        //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+        "orderCellsTop": true,
+        "language": {
+            "sProcessing": "Traitement en cours...",
+            "sSearch": "Rechercher&nbsp;:",
+            "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+            "sInfo": "@("<span class='Total'>Total </span><span class='TotalNumber'>_MAX_ &eacute;l&eacute;ment(s)</span>")",
+            "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+            "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+            "sInfoPostFix": "",
+            "sLoadingRecords": "Chargement en cours...",
+            "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+            "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+            "oPaginate": {
+                "sFirst": "Premier",
+                "sPrevious": "Pr&eacute;c&eacute;dent",
+                "sNext": "Suivant",
+                "sLast": "Dernier"
+            },
+            "oAria": {
+                "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+            },
+        },
+        "columns": [
+            @for (int i = 0; i < columnNames.Count; i++)
+                {
+                    <text>{ "sClass": "", "sTitle": "@(columnNames[i])", "mData": "@(columnNames[i])", "sDefaultContent": "-", "bVisible": true },</text>
+                }
+            { "sClass": "", className: "ActionCell CenterAlignCol", "sTitle": "Actions", "mData": function (source, type, val) {
+                var html = `
+            @("<")span class="fa-stack PictoContainer" data-toggle="tooltip" data-placement="left" title="" data-original-title="Supprimer">
+                @("<")i class="fa fa-square fa-stack-2x Wrap">@("<")/i>
+                @("<")i class ="fa fa-trash fa-stack-1x Content btnDatatableSuprr" onclick="remove_fk_@(pos)(this)">@("<")/i>
+            @("<")/span>`;
+                return html;
+            }, "bVisible": true
+            },
+    //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+    //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "@("<")a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "@("<")/a>"; }, "bVisible": true, "sWidth": "10%" },
+        ],
+        "fnCreatedRow": function (nRow, aData, iDataIndex) {
+        },
+        "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+            //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+            return nRow;
+        },
+        "initComplete": function (settings) {
+            // Search custom input
+            oTable_@(pos) = $('#table-fk-@pos').DataTable();
+            $('#customFilterInput-@pos').keyup(function () {
+                oTable_@(pos).search($(this).val()).draw();
+            })
+            //Add search field placeholder
+            $('#table-fk-@pos' + "_filter input").attr("placeholder", "Rechercher...");
+            $("#table-fk-@pos").DataTable().columns.adjust().draw()
+            // Add search icon
+            $('#table-fk-@pos' + "_filter label").append("@("<")"+"i class ='fa fa-search SearchIcon'>");
+            $('#table-fk-@pos' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+            $('#table-fk-@pos' + "_filter input").blur(function () {
+                ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+            });
+            // Tooltip initialization
+            @@("$(\"[data-toggle=tooltip]\").tooltip();")
+
+            if (!isHere_@pos) {
+                $('#table-fk-@pos thead').append('@("<")'+'tr>');
+                oTable_@(pos).columns().every(function () {
+                    $('#table-fk-@pos thead tr:last-child').append('@("<")'+'tr>');
+                    isHere_@pos = true;
+                });
+            }
+            // Ajout d'un champ de recherche pour chaque colonne
+            $('#table-fk-@pos thead tr:last-child th').each(function (index, value) {
+                var i = index + 1;
+                $(this).html('@("<input") type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_@(pos)(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+            });
+            initFilters_@(pos)();
+
+        },
+        "fnStateLoaded": function (oSettings, oData) {
+            $.each(oData.columns, function (index, value) {
+                filters_@(pos).push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+            });
+        }
+    });
+
+    // Ajout d'un champ de recherche pour chaque colonne
+    $('#table-fk-@pos tfoot tr th').each(function () {
+        $(this).html('@("<")input type="text" placeholder="Rechercher..." />');
+    });
+
+    fk_table_@(pos).columns().every(function () {
+        var that = this;
+        $('input', this.footer()).on('keyup change', function () {
+            if (that.search() !== this.value) {
+                that
+                    .search(this.value)
+                    .draw();
+            }
+        });
+    });
+
+    $.ajax({
+        url: '/@(n_m_Relations[pos].Name)/GetAll@(n_m_Relations[pos].Name)', // La ressource cibl&eacute;e
+        type: 'POST', // Le type de la requête HTTP.
+        data: {},
+        dataType: "json",
+        @("success: function (res) {")
+            var data = res.data;
+            @("for (var i = 0; i < data.length; i++) {")
+                @foreach (Column columnTmp in n_m_Relations[pos].Columns)
+                {
+                    <text>@("//") @("data[i].")@(columnTmp.Name)</text>
+                    if(columnTmp.Type == CRUDGenerator.Database.Type.Date)
+                    {
+                        <text>
+                            data[i]["@(columnTmp.Name)"] = (new Date(data[i]["@(columnTmp.Name)"])).format("dd/mm/yy");
+                        </text>
+                    }else if (columnTmp.Type == CRUDGenerator.Database.Type.Datetime)
+                    {
+                        <text>
+                            data[i]["@(columnTmp.Name)"] = (new Date(data[i]["@(columnTmp.Name)"])).format("dd/mm/yy HH:MM");
+                        </text>
+                    }
+                }
+            @("}")
+
+
+            fk_modal_table_@pos = $('#fk-@pos-modal-table').DataTable({
+                data: data,
+                "pageLength": 100,
+                dom: "rtp",
+                "bDestroy": true,
+                "bStateSave": true,
+                //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                "orderCellsTop": true,
+                "language": {
+                    "sProcessing": "Traitement en cours...",
+                    "sSearch": "Rechercher&nbsp;:",
+                    "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                    "sInfo": "@("<span class='Total'>Total </span><span class='TotalNumber'>_MAX_ &eacute;l&eacute;ment(s)</span>")",
+                    "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                    "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                    "sInfoPostFix": "",
+                    "sLoadingRecords": "Chargement en cours...",
+                    "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                    "oPaginate": {
+                        "sFirst": "Premier",
+                        "sPrevious": "Pr&eacute;c&eacute;dent",
+                        "sNext": "Suivant",
+                        "sLast": "Dernier"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                    },
+                },
+                "columns": [
+                    @for (int i = 0; i < n_m_Relations[pos].Columns.Count; i++)
+                        {
+                            <text>{ "sClass": "", "sTitle": "@(n_m_Relations[pos].Columns[i].Name)", "mData": "@(n_m_Relations[pos].Columns[i].Name)", "sDefaultContent": "-", "bVisible": true },</text>
+                        }
+                    //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                    //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "@("<")a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "@("<")/a>"; }, "bVisible": true, "sWidth": "10%" },
+                ],
+                "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                    return nRow;
+                },
+                "initComplete": function (settings) {
+                    // Search custom input
+                    oTable_modal_@(pos) = $('#fk-@pos-modal-table').DataTable();
+                    $('#customFilterInput-modal-@pos').keyup(function () {
+                        oTable_modal_@(pos).search($(this).val()).draw();
+                    })
+                    //Add search field placeholder
+                    $('#fk-@pos-modal-table' + "_filter input").attr("placeholder", "Rechercher...");
+                    $("#fk-@pos-modal-table").DataTable().columns.adjust().draw()
+                    // Add search icon
+                    $('#fk-@pos-modal-table' + "_filter label").append("@("<")"+"i class ='fa fa-search SearchIcon'>");
+                    $('#fk-@pos-modal-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                    $('#fk-@pos-modal-table' + "_filter input").blur(function () {
+                        ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                    });
+                    // Tooltip initialization
+                    @@("$(\"[data-toggle=tooltip]\").tooltip();")
+
+                    if (!isHere_modal_@pos) {
+                        $('#fk-@pos-modal-table thead').append('@("<")'+'tr>');
+                        oTable_modal_@(pos).columns().every(function () {
+                            $('#fk-@pos-modal-table thead tr:last-child').append('@("<")'+'th>');
+                            isHere_modal_@pos = true;
+                        });
+                    }
+                    // Ajout d'un champ de recherche pour chaque colonne
+                    $('#fk-@pos-modal-table thead tr:last-child th').each(function (index, value) {
+                        var i = index + 1;
+                        $(this).html('@("<")input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_modal_@(pos)(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                    });
+                    initFilters_modal_@(pos)();
+
+                },
+                "fnStateLoaded": function (oSettings, oData) {
+                    $.each(oData.columns, function (index, value) {
+                        filters_modal_@(pos).push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                    });
+                }
+            });
+
+            // Ajout d'un champ de recherche pour chaque colonne
+            $('#fk-@pos-modal-table tfoot tr th').each(function () {
+                $(this).html('@("<")input type="text" placeholder="Rechercher..." />');
+            });
+
+            fk_modal_table_@(pos).columns().every(function () {
+                var that = this;
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
+                        that
+                            .search(this.value)
+                            .draw();
+                    }
+                });
+            });
+
+
+            $('#fk-@pos-modal-table tbody').on('click', 'tr', function () {
+                var div = $(this).closest(".form-group");
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                    $(div).addClass("has-error");
+                    if($(div).hasClass("has-success")){
+                        $(div).removeClass("has-success");
+                    }
+                    $("#fk-@pos-modal-collapse-div").collapse("show");
+                }
+                else {
+                    fk_modal_table_@(pos).$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                    $(div).addClass("has-success");
+                    if($(div).hasClass("has-error")){
+                        $(div).removeClass("has-error");
+                    }
+                    $("#fk-@pos-modal-collapse-div").collapse("hide");
+                }
+            });
+
+            $.ajax({
+                url: '/@(inter_n_m_Relations[pos].Name)/findById@(table.Name)', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: {Id@(table.Name): $("#@(smallTableName)-@(table.PrimaryKey[0])").val()},
+                dataType: "json",
+                success: function (data2) {
+                    var activeValues = [];
+                    for (var i = 0; i < data2.length; i++) {
+                        @foreach (Column columnTmp in inter_n_m_Relations[pos].Columns)
+                            {
+                                if(columnTmp.Type == CRUDGenerator.Database.Type.Date)
+                                {
+                                    <text>
+                        data2[i]["@(columnTmp.Name)"] = (new Date(data2[i]["@(columnTmp.Name)"])).format("dd/mm/yy");
+                        </text>
+                                }else if (columnTmp.Type == CRUDGenerator.Database.Type.Datetime)
+                                {
+                                    <text>
+                        data2[i]["@(columnTmp.Name)"] = (new Date(data2[i]["@(columnTmp.Name)"])).format("dd/mm/yy HH:MM");
+                        </text>
+                                }
+                            }
+                        var dataRow = undefined;
+                        for (var j = 0; j < data.length && dataRow == undefined; j++) {
+                            if(data[j]["@(n_m_Relations[pos].PrimaryKey[0])"] == data2[i]["@(inter_n_m_Relation_externColumnName[pos])"]){
+                                dataRow = data[j];
+                            }
+                        }
+                        @for (int i = 0; i < inter_n_m_columnNames.Count; i++)
+                        {
+                            <text>dataRow["@(inter_n_m_columnNames[i])"] = data2[i]["@(inter_n_m_columnNames[i])"];</text>
+                        }
+                        dataRow["@(inter_n_m_Relations[pos].Name)Id"] = data2[i]["@(inter_n_m_Relations[pos].PrimaryKey[0])"]
+                        dataRow["num"] = i;
+                        dataRow["exists"] = true;
+                        fk_table_@(pos).row.add(dataRow);
+                    }
+                    fk_table_@(pos).draw(false);
+                    $("#fk-@pos").val(activeValues);
+                    $("#fk-@pos").trigger("change");
+                    $("#fk-@pos").trigger("chosen:updated");
+                }
+            });
+        }
+    });
+});
+                    </text>
+                    }
+                </text>
+                }
+            </text>
+                        }
+
+
+$(function () {
+    $(".datepicker").datepicker({
+        dateFormat: "dd/mm/yy",
+        regional: "fr"
+    });
+
+    $(".datetimepicker").datetimepicker({
+        dateFormat: "dd/mm/yy",
+        regional: "fr",
+        timeFormat: 'HH:mm'
+    });
+
+    $("#form-submit").click(function(event){
+        event.stopPropagation();
+        event.preventDefault();
+        var keep = true;
+        @foreach (Column column in table.Columns)
+        {
+            if(column.Type != CRUDGenerator.Database.Type.Boolean)
+            {
+        <text>$("#@(column.Name)").trigger("change");
+        if($("#@(column.Name)").closest(".form-group").hasClass("has-error")){
+            keep = false;
+        }</text>
+            }
+        }
+        if(keep == false){
+            return;
+        }
+        var dataArray = $("#modifyData-form").serializeArray();
+        var dataToSend = {};
+        for (var i = 0; i < dataArray.length; i++) {
+            var name = dataArray[i].name;
+            var value = dataArray[i].value;
+            if(value != undefined && value.trim() != "" ){
+                dataToSend[name] = value.trim();
+            }
+        }
+        $.ajax({
+            url: '/@(bigTableName)/Update@(bigTableName)', // La ressource cibl&eacute;e
+            type: 'POST', // Le type de la requête HTTP.
+            data: dataToSend,
+            dataType: "json",
+            success: function (res) {
+                var data = res.data;
+                if(res.status){
+                    toastr.success(res.message)
+                    format@(bigTableName)(data["data"]);
+                    var tableData = listTable.rows()[0];
+                    var index = -1;
+                    for (var i = 0; i < tableData.length && index == -1 ; i++) {
+                        var dataTmp = listTable.row(tableData[i]).data();
+                        if (dataTmp["@(table.PrimaryKey[0])"] == data["data"]["@(table.PrimaryKey[0])"]) {
+                            index = tableData[i];
+                        }
+                    }
+                    listTable.row(index).remove();
+                    listTable.row.add(data["data"]);
+                    listTable.draw();
+                }else{
+                    toastr.error(res.message);
+                }
+            }
+        });
+        $("#modal").modal("hide");
+    })
+});

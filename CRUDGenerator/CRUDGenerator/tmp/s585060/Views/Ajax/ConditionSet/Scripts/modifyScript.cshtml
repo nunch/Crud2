@@ -1,0 +1,506 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+ConditionSet conditionSet = (ConditionSet) ViewBag.conditionSet;
+    
+        bool useChosen_on_fk_fk_ConditionSet_0 = true;
+    
+}
+
+
+                
+                    $(function(){
+                        $("#Id_Condition").change(function(){
+                            var attr = $("#Id_Condition").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Id_Condition").parent();
+                                if($("#Id_Condition").val() == "" || $("#Id_Condition").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Id_Condition-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Id_Condition-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Id_Condition-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Champ").change(function(){
+                            var attr = $("#Champ").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Champ").parent();
+                                if($("#Champ").val() == "" || $("#Champ").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Champ-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Champ-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Champ-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Operateur").change(function(){
+                            var attr = $("#Operateur").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Operateur").parent();
+                                if($("#Operateur").val() == "" || $("#Operateur").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Operateur-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Operateur-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Operateur-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Valeur").change(function(){
+                            var attr = $("#Valeur").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Valeur").parent();
+                                if($("#Valeur").val() == "" || $("#Valeur").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Valeur-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Valeur-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Valeur-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#IsSuppr").change(function(){
+                            var attr = $("#IsSuppr").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#IsSuppr").parent();
+                                if($("#IsSuppr").val() == "" || $("#IsSuppr").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#IsSuppr-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#IsSuppr-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#IsSuppr-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    @if(useChosen_on_fk_fk_ConditionSet_0)
+                    {
+                        <text>
+                                $(function(){
+                                    $("#form-cancel").click(function(){
+                                        $("#modal").modal("hide");
+                                    });
+                                    var attr = $("#Id_ExceptionStatut").attr("required");
+                                    if (typeof attr !== typeof undefined && attr !== false) {
+                                        $("#Id_ExceptionStatut").change(function(){
+                                            var parent = $("#Id_ExceptionStatut").parent();
+                                            if($("#Id_ExceptionStatut").val() == "" || $("#Id_ExceptionStatut").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-0-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-0-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        })
+                                    }
+                                    $.ajax({
+                                        url: '/ajax/ExceptionStatutSet/findAll', // La ressource cibl&eacute;e
+                                        type: 'POST', // Le type de la requête HTTP.
+                                        data: {},
+                                        dataType: "json",
+                                        success: function (data) {
+                                            for (var i = 0; i < data.length; i++) {
+                                                                                                    //data[i]["Id_ExceptionStatut"]
+                                                    //data[i]["Titre"]
+                                                    //data[i]["AxeAnalyse"]
+                                                    //data[i]["Source"]
+                                                    //data[i]["IsSuppr"]
+                                                    //data[i]["Description"]
+                                                $("#Id_ExceptionStatut").append("<option value='" + data[i].Id_ExceptionStatut + "'>" + data[i].Id_ExceptionStatut + "</option>");
+                                            }
+                                            //$("#@(column.Name)").val("@@@(smallTableName).@(column.Name)");
+                                            $("#@(column.Name)").val($("#@(column.Name)-object").val());
+
+                                            $("#@(column.Name)").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                        }
+                                    });
+                                })
+                        </text>
+
+                    }else
+                    {
+                                                var fk_0_table = null;
+                                                var isHere_fk_0 = false;
+                                                var filters_fk_0 = [];
+
+                                                function reinitFilters_fk_0() {
+                                                    $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                                        $(this).val('').removeClass('colorFilter');
+                                                    });
+                                                    $('#fk-0-table tfoot tr th input').each(function (index, value) {
+                                                        $(this).val('');
+                                                    });
+                                                    $('#customFilterInput-fk-0').val('');
+                                                    fk_0_table.search('').columns().search('').draw();
+                                                }
+                                                function initFilters_fk_0() {
+                                                    $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                                        var i = index;
+                                                        if (index < 11) {
+                                                            i += 3;
+                                                            $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                                        }
+                                                        else {
+                                                            $(this).val('');
+                                                        }
+                                                    });
+                                                }
+                                                function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                                    $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                                    if (obj.value != "") {
+                                                        $(obj).addClass("colorFilter");
+
+                                                    } else {
+                                                        $(obj).removeClass("colorFilter");
+                                                    }
+                                                }
+                                                $(function(){
+
+                                                    $("#btnResetFilters-fk-0").click(function(event){
+                                                        event.preventDefault();
+                                                        reinitFilters_fk_0();
+                                                    })
+                                                    $("#Id_ExceptionStatut").change(function(){
+                                                        var parent = $("#Id_ExceptionStatut").parent();
+                                                        var attr = $("#Id_ExceptionStatut").attr("required");
+                                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                                            if($("#Id_ExceptionStatut").val() == "" || $("#Id_ExceptionStatut").val() == null){
+                                                                $(parent).addClass("has-error");
+                                                                $("#fk-0-div-collapse-div").collapse("show");
+                                                                if($(parent).hasClass("has-success")){
+                                                                    $(parent).removeClass("has-success");
+                                                                }
+                                                            }else{
+                                                                $(parent).addClass("has-success");
+                                                                $("#fk-0-div-collapse-div").collapse("hide");
+                                                                if($(parent).hasClass("has-error")){
+                                                                    $(parent).removeClass("has-error");
+                                                                }
+                                                            }
+                                                        }else{
+                                                            $(parent).addClass("has-success");
+                                                            $("#fk-0-div-collapse-div").collapse("hide");
+                                                            if($(parent).hasClass("has-error")){
+                                                                $(parent).removeClass("has-error");
+                                                            }
+                                                        }
+                                                    })
+
+                                                    $.ajax({
+                                                        url: '/ajax/ExceptionStatutSet/findAll', // La ressource cibl&eacute;e
+                                                        type: 'POST', // Le type de la requête HTTP.
+                                                        data: {},
+                                                        dataType: "json",
+                                                        success: function (data) {
+                                                                // data[i].Id_ExceptionStatut
+                                                                // data[i].Titre
+                                                                // data[i].AxeAnalyse
+                                                                // data[i].Source
+                                                                // data[i].IsSuppr
+                                                                // data[i].Description
+
+                                                            fk_0_table = $('#fk-0-table').DataTable({
+                                                                data: data,
+                                                                "pageLength": 100,
+                                                                dom: "rtp",
+                                                                "bDestroy": true,
+                                                                "bStateSave": true,
+                                                                //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                                                "orderCellsTop": true,
+                                                                "language": {
+                                                                    "sProcessing": "Traitement en cours...",
+                                                                    "sSearch": "Rechercher&nbsp;:",
+                                                                    "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                                    "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                                    "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                                    "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                                    "sInfoPostFix": "",
+                                                                    "sLoadingRecords": "Chargement en cours...",
+                                                                    "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                                    "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                                    "oPaginate": {
+                                                                        "sFirst": "Premier",
+                                                                        "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                                        "sNext": "Suivant",
+                                                                        "sLast": "Dernier"
+                                                                    },
+                                                                    "oAria": {
+                                                                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                                    },
+                                                                },
+                                                                "columns": [
+                                                                        { "sClass": "", "sTitle": "Id_ExceptionStatut", "mData": "Id_ExceptionStatut", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "Titre", "mData": "Titre", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "AxeAnalyse", "mData": "AxeAnalyse", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "Source", "mData": "Source", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "Description", "mData": "Description", "sDefaultContent": "-", "bVisible": true },
+                                                                    //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                                    //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a")>"; }, "bVisible": true, "sWidth": "10%" },
+                                                                ],
+                                                                "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                                                },
+                                                                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                                    //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                                    return nRow;
+                                                                },
+                                                                "initComplete": function (settings) {
+                                                                    // Search custom input
+                                                                    oTable_fk_0 = $('#fk-0-table').DataTable();
+                                                                    $('#customFilterInput-fk-0').keyup(function () {
+                                                                        oTable_fk_0.search($(this).val()).draw();
+                                                                    })
+                                                                    //Add search field placeholder
+                                                                    $('#fk-0-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                                    $("#fk-0-table").DataTable().columns.adjust().draw()
+                                                                    // Add search icon
+                                                                    $('#fk-0-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                                    $('#fk-0-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                                    $('#fk-0-table' + "_filter input").blur(function () {
+                                                                        ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                                    });
+                                                                    // Tooltip initialization
+                                                                    $("[data-toggle=tooltip]").tooltip();
+
+                                                                    if (!isHere_fk_0) {
+                                                                        $('#fk-0-table thead').append('<tr>');
+                                                                        oTable_fk_0.columns().every(function () {
+                                                                            $('#fk-0-table thead tr:last-child').append('<th>');
+                                                                            isHere_fk_0 = true;
+                                                                        });
+                                                                    }
+                                                                    // Ajout d'un champ de recherche pour chaque colonne
+                                                                    $('#fk-0-table thead tr:last-child th').each(function (index, value) {
+                                                                        var i = index + 1;
+                                                                        $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_0(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                                    });
+                                                                    initFilters_fk_0();
+
+                                                                },
+                                                                "fnStateLoaded": function (oSettings, oData) {
+                                                                    $.each(oData.columns, function (index, value) {
+                                                                        filters_fk_0.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                                    });
+                                                                }
+                                                            });
+
+                                                            // Ajout d'un champ de recherche pour chaque colonne
+                                                            $('#fk-0-table tfoot tr th').each(function () {
+                                                                $(this).html('<input type ="text" placeholder="Rechercher..." />');
+                                                            });
+
+                                                            fk_0_table.columns().every(function () {
+                                                                var that = this;
+                                                                $('input', this.footer()).on('keyup change', function () {
+                                                                    if (that.search() !== this.value) {
+                                                                        that
+                                                                            .search(this.value)
+                                                                            .draw();
+                                                                    }
+                                                                });
+                                                            });
+
+
+
+                                                            $('#fk-0-table tbody').on('click', 'tr', function () {
+                                                                if ($(this).hasClass('selected')) {
+                                                                    $(this).removeClass('selected');
+                                                                    $("#Id_ExceptionStatut").val("");
+                                                                    $("#Id_ExceptionStatut").trigger("change");
+                                                                }
+                                                                else {
+                                                                    fk_0_table.$('tr.selected').removeClass('selected');
+                                                                    $(this).addClass('selected');
+                                                                    var datatmp = fk_0_table.row(this).data();
+                                                                    $("#Id_ExceptionStatut").val(""+datatmp["Id_ExceptionStatut"]);
+                                                                    $("#Id_ExceptionStatut").trigger("change");
+                                                                }
+                                                            });
+                                                            $("#Id_ExceptionStatut").val($("#Id_ExceptionStatut").val());
+                                                            var trs = $('#fk-0-table tbody tr');
+                                                            for (var i = 0; i < trs.length; i++) {
+                                                                var datatmp = fk_0_table.row($(trs[i])).data();
+                                                                if(datatmp["Id_ExceptionStatut"] == $("#Id_ExceptionStatut").val()){
+                                                                    $(trs[i]).trigger("click");
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                })
+                    }
+                
+        
+
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr"
+        });
+
+        $(".datetimepicker").datetimepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr",
+            timeFormat: 'HH:mm'
+        });
+
+        $("#form-submit").click(function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var keep = true;
+            $("#Id_Condition").trigger("change");
+            if($("#Id_Condition").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Champ").trigger("change");
+            if($("#Champ").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Operateur").trigger("change");
+            if($("#Operateur").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Valeur").trigger("change");
+            if($("#Valeur").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#IsSuppr").trigger("change");
+            if($("#IsSuppr").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Id_ExceptionStatut").trigger("change");
+            if($("#Id_ExceptionStatut").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            if(keep == false){
+                return;
+            }
+            var dataArray = $("#modifyData-form").serializeArray();
+            var dataToSend = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                var name = dataArray[i].name;
+                var value = dataArray[i].value;
+                if(value != "" && value != null){
+                    dataToSend[name] = value;
+                }
+            }
+            $.ajax({
+                url: '/ConditionSet/update', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    //window.location = "/ajax/ConditionSet/list";
+                    if (data["success"] == "true") {
+                        toastr.success("Modification réussie");
+                        formatConditionSet(data["conditionSet"]);
+                        var tableData = listTable.rows()[0];
+                        var index = -1;
+                        for (var i = 0; i < tableData.length && index == -1 ; i++) {
+                            var dataTmp = listTable.row(tableData[i]).data();
+                            if (dataTmp["Id_Condition"] == data["conditionSet"]["Id_Condition"]) {
+                                index = tableData[i];
+                            }
+                        }
+                        listTable.row(index).remove();
+                        listTable.row.add(data["conditionSet"]);
+                        listTable.draw();
+                    }else{
+                        toastr.error("La modification a échouée");
+                        console.log(data["errorMessage"]);
+                    }
+                }
+            });
+            $("#modal").modal("hide");
+        })
+    });

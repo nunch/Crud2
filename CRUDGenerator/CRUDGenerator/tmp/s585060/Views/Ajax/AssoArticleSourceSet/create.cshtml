@@ -1,0 +1,135 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+    
+        bool useChosen_on_fk_fk_AssoArticleSourceSet_0 = true;
+    
+    
+        bool useChosen_on_fk_fk_AssoArticleSourceSet_1 = true;
+    
+}
+
+
+<form method="post" id="insertData-form" action="/AssoArticleSourceSet/create">
+    <fieldset>
+        <legend>Ajouter AssoArticleSourceSet</legend>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsSuppr</label>
+                            <input type="number" id="IsSuppr" name="IsSuppr" class="form-control" required=required  />
+                    <div id="IsSuppr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsSuppr</p>
+                    </div>
+                </div>
+                
+                    @if(useChosen_on_fk_fk_AssoArticleSourceSet_0)
+                    {
+                    <div class="form-group" id="fk-0-div">
+                        <label class="control-label">Id_Article</label>
+                        <select data-placeholder="Choisir Id_Article" class="chosen-select" id="Id_Article" name="Id_Article" >
+                            <option disabled selected>Choisir Id_Article</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Article</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-0-div" class="form-group">
+                        <label class="control-label">Id_Article</label>
+                        <input type="hidden" name="Id_Article" id="Id_Article"  />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-0" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-0" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-0" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-0-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-0-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_Article</th>
+                                        <th>PN</th>
+                                        <th>SIN</th>
+                                        <th>IsSuppr</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Article</p>
+                        </div>
+                    </div>
+                    }
+                
+                
+                    @if(useChosen_on_fk_fk_AssoArticleSourceSet_1)
+                    {
+                    <div class="form-group" id="fk-1-div">
+                        <label class="control-label">Id_Source</label>
+                        <select data-placeholder="Choisir Id_Source" class="chosen-select" id="Id_Source" name="Id_Source" >
+                            <option disabled selected>Choisir Id_Source</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-1-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Source</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-1-div" class="form-group">
+                        <label class="control-label">Id_Source</label>
+                        <input type="hidden" name="Id_Source" id="Id_Source"  />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-1" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-1" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-1" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-1-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-1-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_Source</th>
+                                        <th>CodeSource</th>
+                                        <th>CodeSite</th>
+                                        <th>IsSuppr</th>
+                                        <th>EcartSource_Source_Id_Ecart</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-1-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Source</p>
+                        </div>
+                    </div>
+                    }
+                
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Ajouter</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+    </fieldset>
+
+</form>
+
+
+<script src="/Scripts/Ajax/AssoArticleSourceSet/create.js"></script>

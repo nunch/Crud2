@@ -1,0 +1,48 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+ArticleSet articleSet = (ArticleSet) ViewBag.articleSet;
+}
+
+
+<form method="post" id="modifyData-form" action="/ArticleSet/update">
+    <fieldset>
+        <legend>Modifier ArticleSet</legend>
+                <input type="hidden" id="Id_Article" name="Id_Article" value="@articleSet.Id_Article" />
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">PN</label>
+                            <input type="text" maxlength="0" id="PN" name="PN" class="form-control" required=required  value="@articleSet.PN" />
+                    <div id="PN-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir PN</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">SIN</label>
+                            <input type="text" maxlength="0" id="SIN" name="SIN" class="form-control" required=required  value="@articleSet.SIN" />
+                    <div id="SIN-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir SIN</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsSuppr</label>
+                            <input type="number" id="IsSuppr" name="IsSuppr" class="form-control" required=required  value="@articleSet.IsSuppr" />
+                    <div id="IsSuppr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsSuppr</p>
+                    </div>
+                </div>
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Modifier</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+
+</fieldset>
+
+</form>
+
+<script src="/Scripts/Ajax/ArticleSet/modify.js"></script>

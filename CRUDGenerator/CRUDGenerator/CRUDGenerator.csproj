@@ -1,0 +1,888 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1C451D49-29BD-4A8D-9326-D37D4575385A}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CRUDGenerator</RootNamespace>
+    <AssemblyName>CRUDGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Mvc.FixedDisplayModes, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.FixedDisplayModes.1.0.0\lib\net40\Microsoft.Web.Mvc.FixedDisplayModes.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.30506.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.0.0\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.30506.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.30506.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.OData, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.OData.4.0.30506\lib\net40\System.Web.Http.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.2.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Data.OData.5.2.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Spatial, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\System.Spatial.5.2.0\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.3.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.3.0\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\SQLManagement\Controllers\HomeController.cs" />
+    <Compile Include="Areas\SQLManagement\SQLManagementAreaRegistration.cs" />
+    <Compile Include="Controllers\ColumnController.cs" />
+    <Compile Include="Controllers\DatabaseController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TableController.cs" />
+    <Compile Include="Controllers\UserDatabasesController.cs" />
+    <Compile Include="Database\Column.cs" />
+    <Compile Include="Database\DatabaseXML.cs" />
+    <Compile Include="Database\ForeignKey.cs" />
+    <Compile Include="Database\Index.cs" />
+    <Compile Include="Database\RootFile.cs" />
+    <Compile Include="Database\Table.cs" />
+    <Compile Include="Database\Type.cs" />
+    <Compile Include="Database\UniqueKey.cs" />
+    <Compile Include="Database\UserDatabases.cs" />
+    <Compile Include="Database\UserDatabasesDAO.cs" />
+    <Compile Include="Database\ValidationVisitor.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQL\HelperSQL.cs" />
+    <Compile Include="Templates\Classes\CS\AbstractDAOGenerator.cs" />
+    <Compile Include="Templates\Classes\CS\BasicFunction.cs" />
+    <Compile Include="Templates\Classes\CS\ClassStructure.cs" />
+    <Compile Include="Templates\Classes\CS\ControllerGenerator.cs" />
+    <Compile Include="Templates\Classes\CS\DAOGenerator.cs" />
+    <Compile Include="Templates\Classes\CS\EntityGenerator.cs" />
+    <Compile Include="Templates\Classes\PHP\AbstractDAOGenerator.cs" />
+    <Compile Include="Templates\Classes\PHP\BasicFunction.cs" />
+    <Compile Include="Templates\Classes\PHP\ClassStructure.cs" />
+    <Compile Include="Templates\Classes\PHP\DAOGenerator.cs" />
+    <Compile Include="Templates\Classes\PHP\EntityGenerator.cs" />
+    <Compile Include="Templates\Scripts\MySQL\TableScriptGenerator.cs" />
+    <Compile Include="Templates\Scripts\SQLServer\TableScriptGenerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-cyborg.css" />
+    <Content Include="Content\bootstrap-cyborg.min.css" />
+    <Content Include="Content\bootstrap-slate.css" />
+    <Content Include="Content\bootstrap-slate.min.css" />
+    <Content Include="Content\datatables.css" />
+    <Content Include="Content\datatables.min.css" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\jquery-ui.css" />
+    <Content Include="Content\themes\base\jquery.ui.accordion.css" />
+    <Content Include="Content\themes\base\jquery.ui.all.css" />
+    <Content Include="Content\themes\base\jquery.ui.autocomplete.css" />
+    <Content Include="Content\themes\base\jquery.ui.base.css" />
+    <Content Include="Content\themes\base\jquery.ui.button.css" />
+    <Content Include="Content\themes\base\jquery.ui.core.css" />
+    <Content Include="Content\themes\base\jquery.ui.datepicker.css" />
+    <Content Include="Content\themes\base\jquery.ui.dialog.css" />
+    <Content Include="Content\themes\base\jquery.ui.progressbar.css" />
+    <Content Include="Content\themes\base\jquery.ui.resizable.css" />
+    <Content Include="Content\themes\base\jquery.ui.selectable.css" />
+    <Content Include="Content\themes\base\jquery.ui.slider.css" />
+    <Content Include="Content\themes\base\jquery.ui.tabs.css" />
+    <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\base\minified\jquery-ui.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.accordion.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.autocomplete.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.button.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.core.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.datepicker.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.dialog.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.progressbar.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.resizable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.selectable.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
+    <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Images\Snecma.png" />
+    <Content Include="Images\SortAscArrow.png" />
+    <Content Include="Images\SortBothArrow.png" />
+    <Content Include="Images\SortDescArrow.png" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.min.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="lib\bootstrap\css\bootstrap.min.css1" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="lib\chosen_v1.5.1\bower.json" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.eot" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.ttf" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.woff" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.woff2" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\FontAwesome.otf" />
+    <Content Include="lib\font-awesome-4.6.1\less\animated.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\bordered-pulled.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\core.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\fixed-width.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\font-awesome.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\icons.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\larger.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\list.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\mixins.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\path.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\rotated-flipped.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\screen-reader.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\stacked.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\variables.less" />
+    <Content Include="lib\font-awesome-4.6.1\scss\font-awesome.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_animated.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_bordered-pulled.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_core.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_fixed-width.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_icons.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_larger.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_list.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_mixins.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_path.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_rotated-flipped.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_screen-reader.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_stacked.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_variables.scss" />
+    <Content Include="lib\sweetalert2\.editorconfig" />
+    <Content Include="lib\sweetalert2\.gitignore" />
+    <Content Include="lib\sweetalert2\.jscs.json" />
+    <Content Include="lib\sweetalert2\.jshintrc" />
+    <Content Include="lib\sweetalert2\.scss-lint.yml" />
+    <Content Include="lib\sweetalert2\.travis.yml" />
+    <Content Include="lib\sweetalert2\bower.json" />
+    <Content Include="lib\sweetalert2\dist\sweetalert2.js" />
+    <Content Include="lib\sweetalert2\example\example.scss" />
+    <Content Include="lib\sweetalert2\LICENSE" />
+    <Content Include="lib\sweetalert2\package.json" />
+    <Content Include="lib\sweetalert2\README.md" />
+    <Content Include="lib\sweetalert2\src\sweetalert2.scss" />
+    <Content Include="lib\sweetalert\.editorconfig" />
+    <Content Include="lib\sweetalert\.gitignore" />
+    <Content Include="lib\sweetalert\.jshintrc" />
+    <Content Include="lib\sweetalert\.travis.yml" />
+    <Content Include="lib\sweetalert\bower.json" />
+    <Content Include="lib\sweetalert\dev\sweetalert.scss" />
+    <Content Include="lib\sweetalert\example\example.scss" />
+    <Content Include="lib\sweetalert\LICENSE" />
+    <Content Include="lib\sweetalert\package.json" />
+    <Content Include="lib\sweetalert\README.md" />
+    <Content Include="lib\sweetalert\themes\facebook\facebook.scss" />
+    <Content Include="lib\sweetalert\themes\google\google.scss" />
+    <Content Include="lib\sweetalert\themes\twitter\twitter.scss" />
+    <Content Include="Scripts\extractDatabase.js" />
+    <Content Include="Scripts\jquery.dataTables.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="tmp\addToArchive\Fonts\fontawesome-webfont.svg" />
+    <Content Include="tmp\addToArchive\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="tmp\addToArchive\Scripts\app\globalUtils.js" />
+    <Content Include="tmp\iborray.sql" />
+    <Content Include="tmp\addToArchive\Images\SortAscArrow.png" />
+    <Content Include="tmp\addToArchive\Images\SortBothArrow.png" />
+    <Content Include="tmp\addToArchive\Images\SortDescArrow.png" />
+    <Content Include="tmp\addToArchive\Images\WhiteLogoSnecma.png" />
+    <Content Include="tmp\lib\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="tmp\lib\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="tmp\addToArchive\Content\lib\bootstrap.css" />
+    <Content Include="tmp\addToArchive\Content\lib\bootstrap.min.css" />
+    <Content Include="tmp\lib\bootstrap\css\bootstrap_cosmo.css" />
+    <Content Include="tmp\lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="tmp\addToArchive\Scripts\lib\bootstrap-tooltip.js" />
+    <Content Include="tmp\addToArchive\Scripts\lib\bootstrap.js" />
+    <Content Include="tmp\addToArchive\Scripts\lib\bootstrap.min.js" />
+    <Content Include="tmp\lib\bootstrap\js\jquery-1.11.1.min.js" />
+    <Content Include="tmp\lib\bootstrap\js\jquery-1.12.1.min.js" />
+    <Content Include="tmp\lib\bootstrap\js\npm.js" />
+    <Content Include="tmp\addToArchive\Content\lib\chosen-sprite%402x.png" />
+    <Content Include="tmp\addToArchive\Content\lib\chosen-sprite.png" />
+    <Content Include="tmp\addToArchive\Content\lib\chosen.css" />
+    <Content Include="tmp\addToArchive\Scripts\lib\chosen.jquery.js" />
+    <Content Include="tmp\addToArchive\Scripts\lib\chosen.jquery.min.js" />
+    <Content Include="tmp\addToArchive\Content\lib\chosen.min.css" />
+    <Content Include="tmp\lib\chosen_v1.5.1\chosen.proto.js" />
+    <Content Include="tmp\lib\chosen_v1.5.1\chosen.proto.min.js" />
+    <Content Include="tmp\lib\chosen_v1.5.1\docsupport\chosen.png" />
+    <Content Include="tmp\lib\chosen_v1.5.1\docsupport\event.simulate.js" />
+    <Content Include="tmp\lib\chosen_v1.5.1\docsupport\oss-credit.png" />
+    <Content Include="tmp\lib\chosen_v1.5.1\docsupport\prism.css" />
+    <Content Include="tmp\lib\chosen_v1.5.1\docsupport\prism.js" />
+    <Content Include="tmp\lib\chosen_v1.5.1\docsupport\style.css" />
+    <Content Include="tmp\lib\chosen_v1.5.1\index.html" />
+    <Content Include="tmp\lib\chosen_v1.5.1\index.proto.html" />
+    <Content Include="tmp\lib\chosen_v1.5.1\options.html" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\css\autoFill.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\css\autoFill.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\css\autoFill.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\css\autoFill.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\css\autoFill.foundation.css" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\css\autoFill.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\css\autoFill.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\css\autoFill.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\js\autoFill.bootstrap.js" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\js\autoFill.bootstrap.min.js" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\js\autoFill.foundation.js" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\js\autoFill.foundation.min.js" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\js\autoFill.jqueryui.js" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\js\autoFill.jqueryui.min.js" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\js\dataTables.autoFill.js" />
+    <Content Include="tmp\lib\DataTables\AutoFill-2.1.2\js\dataTables.autoFill.min.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\buttons.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\buttons.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\buttons.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\buttons.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\buttons.foundation.css" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\buttons.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\buttons.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\buttons.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.bootstrap.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.bootstrap.min.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.colVis.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.colVis.min.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.flash.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.flash.min.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.foundation.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.foundation.min.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.html5.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.html5.min.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.jqueryui.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.jqueryui.min.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.print.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\buttons.print.min.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\dataTables.buttons.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\js\dataTables.buttons.min.js" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\swf\flashExport.swf" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\css\colReorder.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\css\colReorder.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\css\colReorder.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\css\colReorder.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\css\colReorder.foundation.css" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\css\colReorder.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\css\colReorder.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\css\colReorder.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\js\dataTables.colReorder.js" />
+    <Content Include="tmp\lib\DataTables\ColReorder-1.3.2\js\dataTables.colReorder.min.js" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\css\dataTables.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\css\dataTables.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\css\dataTables.foundation.css" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\css\dataTables.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\css\dataTables.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\css\dataTables.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\css\jquery.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\css\jquery.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\css\jquery.dataTables_themeroller.css" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\images\sort_asc.png" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\images\sort_asc_disabled.png" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\images\sort_both.png" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\images\sort_desc.png" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\images\sort_desc_disabled.png" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\js\dataTables.bootstrap.js" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\js\dataTables.bootstrap.min.js" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\js\dataTables.foundation.js" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\js\dataTables.foundation.min.js" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\js\dataTables.jqueryui.js" />
+    <Content Include="tmp\lib\DataTables\DataTables-1.10.12\js\dataTables.jqueryui.min.js" />
+    <Content Include="tmp\addToArchive\Scripts\lib\jquery.dataTables.js" />
+    <Content Include="tmp\addToArchive\Scripts\lib\jquery.dataTables.min.js" />
+    <Content Include="tmp\addToArchive\Content\lib\datatables.css" />
+    <Content Include="tmp\addToArchive\Scripts\lib\datatables.js" />
+    <Content Include="tmp\addToArchive\Content\lib\datatables.min.css" />
+    <Content Include="tmp\addToArchive\Scripts\lib\datatables.min.js" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\css\fixedColumns.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\css\fixedColumns.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\css\fixedColumns.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\css\fixedColumns.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\css\fixedColumns.foundation.css" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\css\fixedColumns.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\css\fixedColumns.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\css\fixedColumns.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\js\dataTables.fixedColumns.js" />
+    <Content Include="tmp\lib\DataTables\FixedColumns-3.2.2\js\dataTables.fixedColumns.min.js" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\css\fixedHeader.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\css\fixedHeader.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\css\fixedHeader.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\css\fixedHeader.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\css\fixedHeader.foundation.css" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\css\fixedHeader.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\css\fixedHeader.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\css\fixedHeader.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\js\dataTables.fixedHeader.js" />
+    <Content Include="tmp\lib\DataTables\FixedHeader-3.1.2\js\dataTables.fixedHeader.min.js" />
+    <Content Include="tmp\lib\DataTables\JSZip-2.5.0\jszip.js" />
+    <Content Include="tmp\lib\DataTables\JSZip-2.5.0\jszip.min.js" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\css\keyTable.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\css\keyTable.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\css\keyTable.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\css\keyTable.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\css\keyTable.foundation.css" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\css\keyTable.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\css\keyTable.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\css\keyTable.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\js\dataTables.keyTable.js" />
+    <Content Include="tmp\lib\DataTables\KeyTable-2.1.3\js\dataTables.keyTable.min.js" />
+    <Content Include="tmp\lib\DataTables\pdfmake-0.1.18\build\pdfmake.js" />
+    <Content Include="tmp\lib\DataTables\pdfmake-0.1.18\build\pdfmake.min.js" />
+    <Content Include="tmp\lib\DataTables\pdfmake-0.1.18\build\vfs_fonts.js" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\css\responsive.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\css\responsive.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\css\responsive.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\css\responsive.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\css\responsive.foundation.css" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\css\responsive.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\css\responsive.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\css\responsive.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\js\dataTables.responsive.js" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\js\dataTables.responsive.min.js" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\js\responsive.bootstrap.js" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\js\responsive.bootstrap.min.js" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\js\responsive.foundation.js" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\js\responsive.foundation.min.js" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\js\responsive.jqueryui.js" />
+    <Content Include="tmp\lib\DataTables\Responsive-2.1.0\js\responsive.jqueryui.min.js" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\css\rowReorder.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\css\rowReorder.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\css\rowReorder.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\css\rowReorder.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\css\rowReorder.foundation.css" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\css\rowReorder.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\css\rowReorder.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\css\rowReorder.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\js\dataTables.rowReorder.js" />
+    <Content Include="tmp\lib\DataTables\RowReorder-1.1.2\js\dataTables.rowReorder.min.js" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\css\scroller.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\css\scroller.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\css\scroller.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\css\scroller.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\css\scroller.foundation.css" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\css\scroller.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\css\scroller.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\css\scroller.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\js\dataTables.scroller.js" />
+    <Content Include="tmp\lib\DataTables\Scroller-1.4.2\js\dataTables.scroller.min.js" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\css\select.bootstrap.css" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\css\select.bootstrap.min.css" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\css\select.dataTables.css" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\css\select.dataTables.min.css" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\css\select.foundation.css" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\css\select.foundation.min.css" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\css\select.jqueryui.css" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\css\select.jqueryui.min.css" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\js\dataTables.select.js" />
+    <Content Include="tmp\lib\DataTables\Select-1.2.0\js\dataTables.select.min.js" />
+    <Content Include="tmp\addToArchive\Scripts\lib\date.format.js" />
+    <Content Include="tmp\addToArchive\Content\lib\font-awesome.css" />
+    <Content Include="tmp\addToArchive\Content\lib\font-awesome.min.css" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\fonts\fontawesome-webfont.svg" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\HELP-US-OUT.txt" />
+    <Content Include="tmp\addToArchive\Scripts\lib\datepicker-fr.js" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\external\jquery\jquery.js" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-icons_222222_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\index.html" />
+    <Content Include="tmp\addToArchive\Content\lib\jquery-ui-timepicker-addon.css" />
+    <Content Include="tmp\addToArchive\Scripts\lib\jquery-ui-timepicker-addon.js" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\jquery-ui.css" />
+    <Content Include="tmp\addToArchive\Scripts\lib\jquery-ui.js" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\jquery-ui.min.css" />
+    <Content Include="tmp\addToArchive\Scripts\lib\jquery-ui.min.js" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\jquery-ui.structure.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\jquery-ui.structure.min.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\jquery-ui.theme.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-all\jquery-ui.theme.min.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-bg_glass_55_fbf9ee_1x400.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-bg_glass_75_dadada_1x400.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-bg_glass_75_e6e6e6_1x400.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-icons_222222_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-icons_454545_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-icons_888888_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-dark-hive.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-dark-hive.min.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-dark-hive.theme.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-dark-hive.theme.min.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-dot-luv.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-dot-luv.min.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-dot-luv.theme.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-dot-luv.theme.min.css" />
+    <Content Include="tmp\addToArchive\Content\lib\jquery-ui-smoothness.css" />
+    <Content Include="tmp\addToArchive\Content\lib\jquery-ui-smoothness.min.css" />
+    <Content Include="tmp\addToArchive\Content\lib\jquery-ui-smoothness.theme.css" />
+    <Content Include="tmp\addToArchive\Content\lib\jquery-ui-smoothness.theme.min.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-trontastic.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-trontastic.min.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-trontastic.theme.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-trontastic.theme.min.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-ui-darkness.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-ui-darkness.min.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-ui-darkness.theme.css" />
+    <Content Include="tmp\lib\jquery-ui-1.11.4-css\jquery-ui-ui-darkness.theme.min.css" />
+    <Content Include="tmp\addToArchive\Scripts\lib\jquery-2.2.4.js" />
+    <Content Include="tmp\addToArchive\Scripts\lib\jquery-2.2.4.min.js" />
+    <Content Include="tmp\addToArchive\Content\app\Site.css" />
+    <Content Include="tmp\addToArchive\Content\lib\sweetalert2.css" />
+    <Content Include="tmp\addToArchive\Scripts\lib\sweetalert2.js" />
+    <Content Include="tmp\addToArchive\Content\lib\sweetalert2.min.css" />
+    <Content Include="tmp\addToArchive\Scripts\lib\sweetalert2.min.js" />
+    <Content Include="tmp\s585060.sql" />
+    <Content Include="tmp\youpi.txt" />
+    <Content Include="XMLFiles\iborray.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="XMLFiles\youpi.txt" />
+    <Content Include="ZipFiles\youpi.txt" />
+    <Content Include="Areas\SQLManagement\Views\Web.config" />
+    <Content Include="Areas\SQLManagement\Views\Home\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\CRUDGenerator.pubxml" />
+    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="lib\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.css" />
+    <Content Include="lib\bootstrap\css\bootstrap.min.css" />
+    <Content Include="lib\bootstrap\css\bootstrap_cosmo.css" />
+    <Content Include="lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="lib\bootstrap\js\bootstrap-tooltip.js" />
+    <Content Include="lib\bootstrap\js\bootstrap.js" />
+    <Content Include="lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="lib\bootstrap\js\jquery-1.11.1.min.js" />
+    <Content Include="lib\bootstrap\js\jquery-1.12.1.min.js" />
+    <Content Include="lib\bootstrap\js\npm.js" />
+    <Content Include="lib\chosen_v1.5.1\chosen-sprite%402x.png" />
+    <Content Include="lib\chosen_v1.5.1\chosen-sprite.png" />
+    <Content Include="lib\chosen_v1.5.1\chosen.css" />
+    <Content Include="lib\chosen_v1.5.1\chosen.jquery.js" />
+    <Content Include="lib\chosen_v1.5.1\chosen.jquery.min.js" />
+    <Content Include="lib\chosen_v1.5.1\chosen.min.css" />
+    <Content Include="lib\chosen_v1.5.1\chosen.proto.js" />
+    <Content Include="lib\chosen_v1.5.1\chosen.proto.min.js" />
+    <Content Include="lib\chosen_v1.5.1\docsupport\chosen.png" />
+    <Content Include="lib\chosen_v1.5.1\docsupport\event.simulate.js" />
+    <Content Include="lib\chosen_v1.5.1\docsupport\oss-credit.png" />
+    <Content Include="lib\chosen_v1.5.1\docsupport\prism.css" />
+    <Content Include="lib\chosen_v1.5.1\docsupport\prism.js" />
+    <Content Include="lib\chosen_v1.5.1\docsupport\style.css" />
+    <Content Include="lib\chosen_v1.5.1\index.html" />
+    <Content Include="lib\chosen_v1.5.1\index.proto.html" />
+    <Content Include="lib\chosen_v1.5.1\options.html" />
+    <Content Include="lib\font-awesome-4.6.1\css\font-awesome.css" />
+    <Content Include="lib\font-awesome-4.6.1\css\font-awesome.min.css" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.svg" />
+    <Content Include="lib\font-awesome-4.6.1\HELP-US-OUT.txt" />
+    <Content Include="lib\sweetalert2\dist\sweetalert2.css" />
+    <Content Include="lib\sweetalert2\dist\sweetalert2.min.css" />
+    <Content Include="lib\sweetalert2\dist\sweetalert2.min.js" />
+    <Content Include="lib\sweetalert2\example\buttons.css" />
+    <Content Include="lib\sweetalert2\example\example.css" />
+    <Content Include="lib\sweetalert2\example\favicon.ico" />
+    <Content Include="lib\sweetalert2\example\gulpfile.js" />
+    <Content Include="lib\sweetalert2\example\index.html" />
+    <Content Include="lib\sweetalert2\gulpfile.js" />
+    <Content Include="lib\sweetalert2\images\swal2-error.png" />
+    <Content Include="lib\sweetalert2\images\swal2-info.png" />
+    <Content Include="lib\sweetalert2\images\swal2-question.png" />
+    <Content Include="lib\sweetalert2\images\swal2-success.png" />
+    <Content Include="lib\sweetalert2\images\swal2-warning.png" />
+    <Content Include="lib\sweetalert2\images\vs_icon%402x.png" />
+    <Content Include="lib\sweetalert2\images\vs_icon.png" />
+    <Content Include="lib\sweetalert2\src\sweetalert2.js" />
+    <Content Include="lib\sweetalert2\sweetalert2.gif" />
+    <Content Include="lib\sweetalert\dev\gulpfile-wrap-template.js" />
+    <Content Include="lib\sweetalert\dev\ie9.css" />
+    <Content Include="lib\sweetalert\dev\loader-animation.css" />
+    <Content Include="lib\sweetalert\dev\modules\default-params.js" />
+    <Content Include="lib\sweetalert\dev\modules\handle-click.js" />
+    <Content Include="lib\sweetalert\dev\modules\handle-dom.js" />
+    <Content Include="lib\sweetalert\dev\modules\handle-key.js" />
+    <Content Include="lib\sweetalert\dev\modules\handle-swal-dom.js" />
+    <Content Include="lib\sweetalert\dev\modules\injected-html.js" />
+    <Content Include="lib\sweetalert\dev\modules\set-params.js" />
+    <Content Include="lib\sweetalert\dev\modules\utils.js" />
+    <Content Include="lib\sweetalert\dev\sweetalert.es6.js" />
+    <Content Include="lib\sweetalert\dist\sweetalert.css" />
+    <Content Include="lib\sweetalert\dist\sweetalert.js" />
+    <Content Include="lib\sweetalert\dist\sweetalert.min.js" />
+    <Content Include="lib\sweetalert\example\example.css" />
+    <Content Include="lib\sweetalert\example\images\logo_big%402x.png" />
+    <Content Include="lib\sweetalert\example\images\logo_big.png" />
+    <Content Include="lib\sweetalert\example\images\logo_small%402x.png" />
+    <Content Include="lib\sweetalert\example\images\logo_small.png" />
+    <Content Include="lib\sweetalert\example\images\te-logo-small.svg" />
+    <Content Include="lib\sweetalert\example\images\thumbs-up.jpg" />
+    <Content Include="lib\sweetalert\example\images\vs_icon%402x.png" />
+    <Content Include="lib\sweetalert\example\images\vs_icon.png" />
+    <Content Include="lib\sweetalert\gulpfile.js" />
+    <Content Include="lib\sweetalert\index.html" />
+    <Content Include="lib\sweetalert\lib\modules\default-params.js" />
+    <Content Include="lib\sweetalert\lib\modules\handle-click.js" />
+    <Content Include="lib\sweetalert\lib\modules\handle-dom.js" />
+    <Content Include="lib\sweetalert\lib\modules\handle-key.js" />
+    <Content Include="lib\sweetalert\lib\modules\handle-swal-dom.js" />
+    <Content Include="lib\sweetalert\lib\modules\injected-html.js" />
+    <Content Include="lib\sweetalert\lib\modules\set-params.js" />
+    <Content Include="lib\sweetalert\lib\modules\utils.js" />
+    <Content Include="lib\sweetalert\lib\sweetalert.js" />
+    <Content Include="lib\sweetalert\sweetalert.gif" />
+    <Content Include="lib\sweetalert\test\index.html" />
+    <Content Include="lib\sweetalert\test\tests.js" />
+    <Content Include="lib\sweetalert\themes\facebook\facebook.css" />
+    <Content Include="lib\sweetalert\themes\google\google.css" />
+    <Content Include="lib\sweetalert\themes\twitter\twitter.css" />
+    <Content Include="Scripts\addDatabase.js" />
+    <Content Include="Scripts\common.js" />
+    <Content Include="Scripts\index.js" />
+    <Content Include="Scripts\jquery-1.12.1.js" />
+    <Content Include="Scripts\jquery-1.12.1.min.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.js" />
+    <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-2.2.0.debug.js" />
+    <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\removeDatabase.js" />
+    <Content Include="Scripts\showTable.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Images\accent.png" />
+    <Content Include="Images\bullet.png" />
+    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\orderedList0.png" />
+    <Content Include="Images\orderedList1.png" />
+    <Content Include="Images\orderedList2.png" />
+    <Content Include="Images\orderedList3.png" />
+    <Content Include="Images\orderedList4.png" />
+    <Content Include="Images\orderedList5.png" />
+    <Content Include="Images\orderedList6.png" />
+    <Content Include="Images\orderedList7.png" />
+    <Content Include="Images\orderedList8.png" />
+    <Content Include="Images\orderedList9.png" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Web.config" />
+    <Content Include="packages.config" />
+    <None Include="readme.txt" />
+    <Content Include="Views\Template.cshtml" />
+    <Content Include="Views\Shared\inc\footer.cshtml" />
+    <Content Include="Views\Shared\inc\head.cshtml" />
+    <Content Include="Views\Shared\inc\navbar.cshtml" />
+    <Content Include="Views\Home\addDatabase.cshtml" />
+    <Content Include="Views\Home\removeDatabase.cshtml" />
+    <Content Include="Views\Shared\inc\sidebar.cshtml" />
+    <Content Include="Views\Home\showTable.cshtml" />
+    <Content Include="Views\Home\extractDatabase.cshtml" />
+    <Content Include="Views\Shared\inc\addTableModal.cshtml" />
+    <Content Include="Views\Home\loadDatabase.cshtml" />
+    <Content Include="Views\Home\InsertForm.cshtml" />
+    <Content Include="Views\Home\ViewDatas.cshtml" />
+    <Content Include="Views\Home\ModifyForm.cshtml" />
+    <Content Include="Views\Home\AjaxTemplate.cshtml" />
+    <Content Include="Views\Home\modifyFormScript.cshtml" />
+    <Content Include="Views\Home\InsertFormScript.cshtml" />
+    <Content Include="Views\Home\ViewDatasScript.cshtml" />
+    <Content Include="tmp\addToArchive\Fonts\fontawesome-webfont.eot" />
+    <Content Include="tmp\addToArchive\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="tmp\addToArchive\Fonts\fontawesome-webfont.woff" />
+    <Content Include="tmp\addToArchive\Fonts\fontawesome-webfont.woff2" />
+    <Content Include="tmp\addToArchive\Fonts\FontAwesome.otf" />
+    <Content Include="tmp\addToArchive\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="tmp\addToArchive\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="tmp\addToArchive\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="tmp\addToArchive\Fonts\Montserrat-Black.otf" />
+    <Content Include="tmp\addToArchive\Fonts\Montserrat-Bold.otf" />
+    <Content Include="tmp\addToArchive\Fonts\Montserrat-Hairline.otf" />
+    <Content Include="tmp\addToArchive\Fonts\Montserrat-Light.otf" />
+    <Content Include="tmp\addToArchive\Fonts\Montserrat-Regular.otf" />
+    <Content Include="tmp\iborray.zip" />
+    <Content Include="tmp\lib\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="tmp\lib\bootstrap\css\bootstrap-theme.min.css.map" />
+    <Content Include="tmp\lib\bootstrap\css\bootstrap.css.map" />
+    <Content Include="tmp\lib\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="tmp\lib\bootstrap\css\bootstrap.min.css1" />
+    <Content Include="tmp\lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="tmp\lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="tmp\lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="tmp\lib\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="tmp\lib\chosen_v1.5.1\bower.json" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\common.scss" />
+    <Content Include="tmp\lib\DataTables\Buttons-1.2.2\css\mixins.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\fonts\fontawesome-webfont.eot" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\fonts\fontawesome-webfont.ttf" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\fonts\fontawesome-webfont.woff" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\fonts\fontawesome-webfont.woff2" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\fonts\FontAwesome.otf" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\animated.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\bordered-pulled.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\core.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\fixed-width.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\font-awesome.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\icons.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\larger.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\list.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\mixins.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\path.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\rotated-flipped.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\screen-reader.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\stacked.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\less\variables.less" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\font-awesome.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_animated.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_bordered-pulled.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_core.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_fixed-width.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_icons.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_larger.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_list.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_mixins.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_path.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_rotated-flipped.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_screen-reader.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_stacked.scss" />
+    <Content Include="tmp\lib\font-awesome-4.6.3\scss\_variables.scss" />
+    <Content Include="tmp\s585060.zip" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Areas\SQLManagement\Models\" />
+    <Folder Include="Areas\SQLManagement\Views\Shared\" />
+    <Folder Include="Models\" />
+    <Folder Include="temp\" />
+    <Folder Include="tmp\files\" />
+    <Folder Include="tmp\lib\date-format\" />
+    <Folder Include="tmp\lib\font-awesome-4.6.3\css\" />
+    <Folder Include="tmp\lib\jQuery\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>51699</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:51699/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

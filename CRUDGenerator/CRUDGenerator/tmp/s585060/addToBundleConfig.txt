@@ -1,0 +1,30 @@
+
+            var ajaxCssBundle = new Bundle("~/bundles/AjaxCss", new CssMinify());
+            ajaxCssBundle.Include(
+                "~/lib/bootstrap/css/bootstrap.css",
+                "~/lib/font-awesome-4.6.3/css/font-awesome.css",
+                "~/lib/DataTables/DataTables-1.10.12/css/jquery.dataTables.css",
+                "~/lib/FixedHeader-3.1.2/css/fixedHeader.dataTables.css",
+                "~/lib/jquery-ui-1.11.4-css/jquery-ui-smoothness.css",
+                "~/lib/jquery-ui-1.11.4-css/jquery-ui-smoothness.theme.css",
+                "~/lib/jquery-ui-1.11.4-all/jquery-ui-timepicker-addon.css",
+                "~/lib/chosen_v1.5.1/chosen.css",
+                "~/lib/sweetalert2/sweetalert2.css",
+                "~/lib/Site.css"
+                );
+            var ajaxJsBundle = new Bundle("~/bundles/AjaxJs", new JsMinify());
+            ajaxJsBundle.Include(
+                "~/lib/jQuery/jquery-2.2.4.js",
+                "~/lib/bootstrap/js/bootstrap.js",
+                "~/lib/DataTables/DataTables-1.10.12/js/jquery.dataTables.js",
+                "~/lib/FixedHeader-3.1.2/js/fixedHeader.dataTables.js",
+                "~/lib/jquery-ui-1.11.4-all/jquery-ui.js",
+                "~/lib/jquery-ui-1.11.4-all/datepicker-fr.js",
+                "~/lib/jquery-ui-1.11.4-all/jquery-ui-timepicker-addon.js",
+                "~/lib/chosen_v1.5.1/chosen.jquery.js",
+                "~/lib/chosen_v1.5.1/chosen.proto.js",
+                "~/lib/sweetalert2/sweetalert2.js",
+                "~/lib/date-format/date.format.js"
+                ); 
+            bundles.Add(ajaxCssBundle);
+            bundles.Add(ajaxJsBundle);

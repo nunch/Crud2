@@ -1,0 +1,50 @@
+﻿@using CRUDGenerator.Database
+@{
+    ViewBag.Title = "CRUDGenerator";
+    Layout = "~/Views/Template.cshtml";
+    ViewBag.css = "~/Content/head/extractDatabase/css";
+    ViewBag.js = "~/Scripts/footer/extractDatabase/js";
+}
+<form id="extractDatabase-form">
+    <fieldset>
+        <legend>Extraire une base de données</legend>
+        <div class="form-group">
+            <label>Nom de la base de données</label>
+            <select class="chosen-select" name="databaseName" id="extractDatabase-databaseName" required>
+                @foreach (DatabaseXML db in ViewBag.databases)
+                {
+                    <option value="@db.Name">@db.Name</option>
+                }
+            </select>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Format de code</label>
+                    <select class="form-control" name="codeType" id="extractDatabase-codeType">
+                        <option value="CS">C#</option>
+                        <option value="PHP">PHP</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Format de Script SQL</label>
+                    <select class="form-control" name="scriptType" id="extractDatabase-scriptType">
+                        <option value="SQLServer">SQL Server</option>
+                        <option value="MySQL">MySQL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-4" style="text-align: center;">
+                <a id="extractDatabase-code" class="btn btn-primary">Extraire Code</a>
+            </div>
+            <div class="col-sm-4" style="text-align: center;">
+                <a id="extractDatabase-script" class="btn btn-primary">Extraire Script SQL</a>
+            </div>
+            <div class="col-sm-4" style="text-align: center;">
+                <a id="extractDatabase-all" class="btn btn-primary">Extraire Code et Script SQL</a>
+            </div>
+        </div>
+    </fieldset>
+</form>

@@ -1,0 +1,109 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+ConditionSet conditionSet = (ConditionSet) ViewBag.conditionSet;
+    
+        bool useChosen_on_fk_fk_ConditionSet_0 = true;
+    
+}
+
+
+<form method="post" id="modifyData-form" action="/ConditionSet/update">
+    <fieldset>
+        <legend>Modifier ConditionSet</legend>
+                <input type="hidden" id="Id_Condition" name="Id_Condition" value="@conditionSet.Id_Condition" />
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">Champ</label>
+                            <input type="number" id="Champ" name="Champ" class="form-control" required=required  value="@conditionSet.Champ" />
+                    <div id="Champ-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir Champ</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">Operateur</label>
+                            <input type="number" id="Operateur" name="Operateur" class="form-control" required=required  value="@conditionSet.Operateur" />
+                    <div id="Operateur-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir Operateur</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">Valeur</label>
+                            <input type="text" maxlength="0" id="Valeur" name="Valeur" class="form-control" required=required  value="@conditionSet.Valeur" />
+                    <div id="Valeur-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir Valeur</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsSuppr</label>
+                            <input type="number" id="IsSuppr" name="IsSuppr" class="form-control" required=required  value="@conditionSet.IsSuppr" />
+                    <div id="IsSuppr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsSuppr</p>
+                    </div>
+                </div>
+                
+                    @if(useChosen_on_fk_fk_ConditionSet_0)
+                    {
+                    <div class="form-group" id="fk-0-div">
+                        <input type="hidden" id="Id_ExceptionStatut-object" value="@conditionSet.Id_ExceptionStatut" />
+                        <label class="control-label">Id_ExceptionStatut</label>
+                        <select data-placeholder="Choisir Id_ExceptionStatut" class="chosen-select" id="Id_ExceptionStatut" name="Id_ExceptionStatut" required=required>
+                            <option disabled selected>Choisir Id_ExceptionStatut</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_ExceptionStatut</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-0-div" class="form-group">
+                        <label class="control-label">Id_ExceptionStatut</label>
+                        <input type="hidden" name="Id_ExceptionStatut" id="Id_ExceptionStatut" value="@conditionSet.Id_ExceptionStatut" required=required />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-0" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-0" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-0" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-0-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-0-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_ExceptionStatut</th>
+                                        <th>Titre</th>
+                                        <th>AxeAnalyse</th>
+                                        <th>Source</th>
+                                        <th>IsSuppr</th>
+                                        <th>Description</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_ExceptionStatut</p>
+                        </div>
+                    </div>
+                    }
+                
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Modifier</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+
+</fieldset>
+
+</form>
+
+<script src="/Scripts/Ajax/ConditionSet/modify.js"></script>

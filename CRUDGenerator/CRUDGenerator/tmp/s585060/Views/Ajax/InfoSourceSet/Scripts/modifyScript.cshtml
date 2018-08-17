@@ -1,0 +1,668 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+InfoSourceSet infoSourceSet = (InfoSourceSet) ViewBag.infoSourceSet;
+    
+        bool useChosen_on_fk_fk_InfoSourceSet_0 = true;
+    
+}
+
+
+                
+                    @if(useChosen_on_fk_fk_InfoSourceSet_0)
+                    {
+                        <text>
+                                $(function(){
+                                    $("#form-cancel").click(function(){
+                                        $("#modal").modal("hide");
+                                    });
+                                    var attr = $("#Id_Source").attr("required");
+                                    if (typeof attr !== typeof undefined && attr !== false) {
+                                        $("#Id_Source").change(function(){
+                                            var parent = $("#Id_Source").parent();
+                                            if($("#Id_Source").val() == "" || $("#Id_Source").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-0-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-0-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        })
+                                    }
+                                    $.ajax({
+                                        url: '/ajax/SourceSet/findAll', // La ressource cibl&eacute;e
+                                        type: 'POST', // Le type de la requête HTTP.
+                                        data: {},
+                                        dataType: "json",
+                                        success: function (data) {
+                                            for (var i = 0; i < data.length; i++) {
+                                                                                                    //data[i]["Id_Source"]
+                                                    //data[i]["CodeSource"]
+                                                    //data[i]["CodeSite"]
+                                                    //data[i]["IsSuppr"]
+                                                    //data[i]["EcartSource_Source_Id_Ecart"]
+                                                $("#Id_Source").append("<option value='" + data[i].Id_Source + "'>" + data[i].Id_Source + "</option>");
+                                            }
+                                            //$("#@(column.Name)").val("@@@(smallTableName).@(column.Name)");
+                                            $("#@(column.Name)").val($("#@(column.Name)-object").val());
+
+                                            $("#@(column.Name)").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                        }
+                                    });
+                                })
+                        </text>
+
+                    }else
+                    {
+                                                var fk_0_table = null;
+                                                var isHere_fk_0 = false;
+                                                var filters_fk_0 = [];
+
+                                                function reinitFilters_fk_0() {
+                                                    $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                                        $(this).val('').removeClass('colorFilter');
+                                                    });
+                                                    $('#fk-0-table tfoot tr th input').each(function (index, value) {
+                                                        $(this).val('');
+                                                    });
+                                                    $('#customFilterInput-fk-0').val('');
+                                                    fk_0_table.search('').columns().search('').draw();
+                                                }
+                                                function initFilters_fk_0() {
+                                                    $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                                        var i = index;
+                                                        if (index < 11) {
+                                                            i += 3;
+                                                            $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                                        }
+                                                        else {
+                                                            $(this).val('');
+                                                        }
+                                                    });
+                                                }
+                                                function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                                    $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                                    if (obj.value != "") {
+                                                        $(obj).addClass("colorFilter");
+
+                                                    } else {
+                                                        $(obj).removeClass("colorFilter");
+                                                    }
+                                                }
+                                                $(function(){
+
+                                                    $("#btnResetFilters-fk-0").click(function(event){
+                                                        event.preventDefault();
+                                                        reinitFilters_fk_0();
+                                                    })
+                                                    $("#Id_Source").change(function(){
+                                                        var parent = $("#Id_Source").parent();
+                                                        var attr = $("#Id_Source").attr("required");
+                                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                                            if($("#Id_Source").val() == "" || $("#Id_Source").val() == null){
+                                                                $(parent).addClass("has-error");
+                                                                $("#fk-0-div-collapse-div").collapse("show");
+                                                                if($(parent).hasClass("has-success")){
+                                                                    $(parent).removeClass("has-success");
+                                                                }
+                                                            }else{
+                                                                $(parent).addClass("has-success");
+                                                                $("#fk-0-div-collapse-div").collapse("hide");
+                                                                if($(parent).hasClass("has-error")){
+                                                                    $(parent).removeClass("has-error");
+                                                                }
+                                                            }
+                                                        }else{
+                                                            $(parent).addClass("has-success");
+                                                            $("#fk-0-div-collapse-div").collapse("hide");
+                                                            if($(parent).hasClass("has-error")){
+                                                                $(parent).removeClass("has-error");
+                                                            }
+                                                        }
+                                                    })
+
+                                                    $.ajax({
+                                                        url: '/ajax/SourceSet/findAll', // La ressource cibl&eacute;e
+                                                        type: 'POST', // Le type de la requête HTTP.
+                                                        data: {},
+                                                        dataType: "json",
+                                                        success: function (data) {
+                                                                // data[i].Id_Source
+                                                                // data[i].CodeSource
+                                                                // data[i].CodeSite
+                                                                // data[i].IsSuppr
+                                                                // data[i].EcartSource_Source_Id_Ecart
+
+                                                            fk_0_table = $('#fk-0-table').DataTable({
+                                                                data: data,
+                                                                "pageLength": 100,
+                                                                dom: "rtp",
+                                                                "bDestroy": true,
+                                                                "bStateSave": true,
+                                                                //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                                                "orderCellsTop": true,
+                                                                "language": {
+                                                                    "sProcessing": "Traitement en cours...",
+                                                                    "sSearch": "Rechercher&nbsp;:",
+                                                                    "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                                    "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                                    "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                                    "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                                    "sInfoPostFix": "",
+                                                                    "sLoadingRecords": "Chargement en cours...",
+                                                                    "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                                    "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                                    "oPaginate": {
+                                                                        "sFirst": "Premier",
+                                                                        "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                                        "sNext": "Suivant",
+                                                                        "sLast": "Dernier"
+                                                                    },
+                                                                    "oAria": {
+                                                                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                                    },
+                                                                },
+                                                                "columns": [
+                                                                        { "sClass": "", "sTitle": "Id_Source", "mData": "Id_Source", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "CodeSource", "mData": "CodeSource", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "CodeSite", "mData": "CodeSite", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "EcartSource_Source_Id_Ecart", "mData": "EcartSource_Source_Id_Ecart", "sDefaultContent": "-", "bVisible": true },
+                                                                    //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                                    //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a")>"; }, "bVisible": true, "sWidth": "10%" },
+                                                                ],
+                                                                "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                                                },
+                                                                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                                    //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                                    return nRow;
+                                                                },
+                                                                "initComplete": function (settings) {
+                                                                    // Search custom input
+                                                                    oTable_fk_0 = $('#fk-0-table').DataTable();
+                                                                    $('#customFilterInput-fk-0').keyup(function () {
+                                                                        oTable_fk_0.search($(this).val()).draw();
+                                                                    })
+                                                                    //Add search field placeholder
+                                                                    $('#fk-0-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                                    $("#fk-0-table").DataTable().columns.adjust().draw()
+                                                                    // Add search icon
+                                                                    $('#fk-0-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                                    $('#fk-0-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                                    $('#fk-0-table' + "_filter input").blur(function () {
+                                                                        ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                                    });
+                                                                    // Tooltip initialization
+                                                                    $("[data-toggle=tooltip]").tooltip();
+
+                                                                    if (!isHere_fk_0) {
+                                                                        $('#fk-0-table thead').append('<tr>');
+                                                                        oTable_fk_0.columns().every(function () {
+                                                                            $('#fk-0-table thead tr:last-child').append('<th>');
+                                                                            isHere_fk_0 = true;
+                                                                        });
+                                                                    }
+                                                                    // Ajout d'un champ de recherche pour chaque colonne
+                                                                    $('#fk-0-table thead tr:last-child th').each(function (index, value) {
+                                                                        var i = index + 1;
+                                                                        $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_0(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                                    });
+                                                                    initFilters_fk_0();
+
+                                                                },
+                                                                "fnStateLoaded": function (oSettings, oData) {
+                                                                    $.each(oData.columns, function (index, value) {
+                                                                        filters_fk_0.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                                    });
+                                                                }
+                                                            });
+
+                                                            // Ajout d'un champ de recherche pour chaque colonne
+                                                            $('#fk-0-table tfoot tr th').each(function () {
+                                                                $(this).html('<input type ="text" placeholder="Rechercher..." />');
+                                                            });
+
+                                                            fk_0_table.columns().every(function () {
+                                                                var that = this;
+                                                                $('input', this.footer()).on('keyup change', function () {
+                                                                    if (that.search() !== this.value) {
+                                                                        that
+                                                                            .search(this.value)
+                                                                            .draw();
+                                                                    }
+                                                                });
+                                                            });
+
+
+
+                                                            $('#fk-0-table tbody').on('click', 'tr', function () {
+                                                                if ($(this).hasClass('selected')) {
+                                                                    $(this).removeClass('selected');
+                                                                    $("#Id_Source").val("");
+                                                                    $("#Id_Source").trigger("change");
+                                                                }
+                                                                else {
+                                                                    fk_0_table.$('tr.selected').removeClass('selected');
+                                                                    $(this).addClass('selected');
+                                                                    var datatmp = fk_0_table.row(this).data();
+                                                                    $("#Id_Source").val(""+datatmp["Id_Source"]);
+                                                                    $("#Id_Source").trigger("change");
+                                                                }
+                                                            });
+                                                            $("#Id_Source").val($("#Id_Source").val());
+                                                            var trs = $('#fk-0-table tbody tr');
+                                                            for (var i = 0; i < trs.length; i++) {
+                                                                var datatmp = fk_0_table.row($(trs[i])).data();
+                                                                if(datatmp["Id_Source"] == $("#Id_Source").val()){
+                                                                    $(trs[i]).trigger("click");
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                })
+                    }
+                
+                
+                    $(function(){
+                        $("#IsSuppr").change(function(){
+                            var attr = $("#IsSuppr").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#IsSuppr").parent();
+                                if($("#IsSuppr").val() == "" || $("#IsSuppr").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#IsSuppr-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#IsSuppr-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#IsSuppr-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Id_InfoSource").change(function(){
+                            var attr = $("#Id_InfoSource").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Id_InfoSource").parent();
+                                if($("#Id_InfoSource").val() == "" || $("#Id_InfoSource").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Id_InfoSource-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Id_InfoSource-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Id_InfoSource-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#SourceFichier").change(function(){
+                            var attr = $("#SourceFichier").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#SourceFichier").parent();
+                                if($("#SourceFichier").val() == "" || $("#SourceFichier").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#SourceFichier-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#SourceFichier-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#SourceFichier-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#NomSource").change(function(){
+                            var attr = $("#NomSource").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#NomSource").parent();
+                                if($("#NomSource").val() == "" || $("#NomSource").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#NomSource-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#NomSource-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#NomSource-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#NomSite").change(function(){
+                            var attr = $("#NomSite").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#NomSite").parent();
+                                if($("#NomSite").val() == "" || $("#NomSite").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#NomSite-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#NomSite-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#NomSite-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#AdresseSite").change(function(){
+                            var attr = $("#AdresseSite").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#AdresseSite").parent();
+                                if($("#AdresseSite").val() == "" || $("#AdresseSite").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#AdresseSite-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#AdresseSite-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#AdresseSite-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#CodePays").change(function(){
+                            var attr = $("#CodePays").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#CodePays").parent();
+                                if($("#CodePays").val() == "" || $("#CodePays").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#CodePays-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#CodePays-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#CodePays-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#CodeMDM").change(function(){
+                            var attr = $("#CodeMDM").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#CodeMDM").parent();
+                                if($("#CodeMDM").val() == "" || $("#CodeMDM").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#CodeMDM-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#CodeMDM-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#CodeMDM-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Champ1").change(function(){
+                            var attr = $("#Champ1").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Champ1").parent();
+                                if($("#Champ1").val() == "" || $("#Champ1").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Champ1-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Champ1-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Champ1-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#Champ2").change(function(){
+                            var attr = $("#Champ2").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Champ2").parent();
+                                if($("#Champ2").val() == "" || $("#Champ2").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Champ2-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Champ2-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Champ2-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+        
+
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr"
+        });
+
+        $(".datetimepicker").datetimepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr",
+            timeFormat: 'HH:mm'
+        });
+
+        $("#form-submit").click(function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var keep = true;
+            $("#Id_Source").trigger("change");
+            if($("#Id_Source").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#IsSuppr").trigger("change");
+            if($("#IsSuppr").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Id_InfoSource").trigger("change");
+            if($("#Id_InfoSource").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#SourceFichier").trigger("change");
+            if($("#SourceFichier").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#NomSource").trigger("change");
+            if($("#NomSource").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#NomSite").trigger("change");
+            if($("#NomSite").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#AdresseSite").trigger("change");
+            if($("#AdresseSite").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#CodePays").trigger("change");
+            if($("#CodePays").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#CodeMDM").trigger("change");
+            if($("#CodeMDM").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Champ1").trigger("change");
+            if($("#Champ1").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Champ2").trigger("change");
+            if($("#Champ2").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            if(keep == false){
+                return;
+            }
+            var dataArray = $("#modifyData-form").serializeArray();
+            var dataToSend = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                var name = dataArray[i].name;
+                var value = dataArray[i].value;
+                if(value != "" && value != null){
+                    dataToSend[name] = value;
+                }
+            }
+            $.ajax({
+                url: '/InfoSourceSet/update', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    //window.location = "/ajax/InfoSourceSet/list";
+                    if (data["success"] == "true") {
+                        toastr.success("Modification réussie");
+                        formatInfoSourceSet(data["infoSourceSet"]);
+                        var tableData = listTable.rows()[0];
+                        var index = -1;
+                        for (var i = 0; i < tableData.length && index == -1 ; i++) {
+                            var dataTmp = listTable.row(tableData[i]).data();
+                            if (dataTmp["Id_InfoSource"] == data["infoSourceSet"]["Id_InfoSource"]) {
+                                index = tableData[i];
+                            }
+                        }
+                        listTable.row(index).remove();
+                        listTable.row.add(data["infoSourceSet"]);
+                        listTable.draw();
+                    }else{
+                        toastr.error("La modification a échouée");
+                        console.log(data["errorMessage"]);
+                    }
+                }
+            });
+            $("#modal").modal("hide");
+        })
+    });

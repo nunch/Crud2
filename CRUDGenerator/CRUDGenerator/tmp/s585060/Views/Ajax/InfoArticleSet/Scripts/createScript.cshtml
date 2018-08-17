@@ -1,0 +1,732 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+    
+        bool useChosen_on_fk_fk_InfoArticleSet_0 = true;
+    
+    
+        bool useChosen_on_fk_fk_InfoArticleSet_1 = true;
+    
+}
+
+
+                
+                    $(function(){
+                        $("#SourceFichier").change(function(){
+                            var attr = $("#SourceFichier").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#SourceFichier").parent();
+                                if($("#SourceFichier").val() == "" || $("#SourceFichier").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#SourceFichier-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#SourceFichier-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#SourceFichier-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    @if(useChosen_on_fk_fk_InfoArticleSet_0)
+                    {
+                            $(function(){
+                                var attr = $("#Id_Article").attr("required");
+                                if (typeof attr !== typeof undefined && attr !== false) {
+                                    $("#Id_Article").change(function(){
+                                        var parent = $("#Id_Article").parent();
+                                        if($("#Id_Article").val() == "" || $("#Id_Article").val() == null){
+                                            $(parent).addClass("has-error");
+                                            $("#fk-0-div-collapse-div").collapse("show");
+                                            if($(parent).hasClass("has-success")){
+                                                $(parent).removeClass("has-success");
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-0-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+                                }
+                                $.ajax({
+                                    url: '/ajax/ArticleSet/findAll', // La ressource cibl&eacute;e
+                                    type: 'POST', // Le type de la requête HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        for (var i = 0; i < data.length; i++) {
+                                                                                            //data[i]["Id_Article"]
+                                                //data[i]["PN"]
+                                                //data[i]["SIN"]
+                                                //data[i]["IsSuppr"]
+                                            $("#Id_Article").append("<option value='" + data[i].Id_Article + "'>" + data[i].Id_Article + "</option>");
+                                        }
+                                        $("#Id_Article").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                    }
+                                });
+                            })
+                    }else
+                    {
+                    
+                            var fk_0_table = null;
+                            var isHere_fk_0 = false;
+                            var filters_fk_0 = [];
+
+                            function reinitFilters_fk_0() {
+                                $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                    $(this).val('').removeClass('colorFilter');
+                                });
+                                $('#fk-0-table tfoot tr th input').each(function (index, value) {
+                                    $(this).val('');
+                                });
+                                $('#customFilterInput-fk-0').val('');
+                                fk_0_table.search('').columns().search('').draw();
+                            }
+                            function initFilters_fk_0() {
+                                $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                    var i = index;
+                                    if (index < 11) {
+                                        i += 3;
+                                        $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                    }
+                                    else {
+                                        $(this).val('');
+                                    }
+                                });
+                            }
+                            function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                if (obj.value != "") {
+                                    $(obj).addClass("colorFilter");
+
+                                } else {
+                                    $(obj).removeClass("colorFilter");
+                                }
+                            }
+                        $(function(){
+                            $("#form-cancel").click(function(){
+                                $("#modal").modal("hide");
+                            });
+                            $("#btnResetFilters-fk-0").click(function(event){
+                                event.preventDefault();
+                                reinitFilters_fk_0();
+                            })
+                                    $("#Id_Article").change(function(){
+                                        var parent = $("#Id_Article").parent();
+                                        var attr = $("#Id_Article").attr("required");
+                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                            if($("#Id_Article").val() == "" || $("#Id_Article").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-0-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-0-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-0-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+
+                                $.ajax({
+                                    url: '/ajax/ArticleSet/findAll', // La ressource cibl&eacute;e
+                                    type: &#39;POST&#39;, // Le type de la requ&#234;te HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                            // data[i].Id_Article
+                                            // data[i].PN
+                                            // data[i].SIN
+                                            // data[i].IsSuppr
+
+                                        fk_0_table = $('#fk-0-table').DataTable({
+                                            data: data,
+                                            "pageLength": 100,
+                                            dom: "rtp",
+                                            "bDestroy": true,
+                                            "bStateSave": true,
+                                            //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                            "orderCellsTop": true,
+                                            "language": {
+                                                "sProcessing": "Traitement en cours...",
+                                                "sSearch": "Rechercher&nbsp;:",
+                                                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                "sInfoPostFix": "",
+                                                "sLoadingRecords": "Chargement en cours...",
+                                                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                "oPaginate": {
+                                                    "sFirst": "Premier",
+                                                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                    "sNext": "Suivant",
+                                                    "sLast": "Dernier"
+                                                },
+                                                "oAria": {
+                                                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                },
+                                            },
+                                            "columns": [
+                                                    { "sClass": "", "sTitle": "Id_Article", "mData": "Id_Article", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "PN", "mData": "PN", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "SIN", "mData": "SIN", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a>"; }, "bVisible": true, "sWidth": "10%" },
+                                            ],
+                                            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                            },
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                return nRow;
+                                            },
+                                            "initComplete": function (settings) {
+                                                // Search custom input
+                                                oTable_fk_@(indexOfFK) = $('#fk-0-table').DataTable();
+                                                $('#customFilterInput-fk-0').keyup(function () {
+                                                    oTable_fk_0.search($(this).val()).draw();
+                                                })
+                                                //Add search field placeholder
+                                                $('#fk-@indexOfFK-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                $("#fk-0-table").DataTable().columns.adjust().draw()
+                                                // Add search icon
+                                                $('#fk-@indexOfFK-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                $('#fk-0-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                $('#fk-0-table' + "_filter input").blur(function () {
+                                                    ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                });
+                                                // Tooltip initialization
+                                                $(&quot;[data-toggle=tooltip]&quot;).tooltip();
+
+                                                if (!isHere_fk_0) {
+                                                    $('#fk-0-table thead').append('<tr>');
+                                                    oTable_fk_0.columns().every(function () {
+                                                        $('#fk-0-table thead tr:last-child').append('<th>');
+                                                        isHere_fk_0 = true;
+                                                    });
+                                                }
+                                                // Ajout d'un champ de recherche pour chaque colonne
+                                                $('#fk-@indexOfFK-table thead tr:last-child th').each(function (index, value) {
+                                                    var i = index + 1;
+                                                    $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_0(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                });
+                                                initFilters_fk_0();
+
+                                            },
+                                            "fnStateLoaded": function (oSettings, oData) {
+                                                $.each(oData.columns, function (index, value) {
+                                                    filters_fk_0.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                });
+                                            }
+                                        });
+
+                                        // Ajout d'un champ de recherche pour chaque colonne
+                                        $('#fk-@indexOfFK-table tfoot tr th').each(function () {
+                                            $(this).html(&#39;<input type="text" placeholder="Rechercher..." />');
+                                        });
+
+                                        fk_0_table.columns().every(function () {
+                                            var that = this;
+                                            $('input', this.footer()).on('keyup change', function () {
+                                                if (that.search() !== this.value) {
+                                                    that
+                                                        .search(this.value)
+                                                        .draw();
+                                                }
+                                            });
+                                        });
+
+
+
+                                        $('#fk-0-table tbody').on('click', 'tr', function () {
+                                            if ($(this).hasClass('selected')) {
+                                                $(this).removeClass('selected');
+                                                $("#Id_Article").val("");
+                                                $("#Id_Article").trigger("change");
+                                            }
+                                            else {
+                                                fk_0_table.$('tr.selected').removeClass('selected');
+                                                $(this).addClass('selected');
+                                                var datatmp = fk_0_table.row(this).data();
+                                                $("#Id_Article").val(""+datatmp["Id_Article"]);
+                                                $("#Id_Article").trigger("change");
+                                            }
+                                        });
+
+                                    }
+                                });
+                            })
+                    }
+                
+                
+                    $(function(){
+                        $("#IsSuppr").change(function(){
+                            var attr = $("#IsSuppr").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#IsSuppr").parent();
+                                if($("#IsSuppr").val() == "" || $("#IsSuppr").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#IsSuppr-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#IsSuppr-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#IsSuppr-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    @if(useChosen_on_fk_fk_InfoArticleSet_1)
+                    {
+                            $(function(){
+                                var attr = $("#Id_Entite").attr("required");
+                                if (typeof attr !== typeof undefined && attr !== false) {
+                                    $("#Id_Entite").change(function(){
+                                        var parent = $("#Id_Entite").parent();
+                                        if($("#Id_Entite").val() == "" || $("#Id_Entite").val() == null){
+                                            $(parent).addClass("has-error");
+                                            $("#fk-1-div-collapse-div").collapse("show");
+                                            if($(parent).hasClass("has-success")){
+                                                $(parent).removeClass("has-success");
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-1-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+                                }
+                                $.ajax({
+                                    url: '/ajax/EntiteSet/findAll', // La ressource cibl&eacute;e
+                                    type: 'POST', // Le type de la requête HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                        for (var i = 0; i < data.length; i++) {
+                                                                                            //data[i]["IsSuppr"]
+                                                //data[i]["Id_Entite"]
+                                                //data[i]["Nom"]
+                                                //data[i]["Description"]
+                                            $("#Id_Entite").append("<option value='" + data[i].Id_Entite + "'>" + data[i].Id_Entite + "</option>");
+                                        }
+                                        $("#Id_Entite").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                    }
+                                });
+                            })
+                    }else
+                    {
+                    
+                            var fk_1_table = null;
+                            var isHere_fk_1 = false;
+                            var filters_fk_1 = [];
+
+                            function reinitFilters_fk_1() {
+                                $('#fk-1-table thead tr:last-child th input').each(function (index, value) {
+                                    $(this).val('').removeClass('colorFilter');
+                                });
+                                $('#fk-1-table tfoot tr th input').each(function (index, value) {
+                                    $(this).val('');
+                                });
+                                $('#customFilterInput-fk-1').val('');
+                                fk_1_table.search('').columns().search('').draw();
+                            }
+                            function initFilters_fk_1() {
+                                $('#fk-1-table thead tr:last-child th input').each(function (index, value) {
+                                    var i = index;
+                                    if (index < 11) {
+                                        i += 3;
+                                        $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                    }
+                                    else {
+                                        $(this).val('');
+                                    }
+                                });
+                            }
+                            function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                if (obj.value != "") {
+                                    $(obj).addClass("colorFilter");
+
+                                } else {
+                                    $(obj).removeClass("colorFilter");
+                                }
+                            }
+                        $(function(){
+                            $("#form-cancel").click(function(){
+                                $("#modal").modal("hide");
+                            });
+                            $("#btnResetFilters-fk-1").click(function(event){
+                                event.preventDefault();
+                                reinitFilters_fk_1();
+                            })
+                                    $("#Id_Entite").change(function(){
+                                        var parent = $("#Id_Entite").parent();
+                                        var attr = $("#Id_Entite").attr("required");
+                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                            if($("#Id_Entite").val() == "" || $("#Id_Entite").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-1-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-1-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        }else{
+                                            $(parent).addClass("has-success");
+                                            $("#fk-1-div-collapse-div").collapse("hide");
+                                            if($(parent).hasClass("has-error")){
+                                                $(parent).removeClass("has-error");
+                                            }
+                                        }
+                                    })
+
+                                $.ajax({
+                                    url: '/ajax/EntiteSet/findAll', // La ressource cibl&eacute;e
+                                    type: &#39;POST&#39;, // Le type de la requ&#234;te HTTP.
+                                    data: {},
+                                    dataType: "json",
+                                    success: function (data) {
+                                            // data[i].IsSuppr
+                                            // data[i].Id_Entite
+                                            // data[i].Nom
+                                            // data[i].Description
+
+                                        fk_1_table = $('#fk-1-table').DataTable({
+                                            data: data,
+                                            "pageLength": 100,
+                                            dom: "rtp",
+                                            "bDestroy": true,
+                                            "bStateSave": true,
+                                            //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                            "orderCellsTop": true,
+                                            "language": {
+                                                "sProcessing": "Traitement en cours...",
+                                                "sSearch": "Rechercher&nbsp;:",
+                                                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                "sInfoPostFix": "",
+                                                "sLoadingRecords": "Chargement en cours...",
+                                                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                "oPaginate": {
+                                                    "sFirst": "Premier",
+                                                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                    "sNext": "Suivant",
+                                                    "sLast": "Dernier"
+                                                },
+                                                "oAria": {
+                                                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                },
+                                            },
+                                            "columns": [
+                                                    { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Id_Entite", "mData": "Id_Entite", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Nom", "mData": "Nom", "sDefaultContent": "-", "bVisible": true },
+                                                    { "sClass": "", "sTitle": "Description", "mData": "Description", "sDefaultContent": "-", "bVisible": true },
+                                                //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a>"; }, "bVisible": true, "sWidth": "10%" },
+                                            ],
+                                            "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                            },
+                                            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                return nRow;
+                                            },
+                                            "initComplete": function (settings) {
+                                                // Search custom input
+                                                oTable_fk_@(indexOfFK) = $('#fk-1-table').DataTable();
+                                                $('#customFilterInput-fk-1').keyup(function () {
+                                                    oTable_fk_1.search($(this).val()).draw();
+                                                })
+                                                //Add search field placeholder
+                                                $('#fk-@indexOfFK-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                $("#fk-1-table").DataTable().columns.adjust().draw()
+                                                // Add search icon
+                                                $('#fk-@indexOfFK-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                $('#fk-1-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                $('#fk-1-table' + "_filter input").blur(function () {
+                                                    ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                });
+                                                // Tooltip initialization
+                                                $(&quot;[data-toggle=tooltip]&quot;).tooltip();
+
+                                                if (!isHere_fk_1) {
+                                                    $('#fk-1-table thead').append('<tr>');
+                                                    oTable_fk_1.columns().every(function () {
+                                                        $('#fk-1-table thead tr:last-child').append('<th>');
+                                                        isHere_fk_1 = true;
+                                                    });
+                                                }
+                                                // Ajout d'un champ de recherche pour chaque colonne
+                                                $('#fk-@indexOfFK-table thead tr:last-child th').each(function (index, value) {
+                                                    var i = index + 1;
+                                                    $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_1(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                });
+                                                initFilters_fk_1();
+
+                                            },
+                                            "fnStateLoaded": function (oSettings, oData) {
+                                                $.each(oData.columns, function (index, value) {
+                                                    filters_fk_1.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                });
+                                            }
+                                        });
+
+                                        // Ajout d'un champ de recherche pour chaque colonne
+                                        $('#fk-@indexOfFK-table tfoot tr th').each(function () {
+                                            $(this).html(&#39;<input type="text" placeholder="Rechercher..." />');
+                                        });
+
+                                        fk_1_table.columns().every(function () {
+                                            var that = this;
+                                            $('input', this.footer()).on('keyup change', function () {
+                                                if (that.search() !== this.value) {
+                                                    that
+                                                        .search(this.value)
+                                                        .draw();
+                                                }
+                                            });
+                                        });
+
+
+
+                                        $('#fk-1-table tbody').on('click', 'tr', function () {
+                                            if ($(this).hasClass('selected')) {
+                                                $(this).removeClass('selected');
+                                                $("#Id_Entite").val("");
+                                                $("#Id_Entite").trigger("change");
+                                            }
+                                            else {
+                                                fk_1_table.$('tr.selected').removeClass('selected');
+                                                $(this).addClass('selected');
+                                                var datatmp = fk_1_table.row(this).data();
+                                                $("#Id_Entite").val(""+datatmp["Id_Entite"]);
+                                                $("#Id_Entite").trigger("change");
+                                            }
+                                        });
+
+                                    }
+                                });
+                            })
+                    }
+                
+                
+                    $(function(){
+                        $("#DesEN").change(function(){
+                            var attr = $("#DesEN").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#DesEN").parent();
+                                if($("#DesEN").val() == "" || $("#DesEN").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#DesEN-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#DesEN-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#DesEN-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#DesFR").change(function(){
+                            var attr = $("#DesFR").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#DesFR").parent();
+                                if($("#DesFR").val() == "" || $("#DesFR").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#DesFR-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#DesFR-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#DesFR-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#CategorieSPI").change(function(){
+                            var attr = $("#CategorieSPI").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#CategorieSPI").parent();
+                                if($("#CategorieSPI").val() == "" || $("#CategorieSPI").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#CategorieSPI-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#CategorieSPI-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#CategorieSPI-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+            $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr"
+        });
+
+        $(".datetimepicker").datetimepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr",
+            timeFormat: 'HH:mm'
+        });
+
+        $("#form-submit").click(function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var keep = true;
+            $("#Id_InfoArticle").trigger("change");
+            if($("#Id_InfoArticle").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#SourceFichier").trigger("change");
+            if($("#SourceFichier").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Id_Article").trigger("change");
+            if($("#Id_Article").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#IsSuppr").trigger("change");
+            if($("#IsSuppr").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Id_Entite").trigger("change");
+            if($("#Id_Entite").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#DesEN").trigger("change");
+            if($("#DesEN").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#DesFR").trigger("change");
+            if($("#DesFR").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#CategorieSPI").trigger("change");
+            if($("#CategorieSPI").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            if(keep == false){
+                return;
+            }
+            var dataArray = $("#insertData-form").serializeArray();
+            var dataToSend = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                var name = dataArray[i].name;
+                var value = dataArray[i].value;
+                if(value != "" && value != null){
+                    dataToSend[name] = value;
+                }
+            }
+            $.ajax({
+                url: '/ajax/InfoArticleSet/create', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    //window.location = "/InfoArticleSet/list";
+                    if (data["success"] == "true") {
+                        toastr.success("Insertion réussie");
+                        formatInfoArticleSet(data["infoArticleSet"]);
+                        listTable.row.add(data["infoArticleSet"]);
+                        listTable.draw();
+                    }else{
+                        toastr.error("L'insertion a échouée");
+                        console.log(data["errorMessage"]);
+                    }
+                }
+            });
+            $("#modal").modal("hide");
+        })
+    });

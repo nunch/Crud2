@@ -1,0 +1,30 @@
+
+            var ajaxCssBundle = new Bundle("~/bundles/AjaxCss", new CssMinify());
+            ajaxCssBundle.Include(
+                "~/Content/lib/bootstrap.css",
+                "~/Content/lib/font-awesome.css",
+                "~/Content/lib/jquery.dataTables.css",
+                "~/Content/lib/fixedHeader.dataTables.css",
+                "~/Content/lib/jquery-ui-smoothness.css",
+                "~/Content/lib/jquery-ui-smoothness.theme.css",
+                "~/Content/lib/jquery-ui-timepicker-addon.css",
+                "~/Content/lib/chosen.css",
+                "~/Content/lib/sweetalert2.css",
+                "~/Content/app/Site.css"
+                );
+            var ajaxJsBundle = new Bundle("~/bundles/AjaxJs", new JsMinify());
+            ajaxJsBundle.Include(
+                "~/Scripts/lib/jquery-2.2.4.js",
+                "~/Scripts/lib/bootstrap.js",
+                "~/Scripts/lib/jquery.dataTables.js",
+                "~/Scripts/lib/jquery-ui.js",
+                "~/Scripts/lib/datepicker-fr.js",
+                "~/Scripts/lib/jquery-ui-timepicker-addon.js",
+                "~/Scripts/lib/chosen.jquery.js",
+                "~/Scripts/lib/chosen.proto.js",
+                "~/Scripts/lib/sweetalert2.js",
+                "~/Scripts/lib/date.format.js",
+                "~/Scripts/app/globalUtils.js"
+                ); 
+            bundles.Add(ajaxCssBundle);
+            bundles.Add(ajaxJsBundle);

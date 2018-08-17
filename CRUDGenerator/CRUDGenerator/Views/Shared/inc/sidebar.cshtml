@@ -1,0 +1,70 @@
+﻿@using CRUDGenerator.Database
+@{
+	string setectedDatabase = "";
+	string setectedTable = "";
+	if(ViewBag.setectedDatabase != null){
+		setectedDatabase = ViewBag.setectedDatabase;
+	}
+	if(ViewBag.setectedTable != null){
+		setectedTable = ViewBag.setectedTable;
+	}
+}
+
+        <!-- sidebar -->
+        <div class="nav-side-menu " id="sidebar" role="navigation">
+            <div class="brand">Mes bases de données</div>
+            <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+            <div class="menu-list">
+
+                <ul id="menu-content" class="menu-content collapse out">
+                    @{
+                        int i = 0;
+                    }
+                    @foreach (DatabaseXML db in ViewBag.databases)
+                    {
+                    <text>
+                    @if(setectedDatabase == db.Name){
+	                    <text>
+                    <li data-toggle="collapse" data-target="#database-@i" class="active">
+                        <a href="#"><i class="fa fa-database fa-lg"></i> @db.Name <span class="arrow"></span></a>
+                    </li>
+	                    <ul class="sub-menu collapse in" id="database-@i">
+	                        @foreach (Table table in db.Content)
+	                        {
+	                        if(setectedTable == table.Name){
+	                        	<li class="active" role="showTable" database="@db.Name" table="@table.Name" id="@db.Name-@table.Name"><a href="#"><i class="fa fa-table fa-1"></i>@table.Name</a> <a href="#" role="removeTable" database="@db.Name" table="@table.Name"><i class="fa fa-times fa-1"></i></a></li>
+	                        }else{
+	                        	<li role="showTable" database="@db.Name" table="@table.Name" id="@db.Name-@table.Name"><a href="#"><i class="fa fa-table fa-1"></i>@table.Name</a> <a href="#" role="removeTable" database="@db.Name" table="@table.Name"><i class="fa fa-times fa-1"></i></a></li>
+	                        }
+	                        }
+	                        <li><a href="#" role="addTable" database="@db.Name">><i class="fa fa-table fa-1"></i>Ajouter une table</a></li>
+	                    </ul>
+                        @{
+                        i++;
+                        }
+                        </text>
+                    }
+                    @if(setectedDatabase != db.Name){
+	                    <text>
+                    <li data-toggle="collapse" data-target="#database-@i" class="collapsed active">
+                        <a href="#"><i class="fa fa-database fa-lg"></i> @db.Name <span class="arrow"></span></a>
+                    </li>
+	                    <ul class="sub-menu collapse" id="database-@i">
+	                        @foreach (Table table in db.Content)
+	                        {
+	                        <li role="showTable" database="@db.Name" table="@table.Name" id="@db.Name-@table.Name"><a href="#"><i class="fa fa-table fa-1"></i>@table.Name</a> <a href="#" role="removeTable" database="@db.Name" table="@table.Name"><i class="fa fa-times fa-1"></i></a></li>
+	                        }
+	                        <li><a href="#" role="addTable" database="@db.Name"><i class="fa fa-table fa-1"></i>Ajouter une table</a></li>
+	                    </ul>
+                        @{
+                        i++;
+                        }
+                        </text>
+                    }
+                    </text>
+                    }
+
+                </ul>
+            </div>
+        </div>

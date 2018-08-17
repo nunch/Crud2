@@ -1,0 +1,420 @@
+﻿@using CRUDGenerator.Database
+@{
+    //Layout = "~/Views/TemplateForm.cshtml";
+    Layout = null;
+}
+@{
+    DatabaseXML db = (DatabaseXML)ViewBag.database;
+    Table table = (Table)ViewBag.table;
+    string smallTableName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToLower(table.Name);
+    string bigTableName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToUpper(table.Name);
+    string bigDbName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToUpper(db.Name);
+
+    List<Table> inter_n_m_Relations = new List<Table>();
+    List<string> inter_n_m_Relation_columnName = new List<string>();
+    List<string> inter_n_m_Relation_externColumnName = new List<string>();
+    List<List<string>> inter_n_m_Relation_fkColumnNames = new List<List<string>>();
+    List<Table> n_m_Relations = new List<Table>();
+    foreach (Table tmp in db.Content)
+    {
+        if (tmp.Name != table.Name && tmp.Type == "n-m-relation")
+        {
+            if (tmp.ForeignKeys.Count == 2)
+            {
+                ForeignKey fk1 = tmp.ForeignKeys[0];
+                ForeignKey fk2 = tmp.ForeignKeys[1];
+                inter_n_m_Relation_fkColumnNames.Add(new List<string>
+                {
+                    fk1.Info[0].ColumnName, fk2.Info[0].ColumnName
+                });
+                if (fk1.ExternTableName == table.Name)
+                {
+                    n_m_Relations.Add(db.getTableByName(fk2.ExternTableName));
+                    inter_n_m_Relations.Add(tmp);
+                    inter_n_m_Relation_columnName.Add(fk1.Info[0].ColumnName); // Id+table.Name
+                    inter_n_m_Relation_externColumnName.Add(fk2.Info[0].ColumnName); // Id+externTable.Name
+                }
+
+                if (fk2.ExternTableName == table.Name)
+                {
+                    n_m_Relations.Add(db.getTableByName(fk1.ExternTableName));
+                    inter_n_m_Relations.Add(tmp);
+                    inter_n_m_Relation_columnName.Add(fk2.Info[0].ColumnName); // Id+table.Name
+                    inter_n_m_Relation_externColumnName.Add(fk1.Info[0].ColumnName); // Id+externTable.Name
+                }
+            }
+        }
+    }
+
+    List<Table> fk_tables = new List<Table>();
+    List<string> fk_columnNames = new List<string>();
+    List<string> fk_names = new List<string>();
+    for (int i = 0; i < table.ForeignKeys.Count; i++)
+    {
+        ForeignKey fk = table.ForeignKeys[i];
+        fk_tables.Add(db.getTableByName(fk.ExternTableName));
+        fk_columnNames.Add(fk.Info[0].ColumnName);
+        fk_names.Add(fk.Name);
+    }
+}
+@@using @(db.Name).Models
+@@{
+    Layout = null;
+@bigTableName @smallTableName = (@bigTableName) ViewBag.@smallTableName;
+@for (int i = 0; i < n_m_Relations.Count; i++)
+{
+    <text>
+        bool show@(n_m_Relations[i].Name) = true;
+        bool useChosen_on_n_m_@(n_m_Relations[i].Name) = true;
+    </text>
+}
+@for (int i = 0; i < fk_names.Count; i++)
+{
+    <text>
+        bool useChosen_on_fk_@(fk_names[i]) = true;
+    </text>
+}
+}
+
+<input type="hidden" id="@(smallTableName)-@(table.PrimaryKey[0])"/>
+<form method="post" id="modifyData-form" action="/@bigTableName/update">
+    <fieldset>
+        <legend>Modifier @table.Name</legend>
+        @for (int columnNumber = 0; columnNumber < table.Columns.Count; columnNumber++)
+        {
+            Column column = table.Columns[columnNumber];
+            string required = "";
+            if (column.isNull == 0)
+            {
+                required = "required=required";
+            }
+            string readOnly = "";
+            int indexOfFK = fk_columnNames.IndexOf(column.Name);
+            if (table.PrimaryKey.Contains(column.Name))
+            {
+                readOnly = "readonly";
+            }
+
+            if (indexOfFK != -1)
+            {
+                <text>
+                    @@if(useChosen_on_fk_@(fk_names[indexOfFK]))
+                    {
+                    <div class="form-group" id="fk-@indexOfFK-div">
+                        <input type="hidden" id="@(column.Name)-object" value="@("@")@(smallTableName).@(column.Name)" />
+                        <label class="control-label">@column.Name</label>
+                        <select data-placeholder="Choisir @column.Name" class="chosen-select" id="@(column.Name)" name="@column.Name" @required>
+                            <option disabled selected>Choisir @(column.Name)</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-@indexOfFK-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir @(column.Name)</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-@indexOfFK-div" class="form-group">
+                        <label class="control-label">@column.Name</label>
+                        <input type="hidden" name="@column.Name" id="@(column.Name)" value="@("@")@(smallTableName).@(column.Name)" @required />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-@indexOfFK" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-@indexOfFK" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-@indexOfFK" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-@indexOfFK-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-@indexOfFK-table">
+                            <tfoot>
+                                <tr>
+                                    @for (int i = 0; i < fk_tables[indexOfFK].Columns.Count; i++)
+                                    {
+                                        <th>@(fk_tables[indexOfFK].Columns[i].Name)</th>
+                                    }
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-@indexOfFK-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir @(column.Name)</p>
+                        </div>
+                    </div>
+                    }
+                </text>
+            }
+            else if (table.PrimaryKey.Contains(column.Name))
+            {
+                <input type="hidden" id="@column.Name" name="@column.Name" value="@("@")@(smallTableName).@column.Name" />
+            }
+            else
+            {
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">@column.Name</label>
+                    @switch (column.Type)
+                    {
+                        case CRUDGenerator.Database.Type.Int:
+                        case CRUDGenerator.Database.Type.Smallint:
+                        case CRUDGenerator.Database.Type.Bigint:
+                        case CRUDGenerator.Database.Type.Tinyint:
+                            <input type="number" id="@column.Name" name="@column.Name" class="form-control" @required @readOnly value="@@@(smallTableName).@column.Name" />
+                            break;
+                        case CRUDGenerator.Database.Type.Int_AI:
+                            <input type="number" id="@column.Name" name="@column.Name" class="form-control" @required @readOnly value="@@@(smallTableName).@column.Name" />
+                            break;
+                        case CRUDGenerator.Database.Type.Boolean:
+                            <text>
+                                @@if (@@@(smallTableName).@column.Name == true)
+                                {
+                                <input type="radio" id="@column.Name-0" name="@column.Name" value="0" /> <span>Non   </span>
+                                <input type="radio" id="@column.Name-1" name="@column.Name" value="1" checked="checked" /> <span>Oui</span>
+                                }
+                                else
+                                {
+                                <input type="radio" id="@column.Name-0" name="@column.Name" value="0" checked="checked" /> <span>Non   </span>
+                                <input type="radio" id="@column.Name-1" name="@column.Name" value="1" /> <span>Oui</span>
+                                }
+                            </text>
+                            break;
+                        case CRUDGenerator.Database.Type.String:
+                            <input type="text" id="@column.Name" name="@column.Name" class="form-control" @required @readOnly value="@@@(smallTableName).@column.Name" />
+                            break;
+                        case CRUDGenerator.Database.Type.Text:
+                            <textarea id="modifyData-form-@column.Name" name="@column.Name" class="form-control" @required @readOnly>@@@(smallTableName).@column.Name</textarea>
+                            break;
+                        case CRUDGenerator.Database.Type.Float:
+                            <input type="text" pattern="[-+]?[0-9]*\.?[0-9]+" id="@column.Name" name="@column.Name" class="form-control" @required @readOnly value="@@@(smallTableName).@column.Name" />
+                            break;
+                        case CRUDGenerator.Database.Type.Datetime:
+                            <input type="text" id="@column.Name" class="datetimepicker form-control" name="@column.Name" @required @readOnly value="@@@(smallTableName).@column.Name" />
+                            break;
+                        case CRUDGenerator.Database.Type.Date:
+                            <input type="text" id="@column.Name" class="datepicker form-control" name="@column.Name" @required @readOnly value="@@@(smallTableName).@column.Name" />
+                            break;
+                        case CRUDGenerator.Database.Type.Decimal:
+                            <input type="text" pattern="[-+]?[0-9]*\.?[0-9]+" id="@column.Name" name="@column.Name" class="form-control" @required @readOnly value="@@@(smallTableName).@column.Name" />
+                            break;
+                        default:
+                            break;
+                    }
+                    <div id="@column.Name-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir @(column.Name)</p>
+                    </div>
+                </div>
+            }
+
+        }
+        @for (int pos = 0; pos < n_m_Relations.Count; pos++)
+        {
+            <text>
+                @@if(show@(n_m_Relations[pos].Name))
+                {
+                <text>
+                    <div>
+                        <label>Relation avec @(n_m_Relations[pos].Name)</label>
+                        @@if (useChosen_on_n_m_@(n_m_Relations[pos].Name) == true)
+                        {
+                        <div class="form-group">
+                            <select data-placeholder="Choisir @(n_m_Relations[pos].Name)" multiple class="chosen-select" id="fk-@pos"></select>
+                        </div>
+                        <div id="fk-inputs-@pos" style="display: none">
+
+                        </div>
+                        <div id="fk-delete-inputs-@pos" style="display: none">
+
+                        </div>
+                        }
+                        else
+                        {
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-@pos" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-@pos" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-@pos" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="table-fk-@pos">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <a class="btn btn-primary" id="add-@pos">Ajouter une relation avec @n_m_Relations[pos].Name</a>
+                            </div>
+                        </div>
+                        @{
+                            List<string> externColumnsNames = new List<string>();
+                            List<string> inter_n_m_columnNames = new List<string>();
+                            List<string> columnNames = new List<string>();
+                            for (int i = 0; i < n_m_Relations[pos].Columns.Count; i++)
+                            {
+                                Column columnTmp = n_m_Relations[pos].Columns[i];
+                                externColumnsNames.Add(columnTmp.Name);
+                                columnNames.Add(columnTmp.Name);
+                            }
+                            for (int i = 0; i < inter_n_m_Relations[pos].Columns.Count; i++)
+                            {
+                                Column columnTmp = inter_n_m_Relations[pos].Columns[i];
+                                bool keep = true;
+                                foreach (ForeignKey fk in inter_n_m_Relations[pos].ForeignKeys)
+                                {
+                                    if (columnTmp.Name.Equals(fk.Info[0].ColumnName))
+                                    {
+                                        keep = false;
+                                    }
+                                }
+                                if (inter_n_m_Relations[pos].PrimaryKey.Contains(columnTmp.Name))
+                                {
+                                    keep = false;
+                                }
+                                if (keep == true)
+                                {
+                                    inter_n_m_columnNames.Add(columnTmp.Name);
+                                    columnNames.Add(columnTmp.Name);
+                                }
+                            }
+                        }
+                        <table id="table-fk-@pos">
+                            <tfoot>
+                                <tr>
+                                    @for (int i = 0; i < columnNames.Count; i++)
+                                    {
+                                        <th>@(columnNames[i])</th>
+                                    }
+                                    <th>Actions</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div style="display: none" id="fk-@pos-inputs">
+                        </div>
+                        <div style="display: none" id="fk-@pos-remove-inputs">
+                        </div>
+                        <div id="fk-@pos-modal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        Ajouter une relation avec @(n_m_Relations[pos].Name)
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="control-label">@(inter_n_m_Relations[pos].Name)</label>
+                                            <div class="row">
+                                                <div class="col-xs-1">
+                                                    <button id="btnResetFilters-modal-@pos" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                                        <i class="fa fa-refresh Icon"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-xs-4 ">
+                                                    <div id="tab_filter-modal-@pos" class="customFilter">
+                                                        <label>
+                                                            <input id="customFilterInput-modal-@pos" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-@pos-modal-table">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <table id="fk-@pos-modal-table">
+                                                <tfoot>
+                                                    <tr>
+                                                        @for (int i = 0; i < n_m_Relations[pos].Columns.Count; i++)
+                                                        {
+                                                            <th>@(n_m_Relations[pos].Columns[i].Name)</th>
+                                                        }
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                            <div id="fk-@pos-modal-collapse-div" class="collapse">
+                                                <p class="help-block">Veuillez choisir @(inter_n_m_Relations[pos].Name)</p>
+                                            </div>
+                                        </div>
+                                        @for (int i = 0; i < inter_n_m_Relations[pos].Columns.Count; i++)
+                                        {
+
+                                            Column inter_n_m_Relations_Column = inter_n_m_Relations[pos].Columns[i];
+                                            string requiredColumn = "";
+                                            if (inter_n_m_Relations_Column.isNull == 0)
+                                            {
+                                                requiredColumn = "required=required";
+                                            }
+                                            if (!inter_n_m_Relations[pos].PrimaryKey.Contains(inter_n_m_Relations_Column.Name) && !inter_n_m_Relation_fkColumnNames[pos].Contains(inter_n_m_Relations_Column.Name))
+                                            {
+                                                <div class="form-group">
+                                                    <label for="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)" class="control-label">@(inter_n_m_Relations_Column.Name)</label>
+                                                    @switch (inter_n_m_Relations_Column.Type)
+                                                    {
+                                                        case CRUDGenerator.Database.Type.Int:
+                                                        case CRUDGenerator.Database.Type.Int_AI:
+                                                        case CRUDGenerator.Database.Type.Tinyint:
+                                                        case CRUDGenerator.Database.Type.Smallint:
+                                                        case CRUDGenerator.Database.Type.Bigint:
+                                                            <input type="number" id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)" name="@(inter_n_m_Relations_Column.Name)" class="form-control" @requiredColumn />
+                                                            break;
+                                                        case CRUDGenerator.Database.Type.Boolean:
+                                                            <input type="radio" id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)-0" name="@(inter_n_m_Relations_Column.Name)" value="0" /> <span>Non   </span>
+                                                            <input type="radio" id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)-1" name="@(inter_n_m_Relations_Column.Name)" value="1" checked="checked" /> <span>Oui</span>
+                                                            break;
+                                                        case CRUDGenerator.Database.Type.String:
+                                                            <input type="text" maxlength="@(inter_n_m_Relations_Column.Length)" id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)" name="@(inter_n_m_Relations_Column.Name)" class="form-control" @requiredColumn />
+                                                            break;
+                                                        case CRUDGenerator.Database.Type.Text:
+                                                            <textarea id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)" name="@(inter_n_m_Relations_Column.Name)" class="form-control"></textarea>
+                                                            break;
+                                                        case CRUDGenerator.Database.Type.Float:
+                                                            <input type="text" pattern="[-+]?[0-9]*\.?[0-9]+" id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)" name="@(inter_n_m_Relations_Column.Name)" class="form-control" @requiredColumn />
+                                                            break;
+                                                        case CRUDGenerator.Database.Type.Datetime:
+                                                            <input type="text" id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)" class="datetimepicker form-control" name="@(inter_n_m_Relations_Column.Name)" @requiredColumn />
+                                                            break;
+                                                        case CRUDGenerator.Database.Type.Date:
+                                                            <input type="text" id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)" class="datepicker form-control" name="@(inter_n_m_Relations_Column.Name)" @requiredColumn />
+                                                            break;
+                                                        case CRUDGenerator.Database.Type.Decimal:
+                                                            <input type="text" pattern="[-+]?[0-9]*\.?[0-9]+" id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)" name="@(inter_n_m_Relations_Column.Name)" class="form-control" @requiredColumn />
+                                                            break;
+                                                        default:
+                                                            break;
+                                                    }
+                                                    <div id="fk-@pos-modal-@(inter_n_m_Relations_Column.Name)-collapse-div" class="collapse">
+                                                        <p class="help-block">Veuillez choisir @(inter_n_m_Relations_Column.Name)</p>
+                                                    </div>
+                                                </div>
+                                            }
+                                        }
+
+                                        <a id="add-modal-@(pos)" class="btn btn-primary">Ajouter relation</a>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        }
+                    </div>
+                </text>
+                }
+            </text>
+                            }
+        <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Modifier</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+
+</fieldset>
+
+</form>
+
+<script src="/Scripts/Ajax/@(table.Name)/modify.js"></script>

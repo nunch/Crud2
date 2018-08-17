@@ -1,0 +1,17 @@
+﻿@using CRUDGenerator.Database
+@{
+    ViewBag.Title = "CRUDGenerator";
+    Layout = "~/Views/Template.cshtml";
+    ViewBag.css = "~/Content/head/addDatabase/css";
+    ViewBag.js = "~/Scripts/footer/addDatabase/js";
+}
+<form id="addDatabase-form" method="post">
+    <fieldset>
+        <legend>Ajouter une base de données</legend>
+        <div class="form-group">
+            <label>Nom de la base de données</label>
+            <input type="text" class="form-control" name="databaseName" id="addDatabase-databaseName" pattern="[A-Za-z0-9_]*" title="Seuls les caractères alphanumériques ainsi que le caractère _ sont acceptés" required>
+        </div>
+        <input type="submit" class="btn btn-default" id="addDatabase-submit">
+    </fieldset>
+</form>

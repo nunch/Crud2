@@ -1,0 +1,455 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+IgnorerSet ignorerSet = (IgnorerSet) ViewBag.ignorerSet;
+    
+        bool useChosen_on_fk_fk_IgnorerSet_0 = true;
+    
+}
+
+
+                
+                    $(function(){
+                        $("#Id_Ignorer").change(function(){
+                            var attr = $("#Id_Ignorer").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#Id_Ignorer").parent();
+                                if($("#Id_Ignorer").val() == "" || $("#Id_Ignorer").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#Id_Ignorer-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#Id_Ignorer-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#Id_Ignorer-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#IsIgnored").change(function(){
+                            var attr = $("#IsIgnored").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#IsIgnored").parent();
+                                if($("#IsIgnored").val() == "" || $("#IsIgnored").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#IsIgnored-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#IsIgnored-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#IsIgnored-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    $(function(){
+                        $("#IsSuppr").change(function(){
+                            var attr = $("#IsSuppr").attr("required");
+                            if (typeof attr !== typeof undefined && attr !== false) {
+                                var parent = $("#IsSuppr").parent();
+                                if($("#IsSuppr").val() == "" || $("#IsSuppr").val() == null){
+                                    $(parent).addClass("has-error");
+                                    $("#IsSuppr-collapse-div").collapse("show");
+                                    if($(parent).hasClass("has-success")){
+                                        $(parent).removeClass("has-success");
+                                    }
+                                }else{
+                                    $(parent).addClass("has-success");
+                                    $("#IsSuppr-collapse-div").collapse("hide");
+                                    if($(parent).hasClass("has-error")){
+                                        $(parent).removeClass("has-error");
+                                    }
+                                }
+                            }else{
+                                $(parent).addClass("has-success");
+                                $("#IsSuppr-collapse-div").collapse("hide");
+                                if($(parent).hasClass("has-error")){
+                                    $(parent).removeClass("has-error");
+                                }
+                            }
+                        });
+                    });
+                
+                
+                    @if(useChosen_on_fk_fk_IgnorerSet_0)
+                    {
+                        <text>
+                                $(function(){
+                                    $("#form-cancel").click(function(){
+                                        $("#modal").modal("hide");
+                                    });
+                                    var attr = $("#Id_Ecart").attr("required");
+                                    if (typeof attr !== typeof undefined && attr !== false) {
+                                        $("#Id_Ecart").change(function(){
+                                            var parent = $("#Id_Ecart").parent();
+                                            if($("#Id_Ecart").val() == "" || $("#Id_Ecart").val() == null){
+                                                $(parent).addClass("has-error");
+                                                $("#fk-0-div-collapse-div").collapse("show");
+                                                if($(parent).hasClass("has-success")){
+                                                    $(parent).removeClass("has-success");
+                                                }
+                                            }else{
+                                                $(parent).addClass("has-success");
+                                                $("#fk-0-div-collapse-div").collapse("hide");
+                                                if($(parent).hasClass("has-error")){
+                                                    $(parent).removeClass("has-error");
+                                                }
+                                            }
+                                        })
+                                    }
+                                    $.ajax({
+                                        url: '/ajax/EcartSet/findAll', // La ressource cibl&eacute;e
+                                        type: 'POST', // Le type de la requête HTTP.
+                                        data: {},
+                                        dataType: "json",
+                                        success: function (data) {
+                                            for (var i = 0; i < data.length; i++) {
+                                                                                                    //data[i]["Id_Ecart"]
+                                                    //data[i]["NumImport"]
+                                                    //data[i]["IsBoxarr"]
+                                                    //data[i]["IsBaan"]
+                                                    //data[i]["IsTIP"]
+                                                    //data[i]["IsSuppr"]
+                                                    //data[i]["Id_Cle"]
+                                                    //data[i]["NumAxe"]
+                                                    //data[i]["LienArticles_Id_LienArticles"]
+                                                    //data[i]["Article_Id_Article"]
+                                                    //data[i]["AssoArticleSource_Id_AssoArticleSource"]
+                                                $("#Id_Ecart").append("<option value='" + data[i].Id_Ecart + "'>" + data[i].Id_Ecart + "</option>");
+                                            }
+                                            //$("#@(column.Name)").val("@@@(smallTableName).@(column.Name)");
+                                            $("#@(column.Name)").val($("#@(column.Name)-object").val());
+
+                                            $("#@(column.Name)").chosen({ no_results_text: "Aucun r&eacute;sultat", width: "100%" });
+
+                                        }
+                                    });
+                                })
+                        </text>
+
+                    }else
+                    {
+                                                var fk_0_table = null;
+                                                var isHere_fk_0 = false;
+                                                var filters_fk_0 = [];
+
+                                                function reinitFilters_fk_0() {
+                                                    $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                                        $(this).val('').removeClass('colorFilter');
+                                                    });
+                                                    $('#fk-0-table tfoot tr th input').each(function (index, value) {
+                                                        $(this).val('');
+                                                    });
+                                                    $('#customFilterInput-fk-0').val('');
+                                                    fk_0_table.search('').columns().search('').draw();
+                                                }
+                                                function initFilters_fk_0() {
+                                                    $('#fk-0-table thead tr:last-child th input').each(function (index, value) {
+                                                        var i = index;
+                                                        if (index < 11) {
+                                                            i += 3;
+                                                            $(this).val(filters_fk_@(indexOfFK)[i]).keyup();
+                                                        }
+                                                        else {
+                                                            $(this).val('');
+                                                        }
+                                                    });
+                                                }
+                                                function displayInSearchInput_fk_@(indexOfFK)(index, obj) {
+                                                    $('#fk-@indexOfFK-table tfoot tr th:nth-child(' + index + ') input').val(obj.value).keyup();
+                                                    if (obj.value != "") {
+                                                        $(obj).addClass("colorFilter");
+
+                                                    } else {
+                                                        $(obj).removeClass("colorFilter");
+                                                    }
+                                                }
+                                                $(function(){
+
+                                                    $("#btnResetFilters-fk-0").click(function(event){
+                                                        event.preventDefault();
+                                                        reinitFilters_fk_0();
+                                                    })
+                                                    $("#Id_Ecart").change(function(){
+                                                        var parent = $("#Id_Ecart").parent();
+                                                        var attr = $("#Id_Ecart").attr("required");
+                                                        if (typeof attr !== typeof undefined && attr !== false) {
+                                                            if($("#Id_Ecart").val() == "" || $("#Id_Ecart").val() == null){
+                                                                $(parent).addClass("has-error");
+                                                                $("#fk-0-div-collapse-div").collapse("show");
+                                                                if($(parent).hasClass("has-success")){
+                                                                    $(parent).removeClass("has-success");
+                                                                }
+                                                            }else{
+                                                                $(parent).addClass("has-success");
+                                                                $("#fk-0-div-collapse-div").collapse("hide");
+                                                                if($(parent).hasClass("has-error")){
+                                                                    $(parent).removeClass("has-error");
+                                                                }
+                                                            }
+                                                        }else{
+                                                            $(parent).addClass("has-success");
+                                                            $("#fk-0-div-collapse-div").collapse("hide");
+                                                            if($(parent).hasClass("has-error")){
+                                                                $(parent).removeClass("has-error");
+                                                            }
+                                                        }
+                                                    })
+
+                                                    $.ajax({
+                                                        url: '/ajax/EcartSet/findAll', // La ressource cibl&eacute;e
+                                                        type: 'POST', // Le type de la requête HTTP.
+                                                        data: {},
+                                                        dataType: "json",
+                                                        success: function (data) {
+                                                                // data[i].Id_Ecart
+                                                                // data[i].NumImport
+                                                                // data[i].IsBoxarr
+                                                                // data[i].IsBaan
+                                                                // data[i].IsTIP
+                                                                // data[i].IsSuppr
+                                                                // data[i].Id_Cle
+                                                                // data[i].NumAxe
+                                                                // data[i].LienArticles_Id_LienArticles
+                                                                // data[i].Article_Id_Article
+                                                                // data[i].AssoArticleSource_Id_AssoArticleSource
+
+                                                            fk_0_table = $('#fk-0-table').DataTable({
+                                                                data: data,
+                                                                "pageLength": 100,
+                                                                dom: "rtp",
+                                                                "bDestroy": true,
+                                                                "bStateSave": true,
+                                                                //"bSort": [[0, 'asc'], [1, 'asc'], [11, 'asc']],
+                                                                "orderCellsTop": true,
+                                                                "language": {
+                                                                    "sProcessing": "Traitement en cours...",
+                                                                    "sSearch": "Rechercher&nbsp;:",
+                                                                    "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                                                                    "sInfo": "<span class=&#39;Total&#39;>Total </span><span class=&#39;TotalNumber&#39;>_MAX_ &amp;eacute;l&amp;eacute;ment(s)</span>",
+                                                                    "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                                                                    "sInfoFiltered": "_TOTAL_ trouv&eacute;(s)",
+                                                                    "sInfoPostFix": "",
+                                                                    "sLoadingRecords": "Chargement en cours...",
+                                                                    "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                                                                    "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                                                                    "oPaginate": {
+                                                                        "sFirst": "Premier",
+                                                                        "sPrevious": "Pr&eacute;c&eacute;dent",
+                                                                        "sNext": "Suivant",
+                                                                        "sLast": "Dernier"
+                                                                    },
+                                                                    "oAria": {
+                                                                        "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                                                                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                                                                    },
+                                                                },
+                                                                "columns": [
+                                                                        { "sClass": "", "sTitle": "Id_Ecart", "mData": "Id_Ecart", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "NumImport", "mData": "NumImport", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "IsBoxarr", "mData": "IsBoxarr", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "IsBaan", "mData": "IsBaan", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "IsTIP", "mData": "IsTIP", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "IsSuppr", "mData": "IsSuppr", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "Id_Cle", "mData": "Id_Cle", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "NumAxe", "mData": "NumAxe", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "LienArticles_Id_LienArticles", "mData": "LienArticles_Id_LienArticles", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "Article_Id_Article", "mData": "Article_Id_Article", "sDefaultContent": "-", "bVisible": true },
+                                                                        { "sClass": "", "sTitle": "AssoArticleSource_Id_AssoArticleSource", "mData": "AssoArticleSource_Id_AssoArticleSource", "sDefaultContent": "-", "bVisible": true },
+                                                                    //{ "mData": "Id", "bVisible": false, "sWidth": "0%" },
+                                                                    //{ "sClass": "", "sTitle": "Statut", "mData": function (source, type, val) { return "<a href='../DetailsUrgence/DetailsUrgence/" + source.id + "'>" + source.statut + "</a")>"; }, "bVisible": true, "sWidth": "10%" },
+                                                                ],
+                                                                "fnCreatedRow": function (nRow, aData, iDataIndex) {
+                                                                },
+                                                                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                                                                    //$('td:eq(0)', nRow).addClass("c" + (aData.couleur).substring(1));
+                                                                    return nRow;
+                                                                },
+                                                                "initComplete": function (settings) {
+                                                                    // Search custom input
+                                                                    oTable_fk_0 = $('#fk-0-table').DataTable();
+                                                                    $('#customFilterInput-fk-0').keyup(function () {
+                                                                        oTable_fk_0.search($(this).val()).draw();
+                                                                    })
+                                                                    //Add search field placeholder
+                                                                    $('#fk-0-table' + "_filter input").attr("placeholder", "Rechercher...");
+                                                                    $("#fk-0-table").DataTable().columns.adjust().draw()
+                                                                    // Add search icon
+                                                                    $('#fk-0-table' + "_filter label").append("<i class ='fa fa-search SearchIcon'>");
+                                                                    $('#fk-0-table' + "_filter input").focus(function () { $(this).parent().find(".SearchIcon").addClass("Active") });
+                                                                    $('#fk-0-table' + "_filter input").blur(function () {
+                                                                        ($(this).val() == "") ? $(this).parent().find(".SearchIcon").removeClass("Active") : '';
+                                                                    });
+                                                                    // Tooltip initialization
+                                                                    $("[data-toggle=tooltip]").tooltip();
+
+                                                                    if (!isHere_fk_0) {
+                                                                        $('#fk-0-table thead').append('<tr>');
+                                                                        oTable_fk_0.columns().every(function () {
+                                                                            $('#fk-0-table thead tr:last-child').append('<th>');
+                                                                            isHere_fk_0 = true;
+                                                                        });
+                                                                    }
+                                                                    // Ajout d'un champ de recherche pour chaque colonne
+                                                                    $('#fk-0-table thead tr:last-child th').each(function (index, value) {
+                                                                        var i = index + 1;
+                                                                        $(this).html('<input type="text" placeholder="Rechercher..." onkeyup="displayInSearchInput_fk_0(' + i + ', this)"/>').css('padding', 8).css('color', 'black');
+                                                                    });
+                                                                    initFilters_fk_0();
+
+                                                                },
+                                                                "fnStateLoaded": function (oSettings, oData) {
+                                                                    $.each(oData.columns, function (index, value) {
+                                                                        filters_fk_0.push(((value.search.search).replace("^", " ")).replace("$", " ").replace("\\", " ").replace("\\", " "));
+                                                                    });
+                                                                }
+                                                            });
+
+                                                            // Ajout d'un champ de recherche pour chaque colonne
+                                                            $('#fk-0-table tfoot tr th').each(function () {
+                                                                $(this).html('<input type ="text" placeholder="Rechercher..." />');
+                                                            });
+
+                                                            fk_0_table.columns().every(function () {
+                                                                var that = this;
+                                                                $('input', this.footer()).on('keyup change', function () {
+                                                                    if (that.search() !== this.value) {
+                                                                        that
+                                                                            .search(this.value)
+                                                                            .draw();
+                                                                    }
+                                                                });
+                                                            });
+
+
+
+                                                            $('#fk-0-table tbody').on('click', 'tr', function () {
+                                                                if ($(this).hasClass('selected')) {
+                                                                    $(this).removeClass('selected');
+                                                                    $("#Id_Ecart").val("");
+                                                                    $("#Id_Ecart").trigger("change");
+                                                                }
+                                                                else {
+                                                                    fk_0_table.$('tr.selected').removeClass('selected');
+                                                                    $(this).addClass('selected');
+                                                                    var datatmp = fk_0_table.row(this).data();
+                                                                    $("#Id_Ecart").val(""+datatmp["Id_Ecart"]);
+                                                                    $("#Id_Ecart").trigger("change");
+                                                                }
+                                                            });
+                                                            $("#Id_Ecart").val($("#Id_Ecart").val());
+                                                            var trs = $('#fk-0-table tbody tr');
+                                                            for (var i = 0; i < trs.length; i++) {
+                                                                var datatmp = fk_0_table.row($(trs[i])).data();
+                                                                if(datatmp["Id_Ecart"] == $("#Id_Ecart").val()){
+                                                                    $(trs[i]).trigger("click");
+                                                                }
+                                                            }
+                                                        }
+                                                    });
+                                                })
+                    }
+                
+        
+
+    $(function () {
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr"
+        });
+
+        $(".datetimepicker").datetimepicker({
+            dateFormat: "dd/mm/yy",
+            regional: "fr",
+            timeFormat: 'HH:mm'
+        });
+
+        $("#form-submit").click(function(event){
+            event.stopPropagation();
+            event.preventDefault();
+            var keep = true;
+            $("#Id_Ignorer").trigger("change");
+            if($("#Id_Ignorer").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#IsIgnored").trigger("change");
+            if($("#IsIgnored").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#IsSuppr").trigger("change");
+            if($("#IsSuppr").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            $("#Id_Ecart").trigger("change");
+            if($("#Id_Ecart").closest(".form-group").hasClass("has-error")){
+                keep = false;
+            }
+            if(keep == false){
+                return;
+            }
+            var dataArray = $("#modifyData-form").serializeArray();
+            var dataToSend = {};
+            for (var i = 0; i < dataArray.length; i++) {
+                var name = dataArray[i].name;
+                var value = dataArray[i].value;
+                if(value != "" && value != null){
+                    dataToSend[name] = value;
+                }
+            }
+            $.ajax({
+                url: '/IgnorerSet/update', // La ressource cibl&eacute;e
+                type: 'POST', // Le type de la requête HTTP.
+                data: dataToSend,
+                dataType: "json",
+                success: function (data) {
+                    //window.location = "/ajax/IgnorerSet/list";
+                    if (data["success"] == "true") {
+                        toastr.success("Modification réussie");
+                        formatIgnorerSet(data["ignorerSet"]);
+                        var tableData = listTable.rows()[0];
+                        var index = -1;
+                        for (var i = 0; i < tableData.length && index == -1 ; i++) {
+                            var dataTmp = listTable.row(tableData[i]).data();
+                            if (dataTmp["Id_Ignorer"] == data["ignorerSet"]["Id_Ignorer"]) {
+                                index = tableData[i];
+                            }
+                        }
+                        listTable.row(index).remove();
+                        listTable.row.add(data["ignorerSet"]);
+                        listTable.draw();
+                    }else{
+                        toastr.error("La modification a échouée");
+                        console.log(data["errorMessage"]);
+                    }
+                }
+            });
+            $("#modal").modal("hide");
+        })
+    });

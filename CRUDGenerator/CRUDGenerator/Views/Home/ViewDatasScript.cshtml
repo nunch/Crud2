@@ -1,0 +1,262 @@
+﻿@using CRUDGenerator.Database
+@{
+    //Layout = "~/Views/TemplateForm.cshtml";
+    Layout = null;
+}
+@{
+    DatabaseXML db = (DatabaseXML)ViewBag.database;
+    Table table = (Table)ViewBag.table;
+    string bigTableName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToUpper(table.Name);
+    string smallTableName = CRUDGenerator.Templates.Classes.CS.BasicFunction.FirstCharToLower(table.Name);
+    int nbColumn = table.Columns.Count;
+    int idPosition = 0;
+    for (int i = 0; i < nbColumn ; i++)
+    {
+        if(table.Columns[i].Name == "Id" || table.Columns[i].Name == "id")
+        {
+            idPosition = i;
+        }
+    }
+    List<Table> inter_n_m_Relations = new List<Table>();
+    List<string> inter_n_m_Relation_columnName = new List<string>();
+    List<string> inter_n_m_Relation_externColumnName = new List<string>();
+    List<Table> n_m_Relations = new List<Table>();
+    foreach (Table tmp in db.Content)
+    {
+        if(tmp.Name != table.Name && tmp.Type == "n-m-relation")
+        {
+            if(tmp.ForeignKeys.Count == 2)
+            {
+                ForeignKey fk1 = tmp.ForeignKeys[0];
+                ForeignKey fk2 = tmp.ForeignKeys[1];
+                if (fk1.ExternTableName == table.Name)
+                {
+                    n_m_Relations.Add(db.getTableByName(fk2.ExternTableName));
+                    inter_n_m_Relations.Add(tmp);
+                    inter_n_m_Relation_columnName.Add(fk2.Info[0].ColumnName);
+                    inter_n_m_Relation_externColumnName.Add(fk2.Info[0].ExternColumnName);
+                }
+
+                if (fk2.ExternTableName == table.Name)
+                {
+                    n_m_Relations.Add(db.getTableByName(fk1.ExternTableName));
+                    inter_n_m_Relations.Add(tmp);
+                    inter_n_m_Relation_columnName.Add(fk1.Info[0].ColumnName);
+                    inter_n_m_Relation_externColumnName.Add(fk1.Info[0].ExternColumnName);
+                }
+            }
+        }
+    }
+    List<Table> fk_tables = new List<Table>();
+    List<string> fk_columnNames = new List<string>();
+    List<string> fk_names = new List<string>();
+    for (int i = 0; i < table.ForeignKeys.Count; i++)
+    {
+        ForeignKey fk = table.ForeignKeys[i];
+        fk_tables.Add(db.getTableByName(fk.ExternTableName));
+        fk_columnNames.Add(fk.Info[0].ColumnName);
+        fk_names.Add(fk.Name);
+    }
+}
+@@{    
+    Layout = null;
+    @for (int i = 0; i < n_m_Relations.Count; i++)
+    {
+    <text>bool show@(n_m_Relations[i].Name) = true;</text>
+    }
+}
+var listTable = null;
+function openCreate() {
+    $.ajax({
+        url: '/@(bigTableName)/create', // La ressource ciblÃ©e
+        type: 'GET', // Le type de la requÃªte HTTP.
+        data: {},
+        success: function (html) {
+            $("#modal .modal-body").html(html);
+            $("#modal").modal('show')
+        }
+    });
+}
+function modify(Id) {
+    $.ajax({
+        url: '/@(bigTableName)/modify', // La ressource ciblÃ©e
+        type: 'POST', // Le type de la requÃªte HTTP.
+        data: { Id: Id },
+        success: function (html) {
+            $("#modal .modal-body").html(html);
+            $("#modal").modal('show')
+        }
+    });
+}
+function deleteObj(element) {
+    var data = listTable.row($(element).closest("tr")).data();
+    swal({
+        title: 'Voulez vous vraiment supprimer l\'&eacute;l&eacute;ment ?',
+        text: "",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonClass: 'swgButton',
+        cancelButtonClass: 'swgButtonCancel',
+        confirmButtonColor: '#2ecc71',
+        cancelButtonColor: '#ff0000',
+        confirmButtonText: 'Oui',
+        cancelButtonText: 'Non'
+    }).then(function() {
+        $.ajax({
+            url: '/@(bigTableName)/Remove@(bigTableName)', // La ressource cibl&eacute;e
+            type: 'POST', // Le type de la requête HTTP.
+            data: {Id_@(table.PrimaryKey[0]): data["@(table.PrimaryKey[0])"]},
+            success: function (res) {
+                if(res.status){
+                    toastr.success(res.message);
+                    var index = -1;
+                    for (var i = 0; i < tableData.length && index == -1 ; i++) {
+                        var dataTmp = listTable.row(tableData[i]).data();
+                        if (dataTmp["@(table.PrimaryKey[0])"] == data["@(table.PrimaryKey[0])"]) {
+                            index = tableData[i];
+                        }
+                    }
+                    listTable.row(index).remove();
+                    listTable.draw();
+                }else{
+                    toastr.error(res.message)
+                }
+            }
+        });
+    });
+    console.log(data);
+}
+function format@(bigTableName)(@(smallTableName)) {
+        
+    @for (int i = 0; i < table.Columns.Count; i++)
+    {
+        Column column = table.Columns[i];
+        if(column.Type == CRUDGenerator.Database.Type.Date)
+        {
+    <text>@(smallTableName)["@(column.Name)"] = (new Date(@(smallTableName)["@(column.Name)"])).format("dd/mm/yy");</text>
+        }else if(column.Type == CRUDGenerator.Database.Type.Datetime)
+        {
+    <text>@(smallTableName)["@(column.Name)"] = (new Date(@(smallTableName)["@(column.Name)"])).format("dd/mm/yy HH:MM");</text>
+        }
+        int indexOfFk = fk_columnNames.IndexOf(column.Name);
+        if (indexOfFk > -1)
+        {
+            string tableName = fk_tables[indexOfFk].Name;
+            string fk = fk_tables[indexOfFk].PrimaryKey[0];
+            <text>
+    $.ajax({
+        url: '/@tableName/Get@(tableName)ById', // La ressource cibl&eacute;e
+        type: 'POST', // Le type de la requête HTTP.
+        data: { Id_@(tableName) : @(smallTableName)["@(column.Name)"] },
+        async: false,
+        dataType: "json",
+        success: function(dataFK){
+            @for (int j = 0; j < fk_tables[indexOfFk].Columns.Count; j++)
+            {
+                <text>//dataFK["@(fk_tables[indexOfFk].Columns[j].Name)"]</text>
+            }
+            @(smallTableName)["@(column.Name)"] = dataFK["@(fk)"];
+        }
+    });
+
+    </text>
+        }
+    }
+    @for (int i = 0; i < n_m_Relations.Count; i++)
+    {
+        <text>
+    @@if(show@(n_m_Relations[i].Name)){
+        <text>
+        var relationName = "@(n_m_Relations[i].Name)";
+        $.ajax({
+            url: '/@(inter_n_m_Relations[i].Name)/GetBy@(table.Name)Id', // La ressource cibl&eacute;e
+            type: 'POST', // Le type de la requête HTTP.
+            data: { @(table.Name)Id: @(smallTableName)["Id"] },
+            dataType: "json",
+            async: false,
+            success: function (data2) {
+                var ids = [];
+                for (var j = 0; j < data2.length; j++) {
+                    $.ajax({
+                        url: '/' + relationName + '/find', // La ressource cibl&eacute;e
+                        type: 'POST', // Le type de la requête HTTP.
+                        data: { Id: data2[j]["Id" + relationName] },
+                        dataType: "json",
+                        async: false,
+                        success: function (data3) {
+                            ids.push(data3);
+                        }
+                    });
+                }
+
+                @(smallTableName)[relationName] = ids
+            }
+        });
+        </text>
+    }
+    </text>
+    }
+}
+$(function () {
+    $("#add").click(function () {
+        openCreate();
+    })
+    $('#btnResetFilters').on('click', function (e) {
+        resetDataTableSearch($("#ViewDatas-table"));
+    })
+var columns = [
+            @for (int i = 0; i < nbColumn; i++)
+            {
+                Column column = table.Columns[i];
+                string type = "string";
+                if (column.Type == CRUDGenerator.Database.Type.Date)
+                {
+                    type = "date-fr";
+                }
+                if (column.Type == CRUDGenerator.Database.Type.Datetime)
+                {
+                    type = "date-fr-time";
+                }
+            <text>{ sType: "@(type)", input:"text", "sClass": "", "sTitle": "@(column.Name)", "mData": "@(column.Name)", "sDefaultContent": "-", "bVisible": true },</text>
+            }
+            @for (int i = 0; i < n_m_Relations.Count; i++)
+            {
+                Table tmp = n_m_Relations[i];
+                <text>
+                @@if(show@(n_m_Relations[i].Name))
+                {
+                    <text>{sType: "string", input:"text","sClass": "", "sTitle": "@(tmp.Name)", "mData": "@(tmp.Name)", "sDefaultContent": "-", "bVisible": true },</text>
+                }</text>
+            }
+        {
+            "sClass": "", className: "ActionCell CenterAlignCol", "sTitle": "Actions", "mData": function (source, type, val) {
+                var html = `
+                <span class="fa-stack PictoContainer SquareBtn Blue" data-toggle="tooltip" data-placement="left" title="" data-original-title="Modifier">
+                    <i class="fa fa-square fa-stack-2x Wrap"></i>
+                    @("<")i class ="fa fa-pencil fa-stack-1x Content btnDatatableEdit" onclick= "modify(` + source["@(table.PrimaryKey[0])"] + `)" >@("<")/i>
+                </span>
+                <span class="fa-stack PictoContainer" data-toggle="tooltip" data-placement="left" title="" data-original-title="Supprimer">
+                    <i class="fa fa-square fa-stack-2x Wrap"></i>
+                    <i class ="fa fa-trash fa-stack-1x Content btnDatatableSuprr" onclick="deleteObj(this)"></i>
+                </span>`;
+                return html;
+            }, "bVisible": true 
+        }
+    ];
+    listTable = initDataTable($('#ViewDatas-table'), columns);
+    $.ajax({
+        url: '/@bigTableName/GetAll@(bigTableName)', // La ressource cibl&eacute;e
+        type: 'POST', // Le type de la requête HTTP.
+        data: {},
+        dataType: "json",
+        success: function (res) {
+            var dataRoww = res.data;
+            for (var i = 0; i < dataRoww.length; i++) {
+                @("format")@(bigTableName)(dataRoww[i]);
+            }
+            
+            $('#ViewDatas-table').DataTable().rows.add(dataRoww).draw();
+        }
+    });//ajax
+
+});

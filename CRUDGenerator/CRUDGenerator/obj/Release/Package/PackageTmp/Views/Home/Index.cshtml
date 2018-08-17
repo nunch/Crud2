@@ -1,0 +1,75 @@
+﻿@using CRUDGenerator.Database
+@{
+    ViewBag.Title = "CRUDGenerator";
+    Layout = "~/Views/Template.cshtml";
+    ViewBag.css = "~/Content/head/index/css";
+    ViewBag.js = "~/Scripts/footer/index/js";
+}
+
+<div class="row">
+    @foreach (DatabaseXML db in ViewBag.databases)
+    {
+    <div class="col-sm-6" id="@db.Name">
+        <div class="panel panel-default">
+            <div class="panel-heading" id="panel-heading" role="collapse" target="#collapsible-@db.Name">
+                <h3 class="panel-title">@db.Name</h3>
+            </div>
+            <div class="panel-collapse collapse" id="collapsible-@db.Name">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Table</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Table table in db.Content)
+                        {
+                        <text>
+                        <tr>
+                            <th>
+                                <div role="collapse" target="#collapsible-@db.Name-@table.Name">@table.Name</div>
+                            </th>
+                            <th>
+                                <i class="fa fa-search f2" role="collapse" target="#collapsible-@db.Name-@table.Name"></i>
+                                <i class="fa fa-pencil-square-o f2" role="editTable" database="@db.Name" table="@table.Name"></i>
+                                <i class="fa fa-times f2" role="removeTable" database="@db.Name" table="@table.Name"></i>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" >
+                                <div class="collapse" id="collapsible-@db.Name-@table.Name">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <td>Nom</td>
+                                                <td>Type</td>
+                                                <td>Action</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (Column column in table.Columns)
+                                            {
+                                                <tr>
+                                                    <td>@column.Name</td>
+                                                    <td>@TypeString.ToString(column.Type)</td>
+                                                    <td>
+                                                        <i class="fa fa-pencil-square-o f2" role="editColumn" database="@db.Name" table="@table.Name" column="@column.Name"></i>
+                                                        <i class="fa fa-times f2" role="removeColumn" database="@db.Name" table="@table.Name" column="@column.Name"></i>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </th>
+                        </tr>
+                        </text>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    }
+</div>

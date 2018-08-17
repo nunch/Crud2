@@ -1,0 +1,100 @@
+
+
+@using PerennisationSPI.Models
+@{
+    Layout = null;
+IgnorerSet ignorerSet = (IgnorerSet) ViewBag.ignorerSet;
+    
+        bool useChosen_on_fk_fk_IgnorerSet_0 = true;
+    
+}
+
+
+<form method="post" id="modifyData-form" action="/IgnorerSet/update">
+    <fieldset>
+        <legend>Modifier IgnorerSet</legend>
+                <input type="hidden" id="Id_Ignorer" name="Id_Ignorer" value="@ignorerSet.Id_Ignorer" />
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsIgnored</label>
+                            <input type="number" id="IsIgnored" name="IsIgnored" class="form-control" required=required  value="@ignorerSet.IsIgnored" />
+                    <div id="IsIgnored-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsIgnored</p>
+                    </div>
+                </div>
+                <div class="form-group" type="requiredInput">
+                    <label class="control-label">IsSuppr</label>
+                            <input type="number" id="IsSuppr" name="IsSuppr" class="form-control" required=required  value="@ignorerSet.IsSuppr" />
+                    <div id="IsSuppr-collapse-div" class="collapse">
+                        <p class="help-block">Veuillez choisir IsSuppr</p>
+                    </div>
+                </div>
+                
+                    @if(useChosen_on_fk_fk_IgnorerSet_0)
+                    {
+                    <div class="form-group" id="fk-0-div">
+                        <input type="hidden" id="Id_Ecart-object" value="@ignorerSet.Id_Ecart" />
+                        <label class="control-label">Id_Ecart</label>
+                        <select data-placeholder="Choisir Id_Ecart" class="chosen-select" id="Id_Ecart" name="Id_Ecart" >
+                            <option disabled selected>Choisir Id_Ecart</option>
+                            <option value="">Aucun</option>
+                        </select>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Ecart</p>
+                        </div>
+                    </div>
+                    }else
+                    {
+                    <div id="fk-0-div" class="form-group">
+                        <label class="control-label">Id_Ecart</label>
+                        <input type="hidden" name="Id_Ecart" id="Id_Ecart" value="@ignorerSet.Id_Ecart"  />
+                        <div class="row">
+                            <div class="col-xs-1">
+                                <button id="btnResetFilters-fk-0" class="btn refresh" data-rel="tooltip" data-toggle="tooltip" data-original-title="R&eacute;initialiser les filtres">
+                                    <i class="fa fa-refresh Icon"></i>
+                                </button>
+                            </div>
+                            <div class="col-xs-4 ">
+                                <div id="tab_filter-fk-0" class="customFilter">
+                                    <label>
+                                        <input id="customFilterInput-fk-0" type="search" class="form-control input-sm" placeholder="Rechercher..." aria-controls="fk-0-table">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <table id="fk-0-table">
+                            <tfoot>
+                                <tr>
+                                        <th>Id_Ecart</th>
+                                        <th>NumImport</th>
+                                        <th>IsBoxarr</th>
+                                        <th>IsBaan</th>
+                                        <th>IsTIP</th>
+                                        <th>IsSuppr</th>
+                                        <th>Id_Cle</th>
+                                        <th>NumAxe</th>
+                                        <th>LienArticles_Id_LienArticles</th>
+                                        <th>Article_Id_Article</th>
+                                        <th>AssoArticleSource_Id_AssoArticleSource</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <div id="fk-0-div-collapse-div" class="collapse">
+                            <p class="help-block">Veuillez choisir Id_Ecart</p>
+                        </div>
+                    </div>
+                    }
+                
+                <div class="row">
+            <div class="col-md-2 col-sm-2 col-xs-4 col-xs-offset-4">
+                <a href="#" id="form-submit" class="btn btn-sm animated-button victoria-cancel">Modifier</a>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-4">
+                <a href="#" id="form-cancel" class="btn btn-sm animated-button victoria-four ">Annuler</a>
+            </div>
+        </div>
+
+</fieldset>
+
+</form>
+
+<script src="/Scripts/Ajax/IgnorerSet/modify.js"></script>
